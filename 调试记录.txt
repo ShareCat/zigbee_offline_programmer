@@ -1,0 +1,34 @@
+1、文件夹目录结构说明：
+
+├─Doc                                   -->用于存放一些开发文档
+├─Download                              -->一键烧录脚本，用于下载bootloader和application
+├─Libraries                             -->STM32固件库
+│  ├─CMSIS
+│  │  └─startup
+│  └─FWlib
+│      ├─inc
+│      └─src
+├─Project                               -->开发软件工程文件夹，默认使用Keil5以上
+│  └─RVMDK（uv5）
+│      ├─Listings
+│      └─Objects
+├─SI                                    -->source insight文件夹，默认使用V4.0以上版本
+│  └─Untitled Project.si4project
+│      ├─Backup
+│      └─cache
+│          └─parse
+└─User                                  -->所有用户代码文件夹
+    ├─app                               -->应用层代码
+    ├─bsp                               -->板载支持包，处于应用层和底层之间
+    ├─component                         -->组件
+    │  ├─aes                            -->AES加密算法
+    │  └─md5                            -->MD5算法
+    └─sys                               -->系统文件夹，包含调度器，队列和调试命令行
+
+//----------------------------------------  分割线  --------------------------//
+
+
+
+
+
+//----------------------------------------  分割线  --------------------------//

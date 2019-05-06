@@ -1,0 +1,11 @@
+si 1
+exec device=stm32f103ve
+speed auto
+r
+h
+erase
+loadbin ../LHD8006_bootloader.bin 0x08000000
+loadbin ../LHD8006_application.bin 0x08008000
+r
+g
+q
