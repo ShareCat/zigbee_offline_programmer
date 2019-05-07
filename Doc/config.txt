@@ -8,8 +8,8 @@
 #                                                           #
 #############################################################
 
-# Chip Name: [NXP_JX5169], [NXP_JX5168]
-CHIP_NAME  = "NXP_JX5169"
+# Chip Name: [NXP_JN5169], [NXP_JN5168]
+CHIP_NAME  = "NXP_JN5169"
 
 # Upgrade File Name
 FILE_NAME = "DNK-THS-JN5169_ZB_V0.7_20181226.bin"
@@ -30,4 +30,4 @@ MCU_RUN_AFTER_PROGRAM="N"
 AUTO_PROGRAM_CONTROL="N"
 
 # Auto Program Time, [0] ~ [0xFF] seconds
-AUTO_PROGRAM_TIME="0"
+AUTO_PROGRAM_TIME="5"

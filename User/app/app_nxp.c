@@ -108,7 +108,6 @@ __packed typedef struct {
     uint16_t fm_buff_remian;        /* 固件缓存中还剩下多少没有下载 */
     uint16_t fm_buff_dl_count;      /* 固件缓存中已下载字节数 */
     uint16_t fm_buff_dl_pack_size;  /* 本次下载固件的字节数 */
-    uint8_t state;
 
 #define DL_ACK_TIMER_MAX    10      /* 回复时间不能超过500ms */
     uint8_t dl_ack_timer;           /* 下载一个包，等待回复计时 */
@@ -650,6 +649,14 @@ static void nxp_set_mcu_run(void)
 }
 
 
+__packed typedef struct {
+    uint8_t enable :1;
+    uint8_t download_ok :1;
+    uint16_t timer;
+}NXP_AUTO_S;
+
+NXP_AUTO_S nxp_auto;
+
 /**
   * @brief  查询是否需要下载，来自两个方面：按键按下或是定时自动下载
   * @param  None
@@ -660,15 +667,49 @@ uint8_t nxp_wait_for_command(void)
     uint8_t rtn = FALSE;
     uint8_t event;
 
-    if (TRUE == QUEUE_OUT(button_queue, event)) {
-        /* 有按键，才下载 */
-        if (ENB_SINGLE_CLICK == event) {
-            if (E_NXP_WAITING == nxp_state) {
-                /* 如果正在下载时候，按下载按键，这个时候会忽略这次按键，
-                    只有空闲时候按下按键才会进入下载 */
+    if (FALSE == get_config_info_auto_program_control()) {
+        /* 手动下载模式 */
+        if (TRUE == QUEUE_OUT(button_queue, event)) {
+            /* 有按键，才下载 */
+            if (ENB_SINGLE_CLICK == event) {
+                if (E_NXP_WAITING == nxp_state) {
+                    /* 如果正在下载时候，按下载按键，这个时候会忽略这次按键，
+                        只有空闲时候按下按键才会进入下载 */
+                    rtn = TRUE;
+                } else {
+                    //PRINTF("download busy... \r\n");
+                }
+            }
+        }
+    } else {
+        /* 自动定时下载模式 */
+        if (TRUE == QUEUE_OUT(button_queue, event)) {
+            /* 按键控制自动下载模式开启还是关闭 */
+            if (ENB_SINGLE_CLICK == event) {
+                if (TRUE == nxp_auto.enable) {
+                    nxp_auto.enable = FALSE;
+                } else {
+                    nxp_auto.enable = TRUE;
+                }
+            }
+        }
+
+        if (TRUE == nxp_auto.enable) {
+            /* 时间到了就下载 */
+            if (nxp_auto.timer) {
+                nxp_auto.timer--;   /* 10ms减1 */
+            }
+
+            if ((nxp_auto.timer == 0) && (E_NXP_NULL == nxp_state)) {
+                /* 获取自动编程间隔时间，单位秒 */
+                nxp_auto.timer = get_config_info_auto_program_time();
+                /* 计算有多少个10ms */
+                nxp_auto.timer = nxp_auto.timer * 100;
+            }
+
+            if ((nxp_auto.timer == 0) && (E_NXP_WAITING == nxp_state)) {
+                nxp_auto.download_ok = FALSE;
                 rtn = TRUE;
-            } else {
-                //PRINTF("download busy... \r\n");
             }
         }
     }

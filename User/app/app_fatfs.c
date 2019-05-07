@@ -250,6 +250,28 @@ uint8_t get_config_info_mcu_run_after_program(void)
 
 
 /**
+  * @brief  获取get_config_info_auto_program_control
+  * @param  无
+  * @retval 无
+  */
+uint8_t get_config_info_auto_program_control(void)
+{
+    return config_info.auto_program_control;
+}
+
+
+/**
+  * @brief  获取get_config_info_auto_program_time
+  * @param  无
+  * @retval 无
+  */
+uint8_t get_config_info_auto_program_time(void)
+{
+    return config_info.auto_program_time;
+}
+
+
+/**
   * @brief  获取config_info.mcu_run_after_program
   * @param  无
   * @retval 无
@@ -473,15 +495,16 @@ static void chip_name_handle(char* str, CONFIG_INFO_S *p_cfg)
                 p_cfg->chip_name_set_flag = TRUE;
             } else {
                 /* 名字太长 */
+                p_cfg->chip_name_set_flag = FALSE;
                 ERR("chip_name len overflow \r\n");
             }
         } else {
             /* 错误 */
-
+            p_cfg->chip_name_set_flag = FALSE;
         }
     } else {
         /* 错误 */
-
+        p_cfg->chip_name_set_flag = FALSE;
     }
 }
 
@@ -513,15 +536,16 @@ static void file_name_handle(char* str, CONFIG_INFO_S *p_cfg)
                 p_cfg->file_name_set_flag = TRUE;
             } else {
                 /* 名字太长 */
+                p_cfg->file_name_set_flag = FALSE;
                 ERR("file_name len overflow \r\n");
             }
         } else {
             /* 错误 */
-
+            p_cfg->file_name_set_flag = FALSE;
         }
     } else {
         /* 错误 */
-
+        p_cfg->file_name_set_flag = FALSE;
     }
 }
 
@@ -557,11 +581,11 @@ static void max_program_handle(char* str, CONFIG_INFO_S *p_cfg)
             //PRINTF("p_cfg->max_program = %d \r\n", p_cfg->max_program);
         } else {
             /* 错误 */
-
+            p_cfg->max_program_set_flag = FALSE;
         }
     } else {
         /* 错误 */
-
+        p_cfg->max_program_set_flag = FALSE;
     }
 }
 
@@ -589,11 +613,12 @@ static void verify_after_program_handle(char* str, CONFIG_INFO_S *p_cfg)
             p_cfg->verify_after_program_set_flag = TRUE;
         } else {
             /* 参数错误 */
+            p_cfg->verify_after_program_set_flag = FALSE;
         }
 
     } else {
         /* 错误 */
-
+        p_cfg->verify_after_program_set_flag = FALSE;
     }
 }
 
@@ -621,11 +646,12 @@ static void read_out_protection_handle(char* str, CONFIG_INFO_S *p_cfg)
             p_cfg->read_out_protection_set_flag = TRUE;
         } else {
             /* 参数错误 */
+            p_cfg->read_out_protection_set_flag = FALSE;
         }
 
     } else {
         /* 错误 */
-
+        p_cfg->read_out_protection_set_flag = FALSE;
     }
 }
 
@@ -653,11 +679,12 @@ static void mcu_run_after_program_handle(char* str, CONFIG_INFO_S *p_cfg)
             p_cfg->mcu_run_after_program_set_flag = TRUE;
         } else {
             /* 参数错误 */
+            p_cfg->mcu_run_after_program_set_flag = FALSE;
         }
 
     } else {
         /* 错误 */
-
+        p_cfg->mcu_run_after_program_set_flag = FALSE;
     }
 }
 
@@ -685,11 +712,12 @@ static void auto_program_control_handle(char* str, CONFIG_INFO_S *p_cfg)
             p_cfg->auto_program_control_set_flag = TRUE;
         } else {
             /* 参数错误 */
+            p_cfg->auto_program_control_set_flag = FALSE;
         }
 
     } else {
         /* 错误 */
-
+        p_cfg->auto_program_control_set_flag = FALSE;
     }
 }
 
@@ -721,11 +749,11 @@ static void auto_program_time_handle(char* str, CONFIG_INFO_S *p_cfg)
             //PRINTF("p_cfg->auto_program_time = %d \r\n", p_cfg->auto_program_time);
         } else {
             /* 错误 */
-
+            p_cfg->auto_program_time_set_flag = FALSE;
         }
     } else {
         /* 错误 */
-
+        p_cfg->auto_program_time_set_flag = FALSE;
     }
 }
 
@@ -906,7 +934,7 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
     if (TRUE == p_cfg->chip_name_set_flag) {
         /* 判断芯片型号是否合法 */
         for (len = 0; len < NXP_CHIP_MAX; len++) {
-            if (0 == memcmp(p_cfg->chip_name, nxp_chip[len].id, nxp_chip[len].id_len)) {
+            if (0 == memcmp(p_cfg->chip_name, nxp_chip[len].name, strlen(nxp_chip[len].name))) {
                 /* 芯片型号合法 */
                 err = FALSE;
                 break;
@@ -914,6 +942,7 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
         }
         if (TRUE == err) {
             /* 芯片型号不合法 */
+            ERR("p_cfg->chip_name err \r\n");
             p_cfg->chip_name_set_flag = FALSE;
         }
     } else {
@@ -937,6 +966,7 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
             p_cfg->file_size = fno.fsize;
         } else {
             /* 升级固件不存在 */
+            ERR("p_cfg->file_name err \r\n");
             p_cfg->file_name_set_flag = FALSE;
         }
     } else {
@@ -1011,7 +1041,7 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
         /* 自动编程 */
         
     } else {
-        /* 自动编程没有设置的话，默认设置成5s */
+        /* 自动编程时间没有设置的话，默认设置成5s */
         p_cfg->auto_program_time = 0x05;
         p_cfg->auto_program_time_set_flag = TRUE;
     }

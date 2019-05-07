@@ -35,6 +35,8 @@ extern uint8_t check_program_ok(void);
 extern uint32_t get_config_info_file_size(void);
 extern uint8_t get_config_info_state(void);
 extern uint8_t get_config_info_mcu_run_after_program(void);
+extern uint8_t get_config_info_auto_program_control(void);
+extern uint8_t get_config_info_auto_program_time(void);
 extern void config_info_max_program_handle_after_program(void);
 extern void fatfs_init(void);
 extern void fatfs_task(void);
