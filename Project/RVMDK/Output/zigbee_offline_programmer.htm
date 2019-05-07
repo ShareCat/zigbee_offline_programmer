@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Tue May 07 09:14:33 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Tue May 07 09:34:09 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1216 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -3265,12 +3265,13 @@ Global Symbols
 <LI><a href="#[238]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_pack_from_nxp
 </UL>
 
-<P><STRONG><a name="[238]"></a>wait_pack_from_nxp</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, app_nxp.o(.text))
+<P><STRONG><a name="[238]"></a>wait_pack_from_nxp</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, app_nxp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = wait_pack_from_nxp &rArr; nxp_state_reset_from_err &rArr; buzzer_notice_fail &rArr; queue_in &rArr; queue_full
 </UL>
 <BR>[Calls]<UL><LI><a href="#[237]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;download_ack_time_check
 <LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_state_reset_from_err
 <LI><a href="#[233]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_rx_handle
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_task
 <LI><a href="#[23f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_download_other_pack
@@ -3307,7 +3308,7 @@ Global Symbols
 <LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_download_first_pack
 </UL>
 
-<P><STRONG><a name="[23d]"></a>nxp_download_first_pack</STRONG> (Thumb, 544 bytes, Stack size 8 bytes, app_nxp.o(.text))
+<P><STRONG><a name="[23d]"></a>nxp_download_first_pack</STRONG> (Thumb, 566 bytes, Stack size 8 bytes, app_nxp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = nxp_download_first_pack &rArr; send_pack_to_nxp &rArr; wait_pack_from_nxp &rArr; nxp_state_reset_from_err &rArr; buzzer_notice_fail &rArr; queue_in &rArr; queue_full
 </UL>
 <BR>[Calls]<UL><LI><a href="#[23c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_firmware_buff
@@ -3827,6 +3828,7 @@ Global Symbols
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;os_interrupt_handle
 <LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_task
 <LI><a href="#[23f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_download_other_pack
+<LI><a href="#[238]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_pack_from_nxp
 <LI><a href="#[237]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;download_ack_time_check
 <LI><a href="#[233]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_rx_handle
 <LI><a href="#[245]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_set_mcu_run

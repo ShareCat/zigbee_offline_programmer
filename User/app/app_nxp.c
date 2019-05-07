@@ -362,8 +362,9 @@ uint8_t wait_pack_from_nxp(void)
     while(0 == handle_rx.len) {
         /* ¼ÆÊ± */
         if (TRUE == download_ack_time_check()) {
+            PRINTF("wait_pack_from_nxp \r\n");
             nxp_state_reset_from_err();
-            break;
+            break;  /* Ìø³öwhile */
         }
     }
 
