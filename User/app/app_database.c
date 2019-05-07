@@ -179,8 +179,8 @@ void database_read(char* file_name, uint8_t *file_buff, uint32_t file_len)
   */
 void database_task(void)
 {
-
+    /* ‘› ±≤ª”√ */
 }
 
 
-/*********************************************END OF FILE**********************/
+/*********************************************END OF FILE*********************/

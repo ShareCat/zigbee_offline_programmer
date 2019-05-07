@@ -1,12 +1,12 @@
 /**
-  ******************************************************************************
+  *****************************************************************************
   * @file:      app_nxp.c
   * @author:    Cat（孙关平）
   * @version:   V1.0
   * @date:      2019-1-1
   * @brief:     
   * @attention:
-  ******************************************************************************
+  *****************************************************************************
   */
 
 
@@ -35,21 +35,21 @@ static uint8_t nxp_dl_fail = FALSE;
 
 
 enum {
-    ST_M25P05_A     = 0x04,
-    ST_M25P10_A     = 0x00,
-    ST_M25P20_A     = 0x05,
-    ST_M25P40       = 0x03,
-    SST_25VF010A    = 0x01,
-    ATMEL_25F512    = 0x02,
-    INTERNAL_FLASH  = 0x08,
+    ST_M25P05_A     = 0x04,     /* NXP_zigbee外扩SPI_FLASH */
+    ST_M25P10_A     = 0x00,     /* NXP_zigbee外扩SPI_FLASH */
+    ST_M25P20_A     = 0x05,     /* NXP_zigbee外扩SPI_FLASH */
+    ST_M25P40       = 0x03,     /* NXP_zigbee外扩SPI_FLASH */
+    SST_25VF010A    = 0x01,     /* NXP_zigbee外扩SPI_FLASH */
+    ATMEL_25F512    = 0x02,     /* NXP_zigbee外扩SPI_FLASH */
+    INTERNAL_FLASH  = 0x08,     /* NXP_zigbee内部SPI_FLASH */
 };
 
 
 enum {
-    NXP_BAND_1M     = 0x01,     /* 1000000 bps */
-    NXP_BAND_500K   = 0x02,     /* 500000 bps */
-    NXP_BAND_115200 = 0x09,     /* 115200 bps */
-    NXP_BAND_38400  = 0x26,     /* 38400 bps */
+    NXP_BAND_1M     = 0x01,     /* 设置波特率：1000000 bps */
+    NXP_BAND_500K   = 0x02,     /* 设置波特率：500000 bps */
+    NXP_BAND_115200 = 0x09,     /* 设置波特率：115200 bps */
+    NXP_BAND_38400  = 0x26,     /* 设置波特率：38400 bps */
 };
 
 
@@ -110,7 +110,7 @@ __packed typedef struct {
     uint16_t fm_buff_dl_pack_size;  /* 本次下载固件的字节数 */
     uint8_t state;
 
-#define DL_ACK_TIMER_MAX    10      /* 回复时间最大500ms */
+#define DL_ACK_TIMER_MAX    10      /* 回复时间不能超过500ms */
     uint8_t dl_ack_timer;           /* 下载一个包，等待回复计时 */
 }NXP_DOWNLOAD_S;
 
@@ -461,7 +461,10 @@ uint16_t get_one_sector_firmware_from_spi_flash(void)
     spi_flash_buffer_read(fm_buff, nxp_dl.fm_src_addr, size);
     nxp_dl.fm_src_addr += size;
 
-    //LOGA("get_one_sector_firmware_from_spi_flash,addr = 0x%08x, size = %d \r\n", nxp_dl.fm_src_addr, size);
+    #if 0
+    LOGA("get_one_sector_firmware_from_spi_flash, addr = 0x%08x, size = %d",
+        nxp_dl.fm_src_addr, size);
+    #endif
 
     return size;
 }
@@ -487,41 +490,6 @@ uint8_t check_firmware_buff(void)
     return TRUE;
 }
 
-#if 0
-/**
-  * @brief  读取一个包的FLASH，一个包是128byte
-  * @param  None
-  * @retval None
-  */
-void nxp_download_read_one_pack(uint32_t addr)
-{
-    memset(&handle_tx, 0x00, sizeof(handle_tx));
-    handle_tx.len = 0;
-    handle_tx.buff[handle_tx.len++] = 0x00; /* 最后确定长度 */
-    handle_tx.buff[handle_tx.len++] = E_NXP_FLASH_READ_REQUEST;
-    handle_tx.buff[handle_tx.len++] = (uint8_t)(addr >> 0);
-    handle_tx.buff[handle_tx.len++] = (uint8_t)(addr >> 8);
-    handle_tx.buff[handle_tx.len++] = (uint8_t)(addr >> 16);
-    handle_tx.buff[handle_tx.len++] = (uint8_t)(addr >> 24);
-    handle_tx.buff[handle_tx.len++] = (uint8_t)(DOWNLOAD_ONE_PACK_MAX_SIZE >> 0);
-    handle_tx.buff[handle_tx.len++] = (uint8_t)(DOWNLOAD_ONE_PACK_MAX_SIZE >> 8);
-    
-    handle_tx.buff[0] = handle_tx.len;      /* 确定长度 */
-    handle_tx_get_check_sum(&handle_tx);
-
-    if (FALSE == send_pack_to_nxp(TRUE)) {
-        uint8_t response = nxp_protocol.buff[0];
-
-        if (0 == response) {    /* 0x00表示成功 */
-            /* 修改自己的串口波特率 */
-            //PRINTF("nxp_download_read_one_pack \r\n");
-        } else {
-            /* 失败处理 */
-            //ERR("nxp_download_read_one_pack fail \r\n");
-        }
-    }
-}
-#endif
 
 /**
   * @brief  NXP_ZIGBEE下载第一包
@@ -550,7 +518,9 @@ void nxp_download_first_pack(void)
     } else {
         nxp_dl.fm_buff_dl_pack_size = nxp_dl.fm_size - nxp_dl.fm_dl_count;
     }
-    memcpy(&handle_tx.buff[handle_tx.len], &fm_buff[nxp_dl.fm_buff_dl_count], nxp_dl.fm_buff_dl_pack_size);
+    memcpy(&handle_tx.buff[handle_tx.len],
+            &fm_buff[nxp_dl.fm_buff_dl_count],
+            nxp_dl.fm_buff_dl_pack_size);
     handle_tx.len += nxp_dl.fm_buff_dl_pack_size;
     
     handle_tx.buff[0] = handle_tx.len;      /* 确定长度 */
@@ -681,13 +651,41 @@ static void nxp_set_mcu_run(void)
 
 
 /**
+  * @brief  查询是否需要下载，来自两个方面：按键按下或是定时自动下载
+  * @param  None
+  * @retval None
+  */
+uint8_t nxp_wait_for_command(void)
+{
+    uint8_t rtn = FALSE;
+    uint8_t event;
+
+    if (TRUE == QUEUE_OUT(button_queue, event)) {
+        /* 有按键，才下载 */
+        if (ENB_SINGLE_CLICK == event) {
+            if (E_NXP_WAITING == nxp_state) {
+                /* 如果正在下载时候，按下载按键，这个时候会忽略这次按键，
+                    只有空闲时候按下按键才会进入下载 */
+                rtn = TRUE;
+            } else {
+                //PRINTF("download busy... \r\n");
+            }
+        }
+    }
+
+    return rtn;
+}
+
+
+/**
   * @brief  NXP_ZIGBEE下载任务
   * @param  None
   * @retval None
   */
 void nxp_task(void)
 {
-    //PRINTF("nxp_task \r\n");
+    uint8_t cmd = nxp_wait_for_command();
+
     switch (nxp_state) {
         case E_NXP_NULL: {
             nxp_state = E_NXP_WAITING;
@@ -695,20 +693,16 @@ void nxp_task(void)
         //break;    /* 这里就不用break了，直接进入下一个状态，节省20ms */
 
         case E_NXP_WAITING: {
-            uint8_t event;
-            if (TRUE == QUEUE_OUT(button_queue, event)) {
-                /* 有按键，才下载 */
-                if (ENB_SINGLE_CLICK == event) {
-                    if (TRUE == check_program_ok()) {
-                        memset(&nxp_dl, 0x00, sizeof(nxp_dl));
-                        download_uart_init(DOWNLOAD_USART_BAUDRATE_1);
-                        nxp_state = E_NXP_RESET_ING;
-                    } else {
-                        /* 提示没有有效的配置，下载失败 */
-                        if (TRUE == nxp_dbg_en) {
-                            nxp_dl_fail = TRUE;
-                            ERR("check_program_ok fail \r\n");
-                        }
+            if (TRUE == cmd) {
+                if (TRUE == check_program_ok()) {
+                    memset(&nxp_dl, 0x00, sizeof(nxp_dl));
+                    download_uart_init(DOWNLOAD_USART_BAUDRATE_1);
+                    nxp_state = E_NXP_RESET_ING;
+                } else {
+                    /* 提示没有有效的配置，下载失败 */
+                    if (TRUE == nxp_dbg_en) {
+                        nxp_dl_fail = TRUE;
+                        ERR("check_program_ok fail \r\n");
                     }
                 }
             }
@@ -839,7 +833,7 @@ void nxp_task(void)
                     nxp_state = E_NXP_FLASH_ERASE_ALL;
                     /* 修改自己的串口波特率 */
                     download_uart_init(DOWNLOAD_USART_BAUDRATE_2);
-                    os_timer_set(T_20MS);   /* NXP_ZIGBEE修改波特率后，等待20ms */
+                    os_timer_set(T_20MS);   /* NXP_ZIGBEE修改波特率后等待20ms */
                     if (TRUE == nxp_dbg_en) {
                         PRINTF("E_NXP_SET_BAND_1M \r\n");
                     }
@@ -996,4 +990,4 @@ void nxp_task(void)
 }
 
 
-/*********************************************END OF FILE**********************/
+/*********************************************END OF FILE*********************/
