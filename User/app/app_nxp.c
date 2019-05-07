@@ -737,6 +737,7 @@ void nxp_task(void)
             if (TRUE == cmd) {
                 if (TRUE == check_program_ok()) {
                     memset(&nxp_dl, 0x00, sizeof(nxp_dl));
+                    memset(&handle_rx, 0x00, sizeof(handle_rx));
                     download_uart_init(DOWNLOAD_USART_BAUDRATE_1);
                     nxp_state = E_NXP_RESET_ING;
                 } else {
