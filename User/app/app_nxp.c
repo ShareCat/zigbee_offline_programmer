@@ -81,7 +81,7 @@ const NXP_CHIP_S nxp_chip[NXP_CHIP_MAX] = {   /* 芯片ID，命令0x32查询 */
         0x04,
         NXP_JN5139,
         512*1024    /* 不知道多少，先写个512kbyte */
-    },
+    }
 
 };
 
@@ -109,7 +109,7 @@ __packed typedef struct {
     uint16_t fm_buff_dl_pack_size;  /* 本次下载固件的字节数 */
     uint8_t state;
 
-#define DL_ACK_TIMER_MAX    2       /* 回复时间最大20ms */
+#define DL_ACK_TIMER_MAX    10      /* 回复时间最大500ms */
     uint8_t dl_ack_timer;           /* 下载一个包，等待回复计时 */
 }NXP_DOWNLOAD_S;
 
@@ -294,6 +294,63 @@ uint8_t nxp_rx_handle(void)
 
 
 /**
+  * @brief  回复超时时间计时
+  * @param  None
+  * @retval None
+  */
+void download_ack_time_run(void)
+{
+    nxp_dl.dl_ack_timer++;
+}
+
+
+/**
+  * @brief  普通定时器，50ms被调度器调度一次
+  * @param  None
+  * @retval None
+  */
+void normal_timer_50ms(void)
+{
+    download_ack_time_run();
+}
+
+
+/**
+  * @brief  复位状态
+  * @param  None
+  * @retval None
+  */
+void nxp_state_reset_from_err(void)
+{
+    memset(&nxp_dl, 0x00, sizeof(nxp_dl));
+    memset(&handle_rx, 0x00, sizeof(handle_rx));
+    nxp_state = E_NXP_NULL;
+    buzzer_notice_fail();
+}
+
+
+/**
+  * @brief  等待NXP_ZIGBEE的回复包超时检测
+  * @param  None
+  * @retval TRUE表示超时
+  */
+uint8_t download_ack_time_check(void)
+{
+    uint8_t err = FALSE;
+
+    if (nxp_dl.dl_ack_timer > DL_ACK_TIMER_MAX) {
+        /* 下载失败，原因是没有回复 */
+        if (TRUE == nxp_dbg_en) {
+            ERR("download_ack_time_check no ack \r\n");
+        }
+        err = TRUE;
+    }
+
+    return err;
+}
+
+
+/**
   * @brief  等待NXP_ZIGBEE的回复包
   * @param  None
   * @retval None
@@ -304,6 +361,10 @@ uint8_t wait_pack_from_nxp(void)
 
     while(0 == handle_rx.len) {
         /* 计时 */
+        if (TRUE == download_ack_time_check()) {
+            nxp_state_reset_from_err();
+            break;
+        }
     }
 
     if (handle_rx.len) {
@@ -334,6 +395,7 @@ uint8_t send_pack_to_nxp(uint8_t wait)
     uint8_t err = TRUE;
 
     download_usart_dma_tx(handle_tx.buff, handle_tx.len + 1);
+    nxp_dl.dl_ack_timer = 0;
 
     if (FALSE != wait) {    /* 需要等待结果 */
         err = wait_pack_from_nxp();
@@ -506,9 +568,9 @@ void nxp_download_other_pack(void)
 {
     uint8_t err = FALSE;
 
-    if (nxp_state != E_NXP_DOWNLOAD_OTHER_PACK) return;
-
     nxp_dl.dl_ack_timer = 0;
+
+    if (nxp_state != E_NXP_DOWNLOAD_OTHER_PACK) return;
 
     if (FALSE == wait_pack_from_nxp()) {
         uint8_t response = nxp_protocol.buff[0];
@@ -563,6 +625,7 @@ void nxp_download_other_pack(void)
     if (TRUE == err) {
         /* 出错处理，是否重发这个包？ */
         ERRA("pack[%d] download fail \r\n", nxp_dl.fm_buff_dl_count);
+        nxp_state_reset_from_err();
     }
 }
 
@@ -696,22 +759,26 @@ void nxp_task(void)
                                 PRINTF("GET_CHIP_ID: %s \r\n",
                                     nxp_chip_now->name);
                             }
+                            nxp_state = E_NXP_SELECT_INTERNAL_FLASH;
                         } else {
                             /* 失败处理 */
-                            buzzer_notice_fail();
-                            nxp_state = E_NXP_NULL;
+                            nxp_state_reset_from_err();
                             if (TRUE == nxp_dbg_en) {
                                 ERR("GET_CHIP_ID dont match \r\n");
                             }
                         }
-                        nxp_state = E_NXP_SELECT_INTERNAL_FLASH;
                     } else {
                         /* 失败处理 */
-                        buzzer_notice_fail();
-                        nxp_state = E_NXP_NULL;
+                        nxp_state_reset_from_err();
                         if (TRUE == nxp_dbg_en) {
                             ERR("GET_CHIP_ID no response \r\n");
                         }
+                    }
+                } else {
+                    /* 失败处理 */
+                    nxp_state_reset_from_err();
+                    if (TRUE == nxp_dbg_en) {
+                        ERR("GET_CHIP_ID send no response \r\n");
                     }
                 }
             }
@@ -741,11 +808,16 @@ void nxp_task(void)
                     }
                 } else {
                     /* 失败处理 */
-                    buzzer_notice_fail();
-                    nxp_state = E_NXP_NULL;
+                    nxp_state_reset_from_err();
                     if (TRUE == nxp_dbg_en) {
                         ERR("E_NXP_SELECT_INTERNAL_FLASH fail \r\n");
                     }
+                }
+            } else {
+                /* 失败处理 */
+                nxp_state_reset_from_err();
+                if (TRUE == nxp_dbg_en) {
+                    ERR("E_NXP_SELECT_INTERNAL_FLASH send fail \r\n");
                 }
             }
         }
@@ -773,11 +845,16 @@ void nxp_task(void)
                     }
                 } else {
                     /* 失败处理 */
-                    buzzer_notice_fail();
-                    nxp_state = E_NXP_NULL;
+                    nxp_state_reset_from_err();
                     if (TRUE == nxp_dbg_en) {
                         ERR("E_NXP_SET_BAND_1M fail \r\n");
                     }
+                }
+            } else {
+                /* 失败处理 */
+                nxp_state_reset_from_err();
+                if (TRUE == nxp_dbg_en) {
+                    ERR("E_NXP_SET_BAND_1M send fail \r\n");
                 }
             }
         }
@@ -813,10 +890,9 @@ void nxp_task(void)
                     }
                 } else {
                     /* 擦除失败处理 */
-                    buzzer_notice_fail();
-                    nxp_state = E_NXP_NULL;
+                    nxp_state_reset_from_err();
                     if (TRUE == nxp_dbg_en) {
-                        ERR("E_NXP_FLASH_ERASE_ALL fail \r\n");
+                        ERR("E_NXP_FLASH_ERASE_ALL_ACK send fail \r\n");
                     }
                 }
             }
@@ -849,11 +925,16 @@ void nxp_task(void)
                     }
                 } else {
                     /* 失败处理 */
-                    buzzer_notice_fail();
-                    nxp_state = E_NXP_NULL;
+                    nxp_state_reset_from_err();
                     if (TRUE == nxp_dbg_en) {
                         ERR("E_NXP_FLASH_HEADER_CHECK fail \r\n");
                     }
+                }
+            } else {
+                /* 失败处理 */
+                nxp_state_reset_from_err();
+                if (TRUE == nxp_dbg_en) {
+                    ERR("E_NXP_FLASH_HEADER_CHECK send fail \r\n");
                 }
             }
         }
@@ -870,6 +951,10 @@ void nxp_task(void)
                 /* 下载完成 */
                 nxp_download_process_view();
                 nxp_state = E_NXP_DOWNLOAD_OK;
+            } else {
+                if (TRUE == download_ack_time_check()) {
+                    nxp_state_reset_from_err();
+                }
             }
         }
         break;

@@ -96,7 +96,7 @@ enum {  /* message_type */
 
 
 __packed typedef struct {
-#define NXP_CHIP_MAX        10
+#define NXP_CHIP_MAX        4
 #define NXP_CHIP_ID_LEN_MAX 9
     uint8_t id[NXP_CHIP_ID_LEN_MAX];
     uint8_t id_len;
