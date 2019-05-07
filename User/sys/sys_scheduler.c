@@ -301,9 +301,6 @@ void os_start(volatile OS_TASK_S *ptask)
     WATCH_DOG_INIT();
 
     while(1) {
-        normal_timer_50ms_handle(&normal_timers);
-        normal_timer_500ms_handle(&normal_timers);
-
         for(i = 0; i < OS_MAX_TASKS; i++) {
             if(TRUE == ptask[i].ready_flag) {
                 ptask[i].ready_flag = FALSE;
@@ -356,6 +353,9 @@ void os_interrupt_handle(volatile OS_TASK_S *ptask)
             normal_timers.cnt_500ms = 0;
             normal_timers.flag_500ms = TRUE;
         }
+
+        normal_timer_50ms_handle(&normal_timers);
+        normal_timer_500ms_handle(&normal_timers);
     }
 
     /* 系统任务调度 */
