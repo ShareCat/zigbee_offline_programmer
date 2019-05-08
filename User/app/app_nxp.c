@@ -774,7 +774,7 @@ void nxp_task(void)
                 nxp_reset_ctrl(ENABLE);
                 nxp_do1_ctrl(DISABLE);
                 os_timer_set(T_200MS);  /* 建议200ms */
-                nxp_state = E_NXP_GET_CHIP_ID;
+                nxp_state = E_NXP_READ_MAC;
                 if (TRUE == nxp_dbg_en) {
                     PRINTF("E_NXP_RESET_OK \r\n");
                 }
@@ -782,47 +782,95 @@ void nxp_task(void)
         }
         break;
 
-        case E_NXP_GET_CHIP_ID: {
+        case E_NXP_READ_MAC: {
             if (!os_timer_check()) {
                 memset(&handle_tx, 0x00, sizeof(handle_tx));
                 handle_tx.len = 0;
                 handle_tx.buff[handle_tx.len++] = 0x00; /* 最后确定长度 */
-                handle_tx.buff[handle_tx.len++] = E_NXP_GET_CHIP_ID_REQUEST;
+                handle_tx.buff[handle_tx.len++] = E_NXP_RAM_READ_REQUEST;
+                /* 内存地址，LSB first */
+                handle_tx.buff[handle_tx.len++] = (uint8_t)(NXP_MAC_ADDR >> 0);;
+                handle_tx.buff[handle_tx.len++] = (uint8_t)(NXP_MAC_ADDR >> 8);;
+                handle_tx.buff[handle_tx.len++] = (uint8_t)(NXP_MAC_ADDR >> 16);
+                handle_tx.buff[handle_tx.len++] = (uint8_t)(NXP_MAC_ADDR >> 24);
+                /* 读取字节数，LSB first */
+                handle_tx.buff[handle_tx.len++] = NXP_MAC_LEN;
+                handle_tx.buff[handle_tx.len++] = 0;
+
                 handle_tx.buff[0] = handle_tx.len;      /* 确定长度 */
                 handle_tx_get_check_sum(&handle_tx);
 
                 if (FALSE == send_pack_to_nxp(TRUE)) {
                     uint8_t response = nxp_protocol.buff[0];
-                    uint8_t *chip_id_addr = nxp_protocol.buff + 1;
+                    uint8_t *p_mac = nxp_protocol.buff + 1;
 
                     if (0 == response) {    /* 0x00表示成功 */
-                        nxp_chip_now = find_chip_id(chip_id_addr);
-                        if (0 != nxp_chip_now) {
-                            if (TRUE == nxp_dbg_en) {
-                                PRINTF("GET_CHIP_ID: %s \r\n",
-                                    nxp_chip_now->name);
+                        if (TRUE == nxp_dbg_en) {
+                            uint8_t i;
+                            PRINTF("chip MAC: ");
+                            for (i = 0; i < NXP_MAC_LEN; i++) {
+                                PRINTF("%02x ", p_mac[i]);
                             }
-                            nxp_state = E_NXP_SELECT_INTERNAL_FLASH;
-                        } else {
-                            /* 失败处理 */
-                            nxp_dl_fail = TRUE;
-                            if (TRUE == nxp_dbg_en) {
-                                ERR("GET_CHIP_ID dont match \r\n");
-                            }
+                            NL1();
                         }
+                        nxp_state = E_NXP_GET_CHIP_ID;
                     } else {
                         /* 失败处理 */
                         nxp_dl_fail = TRUE;
                         if (TRUE == nxp_dbg_en) {
-                            ERR("GET_CHIP_ID no response \r\n");
+                            ERR("E_NXP_READ_MAC no response \r\n");
                         }
                     }
                 } else {
                     /* 失败处理 */
                     nxp_dl_fail = TRUE;
                     if (TRUE == nxp_dbg_en) {
-                        ERR("GET_CHIP_ID send no response \r\n");
+                        ERR("E_NXP_READ_MAC send no response \r\n");
                     }
+                }
+            }
+        }
+        break;
+
+        case E_NXP_GET_CHIP_ID: {
+            memset(&handle_tx, 0x00, sizeof(handle_tx));
+            handle_tx.len = 0;
+            handle_tx.buff[handle_tx.len++] = 0x00; /* 最后确定长度 */
+            handle_tx.buff[handle_tx.len++] = E_NXP_GET_CHIP_ID_REQUEST;
+            handle_tx.buff[0] = handle_tx.len;      /* 确定长度 */
+            handle_tx_get_check_sum(&handle_tx);
+
+            if (FALSE == send_pack_to_nxp(TRUE)) {
+                uint8_t response = nxp_protocol.buff[0];
+                uint8_t *chip_id_addr = nxp_protocol.buff + 1;
+
+                if (0 == response) {    /* 0x00表示成功 */
+                    nxp_chip_now = find_chip_id(chip_id_addr);
+                    if (0 != nxp_chip_now) {
+                        if (TRUE == nxp_dbg_en) {
+                            PRINTF("E_NXP_GET_CHIP_ID: %s \r\n",
+                                nxp_chip_now->name);
+                        }
+                        nxp_state = E_NXP_SELECT_INTERNAL_FLASH;
+                    } else {
+                        /* 失败处理 */
+                        nxp_dl_fail = TRUE;
+                        if (TRUE == nxp_dbg_en) {
+                            ERR("E_NXP_GET_CHIP_ID dont match \r\n");
+                        }
+                    }
+                } else {
+                    /* 失败处理 */
+                    nxp_dl_fail = TRUE;
+                    if (TRUE == nxp_dbg_en) {
+                        ERR("E_NXP_GET_CHIP_ID no response \r\n");
+                    }
+                }
+            } else {
+                /* 失败处理 */
+                nxp_dl_fail = TRUE;
+                if (TRUE == nxp_dbg_en) {
+                    ERR("E_NXP_GET_CHIP_ID send no response \r\n");
                 }
             }
         }

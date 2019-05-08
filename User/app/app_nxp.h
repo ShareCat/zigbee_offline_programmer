@@ -37,11 +37,17 @@ extern uint8_t cli_nxp(void *para, uint8_t len);
 
 
 enum {
+#define NXP_CUSTOM_MAC_ADDR 0x01001570  /* For OTP via Flash Programmer */
+#define NXP_MAC_ADDR        0x01001580  /* mac address的地址 */
+#define NXP_MAC_LEN         8           /* mac address的字节数 */
+
     E_NXP_NULL,                 /* 空闲状态 */
     E_NXP_WAITING,              /* 等待下载按键按下，或是自动下载倒计时 */
     E_NXP_RESET_ING,            /* 复位NXP_ZIGBEE */
     E_NXP_RESET_OK,             /* 复位成功 */
-    E_NXP_GET_CHIP_ID,          /* 复位完成后过100ms，zigbee是38400bsp */
+    //E_NXP_READ_CUSTOM_MAC,      /* For OTP via Flash Programmer */
+    E_NXP_READ_MAC,             /* 读取mac address */
+    E_NXP_GET_CHIP_ID,          /* 复位完成后过100ms，zigbee串口是38400bsp */
     E_NXP_SELECT_INTERNAL_FLASH,/* 选择内部FLASH下载 */
     E_NXP_SET_BAND_1M,          /* 将波特率设置成1M，准备下载 */
     E_NXP_FLASH_ERASE_ALL,      /* 擦除全部FLASH */
