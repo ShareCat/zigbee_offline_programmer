@@ -715,7 +715,7 @@ uint8_t nxp_wait_for_command(void)
     }
 
     if (TRUE == rtn) {
-        if (FALSE == check_program_ok()) {
+        if (FALSE == check_program_condition()) {
             /* 蜂鸣器短三声，提示没有有效的配置，下载失败 */
             buzzer_notice_invalid_config();
             if (TRUE == nxp_auto.enable) {

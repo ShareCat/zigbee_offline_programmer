@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Wed May 08 11:17:58 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Wed May 08 11:44:38 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1216 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2942,7 +2942,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[20a]"></a>get_config_info_state</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, app_fatfs.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_program_ok
+<BR><BR>[Called By]<UL><LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_program_condition
 </UL>
 
 <P><STRONG><a name="[24b]"></a>get_config_info_mcu_run_after_program</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, app_fatfs.o(.text))
@@ -2958,11 +2958,11 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[20b]"></a>config_info_max_program_check</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, app_fatfs.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_program_ok
+<BR><BR>[Called By]<UL><LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_program_condition
 </UL>
 
-<P><STRONG><a name="[209]"></a>check_program_ok</STRONG> (Thumb, 32 bytes, Stack size 4 bytes, app_fatfs.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = check_program_ok
+<P><STRONG><a name="[209]"></a>check_program_condition</STRONG> (Thumb, 32 bytes, Stack size 4 bytes, app_fatfs.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = check_program_condition
 </UL>
 <BR>[Calls]<UL><LI><a href="#[20b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_max_program_check
 <LI><a href="#[20a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_config_info_state
@@ -3345,7 +3345,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_out
 <LI><a href="#[249]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_notice_invalid_config
-<LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_program_ok
+<LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_program_condition
 <LI><a href="#[248]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_config_info_auto_program_time
 <LI><a href="#[247]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_config_info_auto_program_control
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
@@ -5773,8 +5773,8 @@ Local Symbols
 <LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_max_program_handle_after_program
 </UL>
 
-<P><STRONG><a name="[215]"></a>config_info_check</STRONG> (Thumb, 920 bytes, Stack size 56 bytes, app_fatfs.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = config_info_check &rArr; fatfs_file_check &rArr; f_stat &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
+<P><STRONG><a name="[215]"></a>config_info_check</STRONG> (Thumb, 1006 bytes, Stack size 64 bytes, app_fatfs.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1024<LI>Call Chain = config_info_check &rArr; fatfs_file_check &rArr; f_stat &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fatfs_file_check
 <LI><a href="#[203]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_config_info_check_sum
@@ -5823,7 +5823,7 @@ Local Symbols
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_file_handle
 </UL>
 
-<P><STRONG><a name="[21a]"></a>fatfs_mount</STRONG> (Thumb, 484 bytes, Stack size 8 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[21a]"></a>fatfs_mount</STRONG> (Thumb, 492 bytes, Stack size 8 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 336<LI>Call Chain = fatfs_mount &rArr; f_mount &rArr; find_volume &rArr; check_fs &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_mkfs

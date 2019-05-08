@@ -31,7 +31,7 @@ extern uint8_t cli_fatfs(void *para, uint8_t len);
 #endif
 
 
-extern uint8_t check_program_ok(void);
+extern uint8_t check_program_condition(void);
 extern uint32_t get_config_info_file_size(void);
 extern uint8_t get_config_info_state(void);
 extern uint8_t get_config_info_mcu_run_after_program(void);

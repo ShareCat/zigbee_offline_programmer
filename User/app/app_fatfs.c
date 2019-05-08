@@ -294,7 +294,7 @@ uint8_t config_info_max_program_check()
   * @param  无
   * @retval TRUE满足条件，可以进行烧录
   */
-uint8_t check_program_ok(void)
+uint8_t check_program_condition(void)
 {
     uint8_t temp1 = FALSE;
     uint8_t temp2 = FALSE;
@@ -920,6 +920,7 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
 {
     uint8_t len;
     uint8_t err;
+    uint32_t temp_flash_size;
     FILINFO fno;
 
     extern uint8_t fm_buff[];
@@ -937,6 +938,8 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
             if (0 == memcmp(p_cfg->chip_name, nxp_chip[len].name, strlen(nxp_chip[len].name))) {
                 /* 芯片型号合法 */
                 err = FALSE;
+                /* 记录该芯片FLASH大小 */
+                temp_flash_size = nxp_chip[len].flash_size;
                 break;
             }
         }
@@ -963,7 +966,14 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
         memcpy(&temp_dir[2], p_cfg->file_name, len);
         if (FR_OK == fatfs_file_check((const char *)temp_dir, &fno)) {
             /* 升级固件存在，还需要判断固件大小是否超出芯片FLASH范围 */
-            p_cfg->file_size = fno.fsize;
+            if (temp_flash_size < fno.fsize) {
+                /* 升级固件太大，超出芯片内部FLASH大小 */
+                ERRA("p_cfg->file_name size: %d > %d \r\n",
+                    fno.fsize, temp_flash_size);
+                p_cfg->file_name_set_flag = FALSE;
+            } else {
+                p_cfg->file_size = fno.fsize;
+            }
         } else {
             /* 升级固件不存在 */
             ERR("p_cfg->file_name err \r\n");
