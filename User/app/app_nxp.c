@@ -993,7 +993,12 @@ void nxp_task(void)
             if (nxp_dl.fm_size == nxp_dl.fm_dl_count) {
                 /* 下载完成 */
                 nxp_download_process_view();
-                nxp_state = E_NXP_DOWNLOAD_OK;
+                if (TRUE == get_config_info_mcu_run_after_program()) {
+                    /* 下载完成后，设置MCU运行 */
+                    nxp_state = E_NXP_SET_MCU_RUN;
+                } else {
+                    nxp_state = E_NXP_DOWNLOAD_OK;
+                }
             } else {
                 if (TRUE == download_ack_time_check()) {
                     nxp_dl_fail = TRUE;
@@ -1002,11 +1007,18 @@ void nxp_task(void)
         }
         break;
 
+        case E_NXP_CODE_READ_PROTECT: {
+            /* 设置固件读保护 */
+        }
+        break;
+
+        case E_NXP_SET_MCU_RUN: {
+            nxp_set_mcu_run();
+            nxp_state = E_NXP_DOWNLOAD_OK;
+        }
+        break;
+
         case E_NXP_DOWNLOAD_OK: {
-            if (TRUE == get_config_info_mcu_run_after_program()) {
-                /* 下载完成后，设置MCU运行 */
-                nxp_set_mcu_run();
-            }
             /* 更新剩余烧录次数 */
             config_info_max_program_handle_after_program();
             /* 蜂鸣器短一声，提示下载成功 */

@@ -49,6 +49,8 @@ enum {
     E_NXP_FLASH_HEADER_CHECK,   /* 检测FLASH_HEADER来判断擦除全部FLASH是否成功 */
     E_NXP_DOWNLOAD_FIRST_PACK,  /* 开始下载固件第一个包 */
     E_NXP_DOWNLOAD_OTHER_PACK,  /* 下载固件剩下的包 */
+    E_NXP_CODE_READ_PROTECT,    /* 设置固件读保护 */
+    E_NXP_SET_MCU_RUN,          /* 设置MCU运行 */
     E_NXP_DOWNLOAD_OK,          /* 下载固件成功 */
 };
 
