@@ -920,7 +920,6 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
 {
     uint8_t len;
     uint8_t err;
-    uint32_t temp_flash_size;
     FILINFO fno;
 
     extern uint8_t fm_buff[];
@@ -939,7 +938,7 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
                 /* 芯片型号合法 */
                 err = FALSE;
                 /* 记录该芯片FLASH大小 */
-                temp_flash_size = nxp_chip[len].flash_size;
+                p_cfg->file_size = nxp_chip[len].flash_size;
                 break;
             }
         }
@@ -966,10 +965,10 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
         memcpy(&temp_dir[2], p_cfg->file_name, len);
         if (FR_OK == fatfs_file_check((const char *)temp_dir, &fno)) {
             /* 升级固件存在，还需要判断固件大小是否超出芯片FLASH范围 */
-            if (temp_flash_size < fno.fsize) {
+            if (p_cfg->file_size < fno.fsize) {
                 /* 升级固件太大，超出芯片内部FLASH大小 */
                 ERRA("p_cfg->file_name size: %d > %d \r\n",
-                    fno.fsize, temp_flash_size);
+                    fno.fsize, p_cfg->file_size);
                 p_cfg->file_name_set_flag = FALSE;
             } else {
                 p_cfg->file_size = fno.fsize;
