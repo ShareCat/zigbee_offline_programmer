@@ -37,6 +37,7 @@ extern QUEUE8_S buzzer_queue;
 
 extern void buzzer_notice_ok(void);
 extern void buzzer_notice_fail(void);
+extern void buzzer_notice_invalid_config(void);
 extern void buzzer_notice_config_ok(void);
 extern void buzzer_notice_config_fail(void);
 extern void buzzer_init(void);

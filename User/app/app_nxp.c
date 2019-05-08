@@ -714,6 +714,21 @@ uint8_t nxp_wait_for_command(void)
         }
     }
 
+    if (TRUE == rtn) {
+        if (FALSE == check_program_ok()) {
+            /* 蜂鸣器短三声，提示没有有效的配置，下载失败 */
+            buzzer_notice_invalid_config();
+            if (TRUE == nxp_auto.enable) {
+                /* 自动定时下载模式下，下载次数用完了，提示完后，关闭开关 */
+                nxp_auto.enable = FALSE;
+            }
+            rtn = FALSE;
+            if (TRUE == nxp_dbg_en) {
+                ERR("check_program_ok fail \r\n");
+            }
+        }
+    }
+
     return rtn;
 }
 
@@ -735,18 +750,10 @@ void nxp_task(void)
 
         case E_NXP_WAITING: {
             if (TRUE == cmd) {
-                if (TRUE == check_program_ok()) {
-                    memset(&nxp_dl, 0x00, sizeof(nxp_dl));
-                    memset(&handle_rx, 0x00, sizeof(handle_rx));
-                    download_uart_init(DOWNLOAD_USART_BAUDRATE_1);
-                    nxp_state = E_NXP_RESET_ING;
-                } else {
-                    /* 提示没有有效的配置，下载失败 */
-                    if (TRUE == nxp_dbg_en) {
-                        nxp_dl_fail = TRUE;
-                        ERR("check_program_ok fail \r\n");
-                    }
-                }
+                memset(&nxp_dl, 0x00, sizeof(nxp_dl));
+                memset(&handle_rx, 0x00, sizeof(handle_rx));
+                download_uart_init(DOWNLOAD_USART_BAUDRATE_1);
+                nxp_state = E_NXP_RESET_ING;
             }
         }
         break;

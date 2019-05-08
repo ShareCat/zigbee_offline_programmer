@@ -59,6 +59,21 @@ void buzzer_notice_fail(void)
 
 
 /**
+  * @brief  蜂鸣器短三声，提示没有有效的配置
+  * @param  null
+  * @retval null
+  */
+void buzzer_notice_invalid_config(void)
+{
+    uint8_t event = E_BUZZER_SHORT_SOUND;
+
+    QUEUE_IN(buzzer_queue, event);
+    QUEUE_IN(buzzer_queue, event);
+    QUEUE_IN(buzzer_queue, event);
+}
+
+
+/**
   * @brief  蜂鸣器长一声，提示配置成功
   * @param  null
   * @retval null
