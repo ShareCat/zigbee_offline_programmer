@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Thu May 09 17:02:30 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Thu May 09 17:17:12 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1184 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2437,7 +2437,8 @@ Global Symbols
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;follow_path
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_fileinfo
 </UL>
-<BR>[Called By]<UL><LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fatfs_file_check
+<BR>[Called By]<UL><LI><a href="#[216]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;err_file_delete
+<LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fatfs_file_check
 </UL>
 
 <P><STRONG><a name="[173]"></a>f_getfree</STRONG> (Thumb, 258 bytes, Stack size 56 bytes, ff.o(.text), UNUSED)
@@ -5806,10 +5807,11 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[219]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sprintf_buff_show
 </UL>
 
-<P><STRONG><a name="[216]"></a>err_file_delete</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, app_fatfs.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 968<LI>Call Chain = err_file_delete &rArr; f_unlink &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
+<P><STRONG><a name="[216]"></a>err_file_delete</STRONG> (Thumb, 56 bytes, Stack size 40 bytes, app_fatfs.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1000<LI>Call Chain = err_file_delete &rArr; f_unlink &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_unlink
+<LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_stat
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[219]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sprintf_buff_show
@@ -5823,7 +5825,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[220]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_file_handle
 </UL>
 
-<P><STRONG><a name="[218]"></a>sprintf_buff_add</STRONG> (Thumb, 82 bytes, Stack size 8 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[218]"></a>sprintf_buff_add</STRONG> (Thumb, 494 bytes, Stack size 8 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = sprintf_buff_add &rArr; __2sprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
@@ -5835,8 +5837,8 @@ Local Symbols
 <LI><a href="#[21a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_check
 </UL>
 
-<P><STRONG><a name="[219]"></a>sprintf_buff_show</STRONG> (Thumb, 496 bytes, Stack size 8 bytes, app_fatfs.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 984<LI>Call Chain = sprintf_buff_show &rArr; err_file_creat &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
+<P><STRONG><a name="[219]"></a>sprintf_buff_show</STRONG> (Thumb, 80 bytes, Stack size 8 bytes, app_fatfs.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1008<LI>Call Chain = sprintf_buff_show &rArr; err_file_delete &rArr; f_unlink &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[216]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;err_file_delete
 <LI><a href="#[215]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;err_file_creat
@@ -5868,7 +5870,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[21c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_firmware_backup_and_config_info
 </UL>
 
-<P><STRONG><a name="[21d]"></a>copy_firmware_to_backup</STRONG> (Thumb, 512 bytes, Stack size 48 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[21d]"></a>copy_firmware_to_backup</STRONG> (Thumb, 516 bytes, Stack size 48 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1008<LI>Call Chain = copy_firmware_to_backup &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_sector_erase

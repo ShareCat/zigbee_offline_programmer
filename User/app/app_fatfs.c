@@ -961,13 +961,16 @@ static void err_file_creat(void)
 static void err_file_delete(void)
 {
     FRESULT res_flash;  /* 文件操作结果 */
+    FILINFO fno;
 
-    res_flash = f_unlink(ERR_FILE_PATH);
+    res_flash = f_stat(ERR_FILE_PATH, &fno);
 
     if (res_flash == FR_OK) {
-        //PRINTF("err.txt file deleted \r\n");
-    } else {
-        ERR("err.txt file delete fail \r\n");
+        /* 文件存在才删除 */
+        res_flash = f_unlink(ERR_FILE_PATH);
+        if (res_flash != FR_OK) {
+            ERR("err.txt file delete fail \r\n");
+        }
     }
 }
 
