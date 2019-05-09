@@ -1202,7 +1202,7 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
     uint8_t err = FALSE;
     FRESULT res_flash;  /* 文件操作结果 */
     uint16_t i = 0;
-    char temp_dir[FILE_NAME_MAX + 3];
+    char *temp_dir = ReadBuffer;
     unsigned int rd_count = 0;
     unsigned int rd_once = 0;
     uint32_t fm_backup_addr = FM_BACKUP_SECTOR_START * FM_BACKUP_SECTOR_SIZE;
@@ -1211,7 +1211,7 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
     char *read_buff = (char *)fm_buff;   /* 减少stack的压力 */
     uint16_t read_buff_max = 4096;
 
-    memset(&temp_dir, 0x00, sizeof(temp_dir));
+    memset(temp_dir, 0x00, sizeof(ReadBuffer));
     memcpy(temp_dir, ROOT_PATH, 2);
     memcpy(&temp_dir[2], p_cfg->file_name, strlen(p_cfg->file_name));
 

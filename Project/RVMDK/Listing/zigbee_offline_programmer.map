@@ -967,9 +967,9 @@ Image Symbol Table
     config_info_save_to_database             0x0800e3a5   Thumb Code    22  app_fatfs.o(.text)
     config_info_check                        0x0800e3f1   Thumb Code  1010  app_fatfs.o(.text)
     firmware_backup_check                    0x0800e7e3   Thumb Code   162  app_fatfs.o(.text)
-    copy_firmware_to_backup                  0x0800e8a9   Thumb Code   322  app_fatfs.o(.text)
-    fatfs_unmount                            0x0800e9eb   Thumb Code    16  app_fatfs.o(.text)
-    fatfs_mount                              0x0800e9fb   Thumb Code   492  app_fatfs.o(.text)
+    copy_firmware_to_backup                  0x0800e8a9   Thumb Code   318  app_fatfs.o(.text)
+    fatfs_unmount                            0x0800e9e7   Thumb Code    16  app_fatfs.o(.text)
+    fatfs_mount                              0x0800e9f7   Thumb Code   496  app_fatfs.o(.text)
     .text                                    0x0800eec0   Section        0  app_button.o(.text)
     .text                                    0x0800f14c   Section        0  app_database.o(.text)
     .text                                    0x0800f304   Section        0  app_nxp.o(.text)
@@ -2120,7 +2120,7 @@ Image component sizes
        652        208          0          0        136       5725   app_button.o
        400         14          0          1         13       1833   app_buzzer.o
        440         46         72          0        204       7098   app_database.o
-      6344       2320        344         16       5060      16717   app_fatfs.o
+      6344       2324        344         16       5060      16685   app_fatfs.o
        276         18          0          2          0       1282   app_mass_storage.o
       5756       1520        151         13       4660      11543   app_nxp.o
        148          4          0          0          0       1301   bsp_button.o
@@ -2173,7 +2173,7 @@ Image component sizes
        288          0          0          0          0       1614   util.o
 
     ----------------------------------------------------------------------
-     68476       7156       6808        596      16976     607212   Object Totals
+     68476       7160       6808        596      16976     607180   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          4          0         14         12          3          0   (incl. Padding)
 
@@ -2246,9 +2246,9 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     73140       7288       6808        608      16976     604444   Grand Totals
-     73140       7288       6808        216      16976     604444   ELF Image Totals (compressed)
-     73140       7288       6808        216          0          0   ROM Totals
+     73140       7292       6808        608      16976     604412   Grand Totals
+     73140       7292       6808        216      16976     604412   ELF Image Totals (compressed)
+     73140       7292       6808        216          0          0   ROM Totals
 
 ==============================================================================
 
