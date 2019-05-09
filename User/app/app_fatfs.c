@@ -277,7 +277,7 @@ uint8_t get_config_info_auto_program_time(void)
   * @param  无
   * @retval 无
   */
-uint8_t config_info_max_program_check()
+uint8_t config_info_max_program_check(void)
 {
     uint8_t rtn = FALSE;
 
@@ -475,6 +475,8 @@ static void chip_name_handle(char* str, CONFIG_INFO_S *p_cfg)
     char *addr_2;
     uint8_t len;
 
+    if ((NULL == str) || (NULL == p_cfg)) return;
+
     PRINTF("chip_name_handle: %s \r\n", str);
 
     addr_1 = strstr((const char *)str, "\"");
@@ -516,6 +518,8 @@ static void file_name_handle(char* str, CONFIG_INFO_S *p_cfg)
     char *addr_2;
     uint8_t len;
 
+    if ((NULL == str) || (NULL == p_cfg)) return;
+
     PRINTF("file_name_handle: %s \r\n", str);
 
     addr_1 = strstr((const char *)str, "\"");
@@ -556,6 +560,8 @@ static void max_program_handle(char* str, CONFIG_INFO_S *p_cfg)
     char *addr_1;
     char *addr_2;
 
+    if ((NULL == str) || (NULL == p_cfg)) return;
+
     PRINTF("max_program_handle: %s \r\n", str);
 
     addr_1 = strstr((const char *)str, "\"");
@@ -595,6 +601,8 @@ static void verify_after_program_handle(char* str, CONFIG_INFO_S *p_cfg)
 {
     char *addr_1;
 
+    if ((NULL == str) || (NULL == p_cfg)) return;
+
     PRINTF("verify_after_program_handle: %s \r\n", str);
 
     addr_1 = strstr((const char *)str, "\"");
@@ -627,6 +635,8 @@ static void verify_after_program_handle(char* str, CONFIG_INFO_S *p_cfg)
 static void read_out_protection_handle(char* str, CONFIG_INFO_S *p_cfg)
 {
     char *addr_1;
+
+    if ((NULL == str) || (NULL == p_cfg)) return;
 
     PRINTF("read_out_protection_handle: %s \r\n", str);
 
@@ -661,6 +671,8 @@ static void mcu_run_after_program_handle(char* str, CONFIG_INFO_S *p_cfg)
 {
     char *addr_1;
 
+    if ((NULL == str) || (NULL == p_cfg)) return;
+
     PRINTF("mcu_run_after_program_handle: %s \r\n", str);
 
     addr_1 = strstr((const char *)str, "\"");
@@ -693,6 +705,8 @@ static void mcu_run_after_program_handle(char* str, CONFIG_INFO_S *p_cfg)
 static void auto_program_control_handle(char* str, CONFIG_INFO_S *p_cfg)
 {
     char *addr_1;
+
+    if ((NULL == str) || (NULL == p_cfg)) return;
 
     PRINTF("auto_program_control_handle: %s \r\n", str);
 
@@ -727,6 +741,8 @@ static void auto_program_time_handle(char* str, CONFIG_INFO_S *p_cfg)
 {
     char *addr_1;
     char *addr_2;
+
+    if ((NULL == str) || (NULL == p_cfg)) return;
 
     PRINTF("auto_program_time_handle: %s \r\n", str);
 
@@ -764,6 +780,8 @@ static void match_config_key_word(char *line, CONFIG_INFO_S *p_cfg)
     uint8_t i = 0;
     uint8_t num = sizeof(key_word_map) / sizeof(key_word_map[0]);
 
+    if ((NULL == line) || (NULL == p_cfg)) return;
+
     for (i = 0; i < num; i++) {
         if (NULL != strstr(line, key_word_map[i].key_word)) {
             //PRINTF("match_config_key_word = %d \r\n", i);
@@ -781,6 +799,8 @@ static void match_config_key_word(char *line, CONFIG_INFO_S *p_cfg)
   */
 static char *check_comment_line(char *line)
 {
+    if (NULL == line) return 0;
+
     /* 判断第一个字符是不是注释符号："#" */
     if ('#' == line[0]) {
         //PRINTF("comment line here: %s \r\n", line);
@@ -803,6 +823,8 @@ static uint8_t calc_config_info_check_sum(CONFIG_INFO_S *p_cfg)
     uint8_t *addr = (uint8_t *)p_cfg;
     uint8_t check_sum = 0;
 
+    if (NULL == p_cfg) return 0;
+
     for (i = 0; i < (sizeof(CONFIG_INFO_S) - 1); i++) {
         check_sum += addr[i];
     }
@@ -818,6 +840,8 @@ static uint8_t calc_config_info_check_sum(CONFIG_INFO_S *p_cfg)
   */
 static void config_info_print(CONFIG_INFO_S *p_cfg)
 {
+    if (NULL == p_cfg) return;
+
     NL1();
     DBG("--------------------begin");
     PRINTF("config_info.enable = %d \r\n", p_cfg->enable);
@@ -884,6 +908,8 @@ static void print_config_file_from_database(void)
   */
 static void config_info_save_to_database(CONFIG_INFO_S *p_cfg)
 {
+    if (NULL == p_cfg) return;
+
     extern void database_save(char *file_name, uint8_t *file_buff, uint32_t file_len);
     database_save(KW_CONFIG_INFO, (uint8_t *)p_cfg, sizeof(CONFIG_INFO_S));
 
@@ -1028,7 +1054,7 @@ static void sprintf_buff_show(void)
 /**
   * @brief  判断配置文件各个参数是否合法
   * @param  null
-  * @retval null
+  * @retval TRUE表示错误
   */
 static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
 {
@@ -1036,6 +1062,8 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
     uint8_t err;
     FILINFO fno;
     char *temp_dir = ReadBuffer;
+
+    if (NULL == p_cfg) return TRUE;
 
     memset(temp_dir, 0x00, sizeof(ReadBuffer));
 
@@ -1310,7 +1338,7 @@ void check_firmware_backup_and_config_info(void)
 /**
   * @brief  从fatfs文件系统读取升级固件并复制到固件备份区
   * @param  null
-  * @retval null
+  * @retval TRUE表示错误
   */
 static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
 {
@@ -1325,6 +1353,8 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
     extern uint8_t fm_buff[];
     char *read_buff = (char *)fm_buff;   /* 减少stack的压力 */
     uint16_t read_buff_max = 4096;
+
+    if (NULL == p_cfg) return TRUE;
 
     memset(temp_dir, 0x00, sizeof(ReadBuffer));
     memcpy(temp_dir, ROOT_PATH, 2);

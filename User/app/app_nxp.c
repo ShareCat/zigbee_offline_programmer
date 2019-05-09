@@ -200,6 +200,8 @@ uint8_t calc_check_sum(NXP_PROTOCOL_S *p_nxp)
     uint8_t i = 0;
     uint8_t sum = 0;
 
+    if (NULL == p_nxp) return sum;
+
     sum = sum ^ *(p_nxp->len);
     sum = sum ^ *(p_nxp->message_type);
 
@@ -219,6 +221,8 @@ uint8_t calc_check_sum(NXP_PROTOCOL_S *p_nxp)
   */
 void handle_tx_get_check_sum(HANDLE_TX_S *p_handle_tx)
 {
+    if (NULL == p_handle_tx) return;
+
     nxp_protocol.len = &p_handle_tx->buff[0];
     nxp_protocol.message_type = &p_handle_tx->buff[1];
     nxp_protocol.buff = &p_handle_tx->buff[2];
@@ -243,6 +247,8 @@ void nxp_init(void)
 
 void nxp_handle_rx_copy(uint8_t *buff, uint16_t len)
 {
+    if (NULL == buff) return;
+
     if ((len > 0) && (len < RX_BUFF_MAX)) {
         memcpy(handle_rx.buff, buff, len);
         handle_rx.len = len;
@@ -422,6 +428,8 @@ static const NXP_CHIP_S * find_chip_id(uint8_t *buff)
     const NXP_CHIP_S *p_nxp_chip = 0;
     uint8_t i;
 
+    if (NULL == buff) return 0;
+
     for (i = 0; i < NXP_CHIP_MAX; i++) {
         if (0 == memcmp(nxp_chip[i].id, buff, nxp_chip[i].id_len)) {
             p_nxp_chip = &nxp_chip[i];
@@ -442,6 +450,8 @@ static uint8_t flash_header_check_null(uint8_t *p_data)
 {
     uint8_t err = FALSE;
     uint8_t i;
+
+    if (NULL == p_data) return err;
 
     for (i = 0; i < FLASH_HEADER_LEN; i++) {
         if (0xff != p_data[i]) {
