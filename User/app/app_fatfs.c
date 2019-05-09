@@ -27,6 +27,7 @@
 #define APP_FATFS_DEBUG
 
 #define CONFIG_FILE_PATH    "1:config.txt"  /* 配置文件路径 */
+#define ERR_FILE_PATH       "1:err.txt"     /* 错误信息文件路径 */
 #define ROOT_PATH           "1:"            /* 根目录 */
 
 
@@ -912,13 +913,63 @@ uint16_t sprintf_index = 0;
 /* 用于调试，出错时打印出错信息，正确则不打印 */
 char sprintf_buff[SPRINTF_BUFF_LEN];
 char *config_err_code[] = {
-    "chip name not set or the length of name > 32  \r\n",
+    "chip name not set or the length of name > 32 \r\n",
     "chip name not support \r\n",
     "firmware file not found or the length of name > 64 \r\n",
     "firmware file oversize \r\n",
     "firmware file name not set \r\n",
     "config.txt file not found \r\n",
 };
+
+
+/**
+  * @brief  err.txt文件创建，用户可以打开看到具体错误列表
+  * @param  无
+  * @retval 无
+  */
+static void err_file_creat(void)
+{
+    FRESULT res_flash;  /* 文件操作结果 */
+    UINT fnum;          /* 文件成功读写数量 */
+
+    /* 打开文件，每次都以新建的形式打开，属性为可写 */
+    res_flash = f_open(&fnew, ERR_FILE_PATH, FA_CREATE_ALWAYS | FA_WRITE);
+
+    if (res_flash == FR_OK) {
+        /* 将指定存储区内容写入到文件内 */
+        res_flash = f_write(&fnew, sprintf_buff, strlen(sprintf_buff), &fnum);
+
+        if (res_flash == FR_OK) {
+            //PRINTF("file write bytes = %d \r\n", fnum);
+            //PRINTF("file write content: %s \r\n", sprintf_buff);
+        } else {
+            ERRA("err.txt file write fail：%d \r\n", res_flash);
+        }
+    } else {
+        ERR("err.txt file open/creat fail \r\n");
+    }
+    /* 不再读写，关闭文件 */
+    f_close(&fnew);
+}
+
+
+/**
+  * @brief  err.txt文件删除
+  * @param  无
+  * @retval 无
+  */
+static void err_file_delete(void)
+{
+    FRESULT res_flash;  /* 文件操作结果 */
+
+    res_flash = f_unlink(ERR_FILE_PATH);
+
+    if (res_flash == FR_OK) {
+        //PRINTF("err.txt file deleted \r\n");
+    } else {
+        ERR("err.txt file delete fail \r\n");
+    }
+}
 
 
 /**
@@ -957,13 +1008,17 @@ static void sprintf_buff_add(char *str)
   */
 static void sprintf_buff_show(void)
 {
-    ERR("--------------------begin");
-    /* sprintf_buff是否溢出，暂时没添加判断 */
     if (sprintf_index) {
+        /* 有错误，就创建err.txt文件，并列出错误列表 */
+        err_file_creat();
+
+        ERR("--------------------begin");
         PRINTF("%s", sprintf_buff);
+        ERR("--------------------end \r\n");
+    } else {
+        /* 没有错误，就删除err.txt文件 */
+        err_file_delete();
     }
-    sprintf_index = 0;
-    ERR("--------------------end \r\n");
 }
 
 
@@ -988,7 +1043,9 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
     if (TRUE == p_cfg->chip_name_set_flag) {
         /* 判断芯片型号是否合法 */
         for (len = 0; len < NXP_CHIP_MAX; len++) {
-            if (0 == memcmp(p_cfg->chip_name, nxp_chip[len].name, strlen(nxp_chip[len].name))) {
+            if ((0 == memcmp(p_cfg->chip_name, nxp_chip[len].name,
+                    strlen(nxp_chip[len].name)))
+                    && (strlen(p_cfg->chip_name) == strlen(nxp_chip[len].name))) {
                 /* 芯片型号合法 */
                 err = FALSE;
                 /* 记录该芯片FLASH大小 */
@@ -1398,12 +1455,13 @@ void config_file_handle(void)
         /* 蜂鸣器提示错误 */
         extern void buzzer_notice_config_fail(void);
         buzzer_notice_config_fail();
-        /* 提示错误类型 */
-        sprintf_buff_show();
     } else {
         extern void buzzer_notice_config_ok(void);
         buzzer_notice_config_ok();
     }
+
+    /* 提示错误类型 */
+    sprintf_buff_show();
 
     /* 不再使用文件系统，取消挂载文件系统 */
     fatfs_unmount();

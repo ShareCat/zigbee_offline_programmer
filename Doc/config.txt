@@ -8,7 +8,7 @@
 #                                                           #
 #############################################################
 
-# Chip Name: [NXP_JN5169], [NXP_JN5168]
+# Chip Name: [NXP_JN5169], [NXP_JN5168], [NXP_JN5148], [NXP_JN5142], [NXP_JN5139]
 CHIP_NAME  = "NXP_JN5169"
 
 # Upgrade File Name
