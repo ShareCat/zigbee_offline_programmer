@@ -324,16 +324,18 @@ static FRESULT fatfs_file_check(const char *fpath, FILINFO *fno)
     res_flash = f_stat(fpath, fno);
 
     if (res_flash == FR_OK) {
-        PRINTF("%s \r\n", fpath);
+        DBG("--------------------begin");
+        PRINTF("file path: %s \r\n", fpath);
         PRINTF("file size: %ld bytes \r\n", fno->fsize);
         PRINTF("time: %u/%02u/%02u, %02u:%02u \r\n",
                (fno->fdate >> 9) + 1980, fno->fdate >> 5 & 15, fno->fdate & 31, fno->ftime >> 11, fno->ftime >> 5 & 63);
-        PRINTF("state: %c%c%c%c%c \r\n\r\n",
+        PRINTF("state: %c%c%c%c%c \r\n",
                (fno->fattrib & AM_DIR) ? 'D' : '-',      // 是一个目录
                (fno->fattrib & AM_RDO) ? 'R' : '-',      // 只读文件
                (fno->fattrib & AM_HID) ? 'H' : '-',      // 隐藏文件
                (fno->fattrib & AM_SYS) ? 'S' : '-',      // 系统文件
                (fno->fattrib & AM_ARC) ? 'A' : '-');     // 档案文件
+        DBG("--------------------end \r\n");
     } else {
         ERR("fatfs_file_check fail \r\n");
     }
@@ -422,13 +424,6 @@ static FRESULT fatfs_scan_files(char* path)
 
     return res;
 }
-
-
-char *config_err_code[] = {
-    "FILE_NAME_ERR",
-    "FILE_SIZE_FORMAT_ERR",
-    "FILE_SIZE_SIZE_ERR",
-};
 
 
 __packed typedef struct {
@@ -912,6 +907,66 @@ void config_info_max_program_handle_after_program(void)
 }
 
 
+#define SPRINTF_BUFF_LEN    1024
+uint16_t sprintf_index = 0;
+/* 用于调试，出错时打印出错信息，正确则不打印 */
+char sprintf_buff[SPRINTF_BUFF_LEN];
+char *config_err_code[] = {
+    "chip name not set or the length of name > 32  \r\n",
+    "chip name not support \r\n",
+    "firmware file not found or the length of name > 64 \r\n",
+    "firmware file oversize \r\n",
+    "firmware file name not set \r\n",
+    "config.txt file not found \r\n",
+};
+
+
+/**
+  * @brief  sprintf_buff初始化
+  * @param  null
+  * @retval null
+  */
+static void sprintf_buff_init(void)
+{
+    sprintf_index = 0;
+    memset(sprintf_buff, 0x00, SPRINTF_BUFF_LEN);
+}
+
+
+/**
+  * @brief  增加错误信息到sprintf_buff
+  * @param  null
+  * @retval null
+  */
+static void sprintf_buff_add(char *str)
+{
+    if (NULL == str) return;
+
+    if ((SPRINTF_BUFF_LEN - sprintf_index) > strlen(str)) {
+        sprintf_index += SPRINTF(sprintf_buff + sprintf_index, str);
+    } else {
+        ERR("sprintf_buff not enough \r\n");
+    }
+}
+
+
+/**
+  * @brief  显示sprintf_buff里面的错误信息
+  * @param  null
+  * @retval null
+  */
+static void sprintf_buff_show(void)
+{
+    ERR("--------------------begin");
+    /* sprintf_buff是否溢出，暂时没添加判断 */
+    if (sprintf_index) {
+        PRINTF("%s", sprintf_buff);
+    }
+    sprintf_index = 0;
+    ERR("--------------------end \r\n");
+}
+
+
 /**
   * @brief  判断配置文件各个参数是否合法
   * @param  null
@@ -943,12 +998,12 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
         }
         if (TRUE == err) {
             /* 芯片型号不合法 */
-            ERR("p_cfg->chip_name err \r\n");
+            sprintf_buff_add(config_err_code[1]);
             p_cfg->chip_name_set_flag = FALSE;
         }
     } else {
         /* 芯片型号必须设置，提示错误 */
-        ERR("p_cfg->chip_name_set_flag = FALSE \r\n");
+        sprintf_buff_add(config_err_code[0]);
     }
 
     /*
@@ -966,20 +1021,22 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
             /* 升级固件存在，还需要判断固件大小是否超出芯片FLASH范围 */
             if (p_cfg->file_size < fno.fsize) {
                 /* 升级固件太大，超出芯片内部FLASH大小 */
-                ERRA("p_cfg->file_name size: %d > %d \r\n",
-                    fno.fsize, p_cfg->file_size);
+                if (TRUE == p_cfg->chip_name_set_flag) {
+                    /* 如果芯片型号错误，那么p_cfg->file_size就会是0 */
+                    sprintf_buff_add(config_err_code[3]);
+                }
                 p_cfg->file_name_set_flag = FALSE;
             } else {
                 p_cfg->file_size = fno.fsize;
             }
         } else {
             /* 升级固件不存在 */
-            ERR("p_cfg->file_name err \r\n");
+            sprintf_buff_add(config_err_code[2]);
             p_cfg->file_name_set_flag = FALSE;
         }
     } else {
         /* 升级固件必须设置，提示错误 */
-        ERR("p_cfg->file_name_set_flag = FALSE \r\n");
+        sprintf_buff_add(config_err_code[4]);
     }
 
     /*
@@ -1070,7 +1127,6 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
         err = FALSE;
     } else {
         err = TRUE;
-        ERR("config_info fail \r\n");
     }
 
     return err;
@@ -1256,9 +1312,7 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
         p_cfg->check_sum = calc_config_info_check_sum(p_cfg);
         LOG("copy_firmware_to_backup ok \r\n");
     } else {
-        #ifdef CONFIG_FILE_HANDLE_DENUG
-        ERR("no firmware file \r\n");
-        #endif
+        sprintf_buff_add(config_err_code[2]);
 
         /* 没有检测升级固件，提示错误 */
         err = TRUE;
@@ -1289,6 +1343,7 @@ void config_file_handle(void)
     //fatfs_file_check(CONFIG_FILE_PATH, &fno);
 #endif
 
+    sprintf_buff_init();
     memset(&temp_config_info, 0x00, sizeof(temp_config_info));
 
     fatfs_mount();
@@ -1315,9 +1370,7 @@ void config_file_handle(void)
             }
         }
     } else {
-        #ifdef CONFIG_FILE_HANDLE_DENUG
-        ERR("no config file \r\n");
-        #endif
+        sprintf_buff_add(config_err_code[5]);
 
         /* 没有检测到配置文件，提示错误 */
         err = TRUE;
@@ -1345,6 +1398,8 @@ void config_file_handle(void)
         /* 蜂鸣器提示错误 */
         extern void buzzer_notice_config_fail(void);
         buzzer_notice_config_fail();
+        /* 提示错误类型 */
+        sprintf_buff_show();
     } else {
         extern void buzzer_notice_config_ok(void);
         buzzer_notice_config_ok();
