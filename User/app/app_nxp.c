@@ -57,6 +57,13 @@ const NXP_CHIP_S *nxp_chip_now;
 
 const NXP_CHIP_S nxp_chip[NXP_CHIP_MAX] = {   /* 芯片ID，命令0x32查询 */
     {
+        {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},   /* ID还不知道 */
+        0x08,
+        NXP_JN5168,
+        256*1024
+    },
+
+    {
         {0x60, 0x00, 0xb6, 0x86, 0x00, 0x0b, 0x00, 0x02},
         0x08,
         NXP_JN5169,
@@ -67,21 +74,21 @@ const NXP_CHIP_S nxp_chip[NXP_CHIP_MAX] = {   /* 芯片ID，命令0x32查询 */
         {0x10, 0x40, 0x46, 0x86},
         0x04,
         NXP_JN5148,
-        512*1024    /* 不知道多少，先写个512kbyte */
+        128*1024
     },
 
     {
         {0x00, 0x00, 0x56, 0x86},
         0x04,
         NXP_JN5142,
-        512*1024    /* 不知道多少，先写个512kbyte */
+        128*1024
     },
 
     {
         {0x10, 0x00, 0x20, 0x00},
         0x04,
         NXP_JN5139,
-        512*1024    /* 不知道多少，先写个512kbyte */
+        192*1024
     }
 
 };

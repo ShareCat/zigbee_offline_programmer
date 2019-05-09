@@ -30,6 +30,7 @@ extern uint8_t cli_nxp(void *para, uint8_t len);
 #endif
 
 
+#define NXP_JN5168 "NXP_JN5168"
 #define NXP_JN5169 "NXP_JN5169"
 #define NXP_JN5148 "NXP_JN5148"
 #define NXP_JN5142 "NXP_JN5142"
@@ -104,7 +105,7 @@ enum {  /* message_type */
 
 
 __packed typedef struct {
-#define NXP_CHIP_MAX        4
+#define NXP_CHIP_MAX        5
 #define NXP_CHIP_ID_LEN_MAX 9
     uint8_t id[NXP_CHIP_ID_LEN_MAX];
     uint8_t id_len;
