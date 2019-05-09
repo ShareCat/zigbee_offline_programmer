@@ -854,6 +854,7 @@ static uint8_t config_info_update_from_database(void)
 {
     uint8_t err = FALSE;
     uint8_t check_sum = 0;
+
     extern void database_read(char* file_name, uint8_t *file_buff, uint32_t file_len);
     database_read(KW_CONFIG_INFO, (uint8_t *)&config_info, sizeof(CONFIG_INFO_S));
 
@@ -921,11 +922,9 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
     uint8_t len;
     uint8_t err;
     FILINFO fno;
+    char *temp_dir = ReadBuffer;
 
-    extern uint8_t fm_buff[];
-    char *temp_dir = (char *)fm_buff;   /* 减少stack的压力 */
-
-    memset(temp_dir, 0x00, FILE_NAME_MAX + 3);
+    memset(temp_dir, 0x00, sizeof(ReadBuffer));
 
     /*
         处理芯片型号设置
@@ -1220,10 +1219,8 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
     res_flash = f_open(&fnew, temp_dir, FA_OPEN_EXISTING | FA_READ);
 
     if (res_flash == FR_OK) {
-        /* f_gets读取碰到'\n'或'\0'就停止，可用于每次读取一个字符串或是一行数据 */
-
         while (rd_count < p_cfg->file_size) {
-            /*  文件定位到文件起始位置 */
+            /*  文件定位到rd_count位置 */
             res_flash = f_lseek(&fnew, rd_count);
             /* 读取文件所有内容到缓存区 */
             res_flash = f_read(&fnew, read_buff, read_buff_max, &rd_once);
