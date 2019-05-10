@@ -99,7 +99,7 @@ static void auto_program_control_handle(char* str, CONFIG_INFO_S *p_cfg);
 static void auto_program_time_handle(char* str, CONFIG_INFO_S *p_cfg);
 static void print_config_file_from_database(void);
 static void print_firmware_backup(void);
-
+static void fatfs_file_delete(char *path);
 
 
 uint8_t fatfs_dbg_en = FALSE;
@@ -958,6 +958,7 @@ void config_info_max_program_handle_after_program(void)
 void system_file_creat(void)
 {
 #define SYSTEM_USING "Welcome, System are running with configurations below: "
+#define SYSTEM_NULL  "Welcome, System not configured !"
 #define LONG_LINE               "+--------------------------------------\
 --------------------------------------+ \r\n"
 #define CHIP_NAME                "| CHIP_NAME               |   "
@@ -974,61 +975,63 @@ void system_file_creat(void)
 
     config_info_update_from_database();
 
-    fatfs_mount();
-
     /* 打开文件，每次都以新建的形式打开，属性为可写 */
     res_flash = f_open(&fnew, SYSTEM_FILE_PATH, FA_CREATE_ALWAYS | FA_WRITE);
 
     if (res_flash == FR_OK) {
         res_flash = f_lseek(&fnew, 0);  /* 定位到文件开头 */
 
-        //f_printf(&fnew, LOGO "\r\n\r\n");
-        f_printf(&fnew, SYSTEM_USING "\r\n\r\n");
+        if (TRUE == config_info.enable) {
+            //f_printf(&fnew, LOGO "\r\n\r\n");
+            f_printf(&fnew, SYSTEM_USING "\r\n\r\n");
 
-        f_printf(&fnew, LONG_LINE);
+            f_printf(&fnew, LONG_LINE);
 
-        f_printf(&fnew, CHIP_NAME "%s \r\n" LONG_LINE,
-            config_info.chip_name);
+            f_printf(&fnew, CHIP_NAME "%s \r\n" LONG_LINE,
+                config_info.chip_name);
 
-        f_printf(&fnew, FILE_NAME "%s \r\n" LONG_LINE,
-            config_info.file_name);
+            f_printf(&fnew, FILE_NAME "%s \r\n" LONG_LINE,
+                config_info.file_name);
 
-        f_printf(&fnew, FILE_SIZE "%d \r\n" LONG_LINE,
-            config_info.file_size);
+            f_printf(&fnew, FILE_SIZE "%d Bytes \r\n" LONG_LINE,
+                config_info.file_size);
 
-        if (0 == config_info.max_program) {
-            f_printf(&fnew, MAX_PROGRAM "Infinity \r\n" LONG_LINE);
+            if (0 == config_info.max_program) {
+                f_printf(&fnew, MAX_PROGRAM "Infinity \r\n" LONG_LINE);
+            } else {
+                f_printf(&fnew, MAX_PROGRAM "%d \r\n" LONG_LINE,
+                    config_info.max_program - 1);
+            }
+
+            if (TRUE == config_info.verify_after_program) {
+                f_printf(&fnew, VERIFY_AFTER_PROGRAM "YES \r\n" LONG_LINE);
+            } else {
+                f_printf(&fnew, VERIFY_AFTER_PROGRAM "NO \r\n" LONG_LINE);
+            }
+
+            if (TRUE == config_info.read_out_protection) {
+                f_printf(&fnew, READ_OUT_PROTECTION "YES \r\n" LONG_LINE);
+            } else {
+                f_printf(&fnew, READ_OUT_PROTECTION "NO \r\n" LONG_LINE);
+            }
+
+            if (TRUE == config_info.mcu_run_after_program) {
+                f_printf(&fnew, MCU_RUN_AFTER_PROGRAM "YES \r\n" LONG_LINE);
+            } else {
+                f_printf(&fnew, MCU_RUN_AFTER_PROGRAM "NO \r\n" LONG_LINE);
+            }
+
+            if (TRUE == config_info.auto_program_control) {
+                f_printf(&fnew, AUTO_PROGRAM_CONTROL "YES \r\n" LONG_LINE);
+            } else {
+                f_printf(&fnew, AUTO_PROGRAM_CONTROL "NO \r\n" LONG_LINE);
+            }
+
+            f_printf(&fnew, AUTO_PROGRAM_TIME "%d Seconds \r\n" LONG_LINE,
+                config_info.auto_program_time);
         } else {
-            f_printf(&fnew, MAX_PROGRAM "%d \r\n" LONG_LINE,
-                config_info.max_program - 1);
+            f_printf(&fnew, SYSTEM_NULL "\r\n\r\n");
         }
-
-        if (TRUE == config_info.verify_after_program) {
-            f_printf(&fnew, VERIFY_AFTER_PROGRAM "YES \r\n" LONG_LINE);
-        } else {
-            f_printf(&fnew, VERIFY_AFTER_PROGRAM "NO \r\n" LONG_LINE);
-        }
-
-        if (TRUE == config_info.read_out_protection) {
-            f_printf(&fnew, READ_OUT_PROTECTION "YES \r\n" LONG_LINE);
-        } else {
-            f_printf(&fnew, READ_OUT_PROTECTION "NO \r\n" LONG_LINE);
-        }
-
-        if (TRUE == config_info.mcu_run_after_program) {
-            f_printf(&fnew, MCU_RUN_AFTER_PROGRAM "YES \r\n" LONG_LINE);
-        } else {
-            f_printf(&fnew, MCU_RUN_AFTER_PROGRAM "NO \r\n" LONG_LINE);
-        }
-
-        if (TRUE == config_info.auto_program_control) {
-            f_printf(&fnew, AUTO_PROGRAM_CONTROL "YES \r\n" LONG_LINE);
-        } else {
-            f_printf(&fnew, AUTO_PROGRAM_CONTROL "NO \r\n" LONG_LINE);
-        }
-
-        f_printf(&fnew, AUTO_PROGRAM_TIME "%d Seconds \r\n" LONG_LINE,
-            config_info.auto_program_time);
 
         if (res_flash == FR_OK) {
             //PRINTF("file write bytes = %d \r\n", fnum);
@@ -1041,8 +1044,6 @@ void system_file_creat(void)
     }
     /* 不再读写，关闭文件 */
     f_close(&fnew);
-
-    fatfs_unmount();
 }
 
 
@@ -1092,28 +1093,6 @@ static void err_file_creat(void)
 
 
 /**
-  * @brief  err.txt文件删除
-  * @param  无
-  * @retval 无
-  */
-static void err_file_delete(void)
-{
-    FRESULT res_flash;  /* 文件操作结果 */
-    FILINFO fno;
-
-    res_flash = f_stat(ERR_FILE_PATH, &fno);
-
-    if (res_flash == FR_OK) {
-        /* 文件存在才删除 */
-        res_flash = f_unlink(ERR_FILE_PATH);
-        if (res_flash != FR_OK) {
-            ERR("err.txt file delete fail \r\n");
-        }
-    }
-}
-
-
-/**
   * @brief  sprintf_buff初始化
   * @param  null
   * @retval null
@@ -1158,7 +1137,7 @@ static void sprintf_buff_err_show(void)
         ERR("--------------------end \r\n");
     } else {
         /* 没有错误，就删除err.txt文件 */
-        err_file_delete();
+        fatfs_file_delete(ERR_FILE_PATH);
     }
 }
 
@@ -1667,6 +1646,28 @@ static void fatfs_unmount(void)
 
 
 /**
+  * @brief  文件删除
+  * @param  无
+  * @retval 无
+  */
+static void fatfs_file_delete(char *path)
+{
+    FRESULT res_flash;  /* 文件操作结果 */
+    FILINFO fno;
+
+    res_flash = f_stat(path, &fno);
+
+    if (res_flash == FR_OK) {
+        /* 文件存在才删除 */
+        res_flash = f_unlink(path);
+        if (res_flash != FR_OK) {
+            ERRA("%s file delete fail \r\n", path);
+        }
+    }
+}
+
+
+/**
   * @brief  fatfs文件系统初始化
   * @param  无
   * @retval 无
@@ -1688,6 +1689,9 @@ void fatfs_init(void)
 
     /* 遍历打印fatfs中所有文件的路径 */
     fatfs_scan_files(ROOT_PATH);
+
+    /* 每次上电都将系统当前的配置信息，写到system.txt文件中 */
+    system_file_creat();
 
     fatfs_unmount();
 }

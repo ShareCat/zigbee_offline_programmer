@@ -1,11 +1,10 @@
 si 1
-exec device=stm32f103ve
+exec device=stm32f103rb
 speed auto
 r
 h
 erase
-loadbin ../LHD8006_bootloader.bin 0x08000000
-loadbin ../LHD8006_application.bin 0x08008000
+loadbin ../zigbee_offline_programmer.bin 0x08000000
 r
 g
 q

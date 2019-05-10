@@ -141,11 +141,6 @@ void sw_button_double_click_handler(void* btn)
 void sw_button_long_press_handler(void* btn)
 {
     PRINTF("sw long press\r\n");
-
-    if (E_NXP_WAITING == nxp_state_get()) { /* 由于fm_buff缓存共用所以做个互锁 */
-        extern void system_file_creat(void);
-        system_file_creat();
-    }
 }
 
 
