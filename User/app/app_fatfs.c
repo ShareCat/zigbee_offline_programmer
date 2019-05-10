@@ -958,6 +958,17 @@ void config_info_max_program_handle_after_program(void)
 void system_file_creat(void)
 {
 #define SYSTEM_USING "Welcome, System are running with configurations below: "
+#define LONG_LINE               "+--------------------------------------\
+--------------------------------------+ \r\n"
+#define CHIP_NAME                "| CHIP_NAME               |   "
+#define FILE_NAME                "| FILE_NAME               |   "
+#define FILE_SIZE                "| FILE_SIZE               |   "
+#define MAX_PROGRAM              "| MAX_PROGRAM             |   "
+#define VERIFY_AFTER_PROGRAM     "| VERIFY_AFTER_PROGRAM    |   "
+#define READ_OUT_PROTECTION      "| READ_OUT_PROTECTION     |   "
+#define MCU_RUN_AFTER_PROGRAM    "| MCU_RUN_AFTER_PROGRAM   |   "
+#define AUTO_PROGRAM_CONTROL     "| AUTO_PROGRAM_CONTROL    |   "
+#define AUTO_PROGRAM_TIME        "| AUTO_PROGRAM_TIME       |   "
 
     FRESULT res_flash;  /* 文件操作结果 */
 
@@ -974,47 +985,49 @@ void system_file_creat(void)
         //f_printf(&fnew, LOGO "\r\n\r\n");
         f_printf(&fnew, SYSTEM_USING "\r\n\r\n");
 
-        f_printf(&fnew, KW_CHIP_NAME EQUAL_SIGN "%s \r\n\r\n",
+        f_printf(&fnew, LONG_LINE);
+
+        f_printf(&fnew, CHIP_NAME "%s \r\n" LONG_LINE,
             config_info.chip_name);
 
-        f_printf(&fnew, KW_FILE_NAME EQUAL_SIGN "%s \r\n\r\n",
+        f_printf(&fnew, FILE_NAME "%s \r\n" LONG_LINE,
             config_info.file_name);
 
-        f_printf(&fnew, KW_FILE_SIZE EQUAL_SIGN "%d \r\n\r\n",
+        f_printf(&fnew, FILE_SIZE "%d \r\n" LONG_LINE,
             config_info.file_size);
 
         if (0 == config_info.max_program) {
-            f_printf(&fnew, KW_MAX_PROGRAM EQUAL_SIGN "Infinity \r\n\r\n");
+            f_printf(&fnew, MAX_PROGRAM "Infinity \r\n" LONG_LINE);
         } else {
-            f_printf(&fnew, KW_MAX_PROGRAM EQUAL_SIGN "%d \r\n\r\n",
+            f_printf(&fnew, MAX_PROGRAM "%d \r\n" LONG_LINE,
                 config_info.max_program - 1);
         }
 
         if (TRUE == config_info.verify_after_program) {
-            f_printf(&fnew, KW_VERIFY_AFTER_PROGRAM EQUAL_SIGN "YES \r\n\r\n");
+            f_printf(&fnew, VERIFY_AFTER_PROGRAM "YES \r\n" LONG_LINE);
         } else {
-            f_printf(&fnew, KW_VERIFY_AFTER_PROGRAM EQUAL_SIGN "NO \r\n\r\n");
+            f_printf(&fnew, VERIFY_AFTER_PROGRAM "NO \r\n" LONG_LINE);
         }
 
         if (TRUE == config_info.read_out_protection) {
-            f_printf(&fnew, KW_READ_OUT_PROTECTION EQUAL_SIGN "YES \r\n\r\n");
+            f_printf(&fnew, READ_OUT_PROTECTION "YES \r\n" LONG_LINE);
         } else {
-            f_printf(&fnew, KW_READ_OUT_PROTECTION EQUAL_SIGN "NO \r\n\r\n");
+            f_printf(&fnew, READ_OUT_PROTECTION "NO \r\n" LONG_LINE);
         }
 
         if (TRUE == config_info.mcu_run_after_program) {
-            f_printf(&fnew, KW_MCU_RUN_AFTER_PROGRAM EQUAL_SIGN "YES \r\n\r\n");
+            f_printf(&fnew, MCU_RUN_AFTER_PROGRAM "YES \r\n" LONG_LINE);
         } else {
-            f_printf(&fnew, KW_MCU_RUN_AFTER_PROGRAM EQUAL_SIGN "NO \r\n\r\n");
+            f_printf(&fnew, MCU_RUN_AFTER_PROGRAM "NO \r\n" LONG_LINE);
         }
 
         if (TRUE == config_info.auto_program_control) {
-            f_printf(&fnew, KW_AUTO_PROGRAM_CONTROL EQUAL_SIGN "YES \r\n\r\n");
+            f_printf(&fnew, AUTO_PROGRAM_CONTROL "YES \r\n" LONG_LINE);
         } else {
-            f_printf(&fnew, KW_AUTO_PROGRAM_CONTROL EQUAL_SIGN "NO \r\n\r\n");
+            f_printf(&fnew, AUTO_PROGRAM_CONTROL "NO \r\n" LONG_LINE);
         }
 
-        f_printf(&fnew, KW_AUTO_PROGRAM_TIME EQUAL_SIGN "%d Seconds \r\n\r\n",
+        f_printf(&fnew, AUTO_PROGRAM_TIME "%d Seconds \r\n" LONG_LINE,
             config_info.auto_program_time);
 
         if (res_flash == FR_OK) {

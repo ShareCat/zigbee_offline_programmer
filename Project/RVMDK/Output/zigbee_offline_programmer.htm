@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Fri May 10 10:08:15 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Fri May 10 10:32:45 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1184 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2996,7 +2996,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_task
 </UL>
 
-<P><STRONG><a name="[217]"></a>system_file_creat</STRONG> (Thumb, 344 bytes, Stack size 8 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[217]"></a>system_file_creat</STRONG> (Thumb, 352 bytes, Stack size 8 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1040<LI>Call Chain = system_file_creat &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[216]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fatfs_mount
@@ -3021,7 +3021,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[234]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;database_init
 </UL>
 
-<P><STRONG><a name="[221]"></a>config_file_handle</STRONG> (Thumb, 156 bytes, Stack size 136 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[221]"></a>config_file_handle</STRONG> (Thumb, 304 bytes, Stack size 136 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1176<LI>Call Chain = config_file_handle &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[225]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_notice_config_ok
@@ -5888,7 +5888,7 @@ Local Symbols
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_check
 </UL>
 
-<P><STRONG><a name="[21c]"></a>sprintf_buff_err_show</STRONG> (Thumb, 1006 bytes, Stack size 8 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[21c]"></a>sprintf_buff_err_show</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1008<LI>Call Chain = sprintf_buff_err_show &rArr; err_file_delete &rArr; f_unlink &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[219]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;err_file_delete
@@ -5898,7 +5898,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[221]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_file_handle
 </UL>
 
-<P><STRONG><a name="[21d]"></a>config_info_check</STRONG> (Thumb, 620 bytes, Stack size 56 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[21d]"></a>config_info_check</STRONG> (Thumb, 1308 bytes, Stack size 56 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = config_info_check &rArr; fatfs_file_check &rArr; f_stat &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sprintf_buff_err_add
@@ -5921,7 +5921,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[21f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_firmware_backup_and_config_info
 </UL>
 
-<P><STRONG><a name="[220]"></a>copy_firmware_to_backup</STRONG> (Thumb, 524 bytes, Stack size 48 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[220]"></a>copy_firmware_to_backup</STRONG> (Thumb, 336 bytes, Stack size 48 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1008<LI>Call Chain = copy_firmware_to_backup &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_sector_erase
