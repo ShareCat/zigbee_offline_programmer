@@ -26,9 +26,24 @@
 
 #define APP_FATFS_DEBUG
 
+
+#define LOGO \
+"#############################################################\r\n\
+#                                                           #\r\n\
+#   Version:    V0.1                                        #\r\n\
+#   Author:     Cat                                         #\r\n\
+#   Email:      843553493@qq.com                            #\r\n\
+#                                                           #\r\n\
+#   THIS IS CONFIG FILE, READ THE MANNUAL BEFORE MODIFY !   #\r\n\
+#                                                           #\r\n\
+#############################################################"
+
+
+#define ROOT_PATH           "1:"            /* fatfs文件系统根目录 */ 
+
 #define CONFIG_FILE_PATH    "1:config.txt"  /* 配置文件路径 */
 #define ERR_FILE_PATH       "1:err.txt"     /* 错误信息文件路径 */
-#define ROOT_PATH           "1:"            /* 根目录 */
+#define SYSTEM_FILE_PATH    "1:system.txt"  /* 系统文件路径 */
 
 
 FATFS fs;                                   /* FatFs文件系统对象 */
@@ -429,6 +444,7 @@ static FRESULT fatfs_scan_files(char* path)
 
 __packed typedef struct {
 #define KW_CONFIG_INFO              "CONFIG_INFO"
+#define EQUAL_SIGN                  " = "
 #define KW_CHIP_NAME                "CHIP_NAME"
 #define KW_FILE_NAME                "FILE_NAME"
 #define KW_FILE_SIZE                "FILE_SIZE"
@@ -934,6 +950,89 @@ void config_info_max_program_handle_after_program(void)
 }
 
 
+/**
+  * @brief  system.txt文件创建，用户可以打开看到当前配置状态
+  * @param  无
+  * @retval 无
+  */
+void system_file_creat(void)
+{
+#define SYSTEM_USING "Welcome, System are running with configurations below: "
+
+    FRESULT res_flash;  /* 文件操作结果 */
+
+    config_info_update_from_database();
+
+    fatfs_mount();
+
+    /* 打开文件，每次都以新建的形式打开，属性为可写 */
+    res_flash = f_open(&fnew, SYSTEM_FILE_PATH, FA_CREATE_ALWAYS | FA_WRITE);
+
+    if (res_flash == FR_OK) {
+        res_flash = f_lseek(&fnew, 0);  /* 定位到文件开头 */
+
+        //f_printf(&fnew, LOGO "\r\n\r\n");
+        f_printf(&fnew, SYSTEM_USING "\r\n\r\n");
+
+        f_printf(&fnew, KW_CHIP_NAME EQUAL_SIGN "%s \r\n\r\n",
+            config_info.chip_name);
+
+        f_printf(&fnew, KW_FILE_NAME EQUAL_SIGN "%s \r\n\r\n",
+            config_info.file_name);
+
+        f_printf(&fnew, KW_FILE_SIZE EQUAL_SIGN "%d \r\n\r\n",
+            config_info.file_size);
+
+        if (0 == config_info.max_program) {
+            f_printf(&fnew, KW_MAX_PROGRAM EQUAL_SIGN "Infinity \r\n\r\n");
+        } else {
+            f_printf(&fnew, KW_MAX_PROGRAM EQUAL_SIGN "%d \r\n\r\n",
+                config_info.max_program - 1);
+        }
+
+        if (TRUE == config_info.verify_after_program) {
+            f_printf(&fnew, KW_VERIFY_AFTER_PROGRAM EQUAL_SIGN "YES \r\n\r\n");
+        } else {
+            f_printf(&fnew, KW_VERIFY_AFTER_PROGRAM EQUAL_SIGN "NO \r\n\r\n");
+        }
+
+        if (TRUE == config_info.read_out_protection) {
+            f_printf(&fnew, KW_READ_OUT_PROTECTION EQUAL_SIGN "YES \r\n\r\n");
+        } else {
+            f_printf(&fnew, KW_READ_OUT_PROTECTION EQUAL_SIGN "NO \r\n\r\n");
+        }
+
+        if (TRUE == config_info.mcu_run_after_program) {
+            f_printf(&fnew, KW_MCU_RUN_AFTER_PROGRAM EQUAL_SIGN "YES \r\n\r\n");
+        } else {
+            f_printf(&fnew, KW_MCU_RUN_AFTER_PROGRAM EQUAL_SIGN "NO \r\n\r\n");
+        }
+
+        if (TRUE == config_info.auto_program_control) {
+            f_printf(&fnew, KW_AUTO_PROGRAM_CONTROL EQUAL_SIGN "YES \r\n\r\n");
+        } else {
+            f_printf(&fnew, KW_AUTO_PROGRAM_CONTROL EQUAL_SIGN "NO \r\n\r\n");
+        }
+
+        f_printf(&fnew, KW_AUTO_PROGRAM_TIME EQUAL_SIGN "%d Seconds \r\n\r\n",
+            config_info.auto_program_time);
+
+        if (res_flash == FR_OK) {
+            //PRINTF("file write bytes = %d \r\n", fnum);
+            //PRINTF("file write content: %s \r\n", sprintf_buff);
+        } else {
+            ERRA("system.txt file write fail：%d \r\n", res_flash);
+        }
+    } else {
+        ERR("system.txt file open/creat fail \r\n");
+    }
+    /* 不再读写，关闭文件 */
+    f_close(&fnew);
+
+    fatfs_unmount();
+}
+
+
 #define SPRINTF_BUFF_LEN    1024
 uint16_t sprintf_index = 0;
 /* 用于调试，出错时打印出错信息，正确则不打印 */
@@ -1018,7 +1117,7 @@ static void sprintf_buff_init(void)
   * @param  null
   * @retval null
   */
-static void sprintf_buff_add(char *str)
+static void sprintf_buff_err_add(char *str)
 {
     if (NULL == str) return;
 
@@ -1035,7 +1134,7 @@ static void sprintf_buff_add(char *str)
   * @param  null
   * @retval null
   */
-static void sprintf_buff_show(void)
+static void sprintf_buff_err_show(void)
 {
     if (sprintf_index) {
         /* 有错误，就创建err.txt文件，并列出错误列表 */
@@ -1086,12 +1185,12 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
         }
         if (TRUE == err) {
             /* 芯片型号不合法 */
-            sprintf_buff_add(config_err_code[1]);
+            sprintf_buff_err_add(config_err_code[1]);
             p_cfg->chip_name_set_flag = FALSE;
         }
     } else {
         /* 芯片型号必须设置，提示错误 */
-        sprintf_buff_add(config_err_code[0]);
+        sprintf_buff_err_add(config_err_code[0]);
     }
 
     /*
@@ -1111,7 +1210,7 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
                 /* 升级固件太大，超出芯片内部FLASH大小 */
                 if (TRUE == p_cfg->chip_name_set_flag) {
                     /* 如果芯片型号错误，那么p_cfg->file_size就会是0 */
-                    sprintf_buff_add(config_err_code[3]);
+                    sprintf_buff_err_add(config_err_code[3]);
                 }
                 p_cfg->file_name_set_flag = FALSE;
             } else {
@@ -1119,12 +1218,12 @@ static uint8_t config_info_check(CONFIG_INFO_S *p_cfg)
             }
         } else {
             /* 升级固件不存在 */
-            sprintf_buff_add(config_err_code[2]);
+            sprintf_buff_err_add(config_err_code[2]);
             p_cfg->file_name_set_flag = FALSE;
         }
     } else {
         /* 升级固件必须设置，提示错误 */
-        sprintf_buff_add(config_err_code[4]);
+        sprintf_buff_err_add(config_err_code[4]);
     }
 
     /*
@@ -1402,7 +1501,7 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
         p_cfg->check_sum = calc_config_info_check_sum(p_cfg);
         LOG("copy_firmware_to_backup ok \r\n");
     } else {
-        sprintf_buff_add(config_err_code[2]);
+        sprintf_buff_err_add(config_err_code[2]);
 
         /* 没有检测升级固件，提示错误 */
         err = TRUE;
@@ -1460,7 +1559,7 @@ void config_file_handle(void)
             }
         }
     } else {
-        sprintf_buff_add(config_err_code[5]);
+        sprintf_buff_err_add(config_err_code[5]);
 
         /* 没有检测到配置文件，提示错误 */
         err = TRUE;
@@ -1494,7 +1593,7 @@ void config_file_handle(void)
     }
 
     /* 提示错误类型 */
-    sprintf_buff_show();
+    sprintf_buff_err_show();
 
     /* 不再使用文件系统，取消挂载文件系统 */
     fatfs_unmount();

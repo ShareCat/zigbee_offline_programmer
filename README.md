@@ -1,6 +1,6 @@
 # zigbee_offline_programmer
 
-## support chip:
+## 1. Support Chip:
 - NXP_JN5139
 - NXP_JN5142
 - NXP_JN5148
