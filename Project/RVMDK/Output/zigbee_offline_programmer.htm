@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Fri May 10 19:21:50 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Mon May 13 15:03:34 2019
 <BR><P>
-<H3>Maximum Stack Usage =       1184 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       1192 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 sw_button_double_click_handler &rArr; config_file_handle &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 <P>
@@ -2988,7 +2988,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[214]"></a>config_info_max_program_handle_after_program</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, app_fatfs.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1048<LI>Call Chain = config_info_max_program_handle_after_program &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
+<BR><BR>[Stack]<UL><LI>Max Depth = 1056<LI>Call Chain = config_info_max_program_handle_after_program &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_save_to_database
 <LI><a href="#[203]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_config_info_check_sum
@@ -2996,7 +2996,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_task
 </UL>
 
-<P><STRONG><a name="[215]"></a>system_file_creat</STRONG> (Thumb, 596 bytes, Stack size 8 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[215]"></a>system_file_creat</STRONG> (Thumb, 660 bytes, Stack size 8 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1040<LI>Call Chain = system_file_creat &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_update_from_database
@@ -3019,8 +3019,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[234]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;database_init
 </UL>
 
-<P><STRONG><a name="[221]"></a>config_file_handle</STRONG> (Thumb, 156 bytes, Stack size 136 bytes, app_fatfs.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1176<LI>Call Chain = config_file_handle &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
+<P><STRONG><a name="[221]"></a>config_file_handle</STRONG> (Thumb, 162 bytes, Stack size 136 bytes, app_fatfs.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1184<LI>Call Chain = config_file_handle &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[225]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_notice_config_ok
 <LI><a href="#[224]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_notice_config_fail
@@ -3112,7 +3112,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> app_button.o(.text)
 </UL>
 <P><STRONG><a name="[22e]"></a>sw_button_double_click_handler</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, app_button.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1184<LI>Call Chain = sw_button_double_click_handler &rArr; config_file_handle &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
+<BR><BR>[Stack]<UL><LI>Max Depth = 1192<LI>Call Chain = sw_button_double_click_handler &rArr; config_file_handle &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_state_get
 <LI><a href="#[221]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_file_handle
@@ -3388,7 +3388,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[56]"></a>nxp_task</STRONG> (Thumb, 2876 bytes, Stack size 24 bytes, app_nxp.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1072<LI>Call Chain = nxp_task &rArr; config_info_max_program_handle_after_program &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
+<BR><BR>[Stack]<UL><LI>Max Depth = 1080<LI>Call Chain = nxp_task &rArr; config_info_max_program_handle_after_program &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_do1_ctrl
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_reset_ctrl
@@ -3693,6 +3693,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[240]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;find_chip_id
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_check
+<LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_save_to_database
 <LI><a href="#[1af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lfs_dir_find
 </UL>
 
@@ -3912,6 +3913,7 @@ Global Symbols
 <LI><a href="#[219]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fatfs_file_delete
 <LI><a href="#[218]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sprintf_buff_err_add
 <LI><a href="#[216]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;err_file_creat
+<LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_save_to_database
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;auto_program_time_handle
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;auto_program_control_handle
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mcu_run_after_program_handle
@@ -5810,11 +5812,13 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[221]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_file_handle
 </UL>
 
-<P><STRONG><a name="[212]"></a>config_info_save_to_database</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, app_fatfs.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1040<LI>Call Chain = config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
+<P><STRONG><a name="[212]"></a>config_info_save_to_database</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, app_fatfs.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1048<LI>Call Chain = config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[213]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;database_save
 <LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_update_from_database
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[1b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[221]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_file_handle
 <LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_info_max_program_handle_after_program
@@ -5862,7 +5866,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[21a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sprintf_buff_err_show
 </UL>
 
-<P><STRONG><a name="[21a]"></a>sprintf_buff_err_show</STRONG> (Thumb, 82 bytes, Stack size 8 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[21a]"></a>sprintf_buff_err_show</STRONG> (Thumb, 80 bytes, Stack size 8 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = sprintf_buff_err_show &rArr; fatfs_file_delete &rArr; f_unlink &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[219]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fatfs_file_delete
@@ -5872,7 +5876,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[221]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;config_file_handle
 </UL>
 
-<P><STRONG><a name="[21b]"></a>config_info_check</STRONG> (Thumb, 1244 bytes, Stack size 56 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[21b]"></a>config_info_check</STRONG> (Thumb, 1248 bytes, Stack size 56 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = config_info_check &rArr; fatfs_file_check &rArr; f_stat &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[218]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sprintf_buff_err_add

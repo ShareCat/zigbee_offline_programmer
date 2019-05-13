@@ -922,14 +922,27 @@ static void print_config_file_from_database(void)
   * @param  null
   * @retval null
   */
-static void config_info_save_to_database(CONFIG_INFO_S *p_cfg)
+static uint8_t config_info_save_to_database(CONFIG_INFO_S *p_cfg)
 {
-    if (NULL == p_cfg) return;
+    uint8_t err = TRUE;
+
+    if (NULL == p_cfg) return err;
 
     extern void database_save(char *file_name, uint8_t *file_buff, uint32_t file_len);
     database_save(KW_CONFIG_INFO, (uint8_t *)p_cfg, sizeof(CONFIG_INFO_S));
 
+    /* 保存完成后，读取更新到config_info */
     config_info_update_from_database();
+
+    /* 检查看是否保存成功 */
+    if (0 == memcmp(&config_info, p_cfg, sizeof(config_info))) {
+        err = FALSE;
+    } else {
+        /* 失败 */
+        ERR("config_info and temp_config_info dont match \r\n");
+    }
+
+    return err;
 }
 
 
@@ -1566,7 +1579,9 @@ void config_file_handle(void)
             /* 把fatfs中的升级固件复制到固件备份区 */
             if (FALSE == copy_firmware_to_backup(&temp_config_info)) {
                 /* 将config_info存到数据库 */
-                config_info_save_to_database(&temp_config_info);
+                if (TRUE == config_info_save_to_database(&temp_config_info)) {
+                    err = TRUE;
+                }
             } else {
                 err = TRUE;
             }
