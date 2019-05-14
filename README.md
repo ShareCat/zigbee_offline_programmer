@@ -6,3 +6,11 @@
 - NXP_JN5148
 - NXP_JN5168
 - NXP_JN5169
+
+## 2. Features:
+- Auto Program Mode
+- Mannual Program Mode
+- Max Program Control
+- Verify After Program
+- Run After Program
+- Flash Read out Protection

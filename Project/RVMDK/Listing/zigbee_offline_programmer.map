@@ -1934,15 +1934,15 @@ Memory Map of the image
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x000000ec   Data   RO            3    RESET               startup_stm32f10x_md.o
-    0x080000ec   0x00000000   Code   RO         1514  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x080000ec   0x00000004   Code   RO         1838    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x080000f0   0x00000004   Code   RO         1841    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x080000f4   0x00000000   Code   RO         1843    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x080000f4   0x00000000   Code   RO         1845    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x080000f4   0x00000008   Code   RO         1846    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x080000fc   0x00000000   Code   RO         1848    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x080000fc   0x00000000   Code   RO         1850    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x080000fc   0x00000004   Code   RO         1839    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x080000ec   0x00000000   Code   RO         1513  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x080000ec   0x00000004   Code   RO         1837    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x080000f0   0x00000004   Code   RO         1840    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x080000f4   0x00000000   Code   RO         1842    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x080000f4   0x00000000   Code   RO         1844    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x080000f4   0x00000008   Code   RO         1845    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x080000fc   0x00000000   Code   RO         1847    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x080000fc   0x00000000   Code   RO         1849    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x080000fc   0x00000004   Code   RO         1838    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x08000100   0x00000024   Code   RO            4    .text               startup_stm32f10x_md.o
     0x08000124   0x000001e0   Code   RO           24    .text               system_stm32f10x.o
     0x08000304   0x000000dc   Code   RO          106    .text               misc.o
@@ -1995,53 +1995,53 @@ Memory Map of the image
     0x0800f830   0x0000169c   Code   RO         1367    .text               app_nxp.o
     0x08010ecc   0x00000190   Code   RO         1416    .text               app_buzzer.o
     0x0801105c   0x000000e8   Code   RO         1438    .text               main.o
-    0x08011144   0x00000054   Code   RO         1493    .text               stm32f10x_it.o
-    0x08011198   0x00000024   Code   RO         1517    .text               mc_w.l(memcpya.o)
-    0x080111bc   0x00000024   Code   RO         1519    .text               mc_w.l(memseta.o)
-    0x080111e0   0x00000024   Code   RO         1521    .text               mc_w.l(strstr.o)
-    0x08011204   0x00000018   Code   RO         1523    .text               mc_w.l(strncpy.o)
-    0x0801121c   0x00000014   Code   RO         1525    .text               mc_w.l(strchr.o)
-    0x08011230   0x0000000e   Code   RO         1527    .text               mc_w.l(strlen.o)
-    0x0801123e   0x0000001a   Code   RO         1529    .text               mc_w.l(memcmp.o)
-    0x08011258   0x00000012   Code   RO         1531    .text               mc_w.l(strcpy.o)
-    0x0801126a   0x0000001e   Code   RO         1533    .text               mc_w.l(strncmp.o)
-    0x08011288   0x0000001c   Code   RO         1535    .text               mc_w.l(strspn.o)
-    0x080112a4   0x00000022   Code   RO         1537    .text               mc_w.l(strcspn.o)
-    0x080112c6   0x00000064   Code   RO         1830    .text               mf_w.l(fmul.o)
-    0x0801132a   0x0000007c   Code   RO         1832    .text               mf_w.l(fdiv.o)
-    0x080113a6   0x0000000a   Code   RO         1834    .text               mf_w.l(ffltui.o)
-    0x080113b0   0x00000026   Code   RO         1836    .text               mf_w.l(f2d.o)
-    0x080113d6   0x0000002c   Code   RO         1853    .text               mc_w.l(uidiv.o)
-    0x08011402   0x00000062   Code   RO         1855    .text               mc_w.l(uldiv.o)
-    0x08011464   0x00000000   Code   RO         1859    .text               mc_w.l(iusefp.o)
-    0x08011464   0x0000006e   Code   RO         1860    .text               mf_w.l(fepilogue.o)
-    0x080114d2   0x0000014e   Code   RO         1862    .text               mf_w.l(dadd.o)
-    0x08011620   0x000000e4   Code   RO         1864    .text               mf_w.l(dmul.o)
-    0x08011704   0x000000de   Code   RO         1866    .text               mf_w.l(ddiv.o)
-    0x080117e2   0x00000030   Code   RO         1868    .text               mf_w.l(dfixul.o)
+    0x08011144   0x00000054   Code   RO         1492    .text               stm32f10x_it.o
+    0x08011198   0x00000024   Code   RO         1516    .text               mc_w.l(memcpya.o)
+    0x080111bc   0x00000024   Code   RO         1518    .text               mc_w.l(memseta.o)
+    0x080111e0   0x00000024   Code   RO         1520    .text               mc_w.l(strstr.o)
+    0x08011204   0x00000018   Code   RO         1522    .text               mc_w.l(strncpy.o)
+    0x0801121c   0x00000014   Code   RO         1524    .text               mc_w.l(strchr.o)
+    0x08011230   0x0000000e   Code   RO         1526    .text               mc_w.l(strlen.o)
+    0x0801123e   0x0000001a   Code   RO         1528    .text               mc_w.l(memcmp.o)
+    0x08011258   0x00000012   Code   RO         1530    .text               mc_w.l(strcpy.o)
+    0x0801126a   0x0000001e   Code   RO         1532    .text               mc_w.l(strncmp.o)
+    0x08011288   0x0000001c   Code   RO         1534    .text               mc_w.l(strspn.o)
+    0x080112a4   0x00000022   Code   RO         1536    .text               mc_w.l(strcspn.o)
+    0x080112c6   0x00000064   Code   RO         1829    .text               mf_w.l(fmul.o)
+    0x0801132a   0x0000007c   Code   RO         1831    .text               mf_w.l(fdiv.o)
+    0x080113a6   0x0000000a   Code   RO         1833    .text               mf_w.l(ffltui.o)
+    0x080113b0   0x00000026   Code   RO         1835    .text               mf_w.l(f2d.o)
+    0x080113d6   0x0000002c   Code   RO         1852    .text               mc_w.l(uidiv.o)
+    0x08011402   0x00000062   Code   RO         1854    .text               mc_w.l(uldiv.o)
+    0x08011464   0x00000000   Code   RO         1858    .text               mc_w.l(iusefp.o)
+    0x08011464   0x0000006e   Code   RO         1859    .text               mf_w.l(fepilogue.o)
+    0x080114d2   0x0000014e   Code   RO         1861    .text               mf_w.l(dadd.o)
+    0x08011620   0x000000e4   Code   RO         1863    .text               mf_w.l(dmul.o)
+    0x08011704   0x000000de   Code   RO         1865    .text               mf_w.l(ddiv.o)
+    0x080117e2   0x00000030   Code   RO         1867    .text               mf_w.l(dfixul.o)
     0x08011812   0x00000002   PAD
-    0x08011814   0x00000030   Code   RO         1870    .text               mf_w.l(cdrcmple.o)
-    0x08011844   0x00000024   Code   RO         1872    .text               mc_w.l(init.o)
-    0x08011868   0x0000001e   Code   RO         1874    .text               mc_w.l(llshl.o)
-    0x08011886   0x00000020   Code   RO         1876    .text               mc_w.l(llushr.o)
-    0x080118a6   0x00000024   Code   RO         1878    .text               mc_w.l(llsshr.o)
-    0x080118ca   0x000000ba   Code   RO         1880    .text               mf_w.l(depilogue.o)
-    0x08011984   0x00000056   Code   RO         1890    .text               mc_w.l(__dczerorl2.o)
+    0x08011814   0x00000030   Code   RO         1869    .text               mf_w.l(cdrcmple.o)
+    0x08011844   0x00000024   Code   RO         1871    .text               mc_w.l(init.o)
+    0x08011868   0x0000001e   Code   RO         1873    .text               mc_w.l(llshl.o)
+    0x08011886   0x00000020   Code   RO         1875    .text               mc_w.l(llushr.o)
+    0x080118a6   0x00000024   Code   RO         1877    .text               mc_w.l(llsshr.o)
+    0x080118ca   0x000000ba   Code   RO         1879    .text               mf_w.l(depilogue.o)
+    0x08011984   0x00000056   Code   RO         1889    .text               mc_w.l(__dczerorl2.o)
     0x080119da   0x00000002   PAD
-    0x080119dc   0x00000020   Code   RO         1774    i.__0printf         mc_w.l(printfa.o)
-    0x080119fc   0x00000028   Code   RO         1776    i.__0sprintf        mc_w.l(printfa.o)
+    0x080119dc   0x00000020   Code   RO         1773    i.__0printf         mc_w.l(printfa.o)
+    0x080119fc   0x00000028   Code   RO         1775    i.__0sprintf        mc_w.l(printfa.o)
     0x08011a24   0x00000030   Code   RO         1187    i.__ARM_pop         lfs.o
-    0x08011a54   0x0000000e   Code   RO         1884    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08011a62   0x00000002   Code   RO         1885    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08011a64   0x0000000e   Code   RO         1886    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08011a54   0x0000000e   Code   RO         1883    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08011a62   0x00000002   Code   RO         1884    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08011a64   0x0000000e   Code   RO         1885    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x08011a72   0x00000002   PAD
-    0x08011a74   0x00000184   Code   RO         1781    i._fp_digits        mc_w.l(printfa.o)
-    0x08011bf8   0x000006dc   Code   RO         1782    i._printf_core      mc_w.l(printfa.o)
-    0x080122d4   0x00000024   Code   RO         1783    i._printf_post_padding  mc_w.l(printfa.o)
-    0x080122f8   0x0000002e   Code   RO         1784    i._printf_pre_padding  mc_w.l(printfa.o)
-    0x08012326   0x0000000a   Code   RO         1786    i._sputc            mc_w.l(printfa.o)
-    0x08012330   0x00000050   Code   RO         1802    i.free              mc_w.l(malloc.o)
-    0x08012380   0x0000006c   Code   RO         1803    i.malloc            mc_w.l(malloc.o)
+    0x08011a74   0x00000184   Code   RO         1780    i._fp_digits        mc_w.l(printfa.o)
+    0x08011bf8   0x000006dc   Code   RO         1781    i._printf_core      mc_w.l(printfa.o)
+    0x080122d4   0x00000024   Code   RO         1782    i._printf_post_padding  mc_w.l(printfa.o)
+    0x080122f8   0x0000002e   Code   RO         1783    i._printf_pre_padding  mc_w.l(printfa.o)
+    0x08012326   0x0000000a   Code   RO         1785    i._sputc            mc_w.l(printfa.o)
+    0x08012330   0x00000050   Code   RO         1801    i.free              mc_w.l(malloc.o)
+    0x08012380   0x0000006c   Code   RO         1802    i.malloc            mc_w.l(malloc.o)
     0x080123ec   0x00000092   Data   RO          659    .constdata          usb_desc.o
     0x0801247e   0x0000001a   Data   RO          830    .constdata          bsp_spi.o
     0x08012498   0x000000ee   Data   RO          922    .constdata          sys_command_line.o
@@ -2066,7 +2066,7 @@ Memory Map of the image
     0x08013cc0   0x00000868   Data   RO         1264    .conststring        app_fatfs.o
     0x08014528   0x0000003b   Data   RO         1370    .conststring        app_nxp.o
     0x08014563   0x00000001   PAD
-    0x08014564   0x00000020   Data   RO         1882    Region$$Table       anon$$obj.o
+    0x08014564   0x00000020   Data   RO         1881    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000048c0, Max: 0x00005000, ABSOLUTE, COMPRESSED[0x000000e4])
@@ -2102,9 +2102,9 @@ Memory Map of the image
     0x20000250   0x0000000d   Data   RW         1371    .data               app_nxp.o
     0x2000025d   0x00000001   Data   RW         1418    .data               app_buzzer.o
     0x2000025e   0x00000002   PAD
-    0x20000260   0x00000004   Data   RW         1852    .data               mc_w.l(stdout.o)
-    0x20000264   0x00000004   Data   RW         1857    .data               mc_w.l(mvars.o)
-    0x20000268   0x00000004   Data   RW         1858    .data               mc_w.l(mvars.o)
+    0x20000260   0x00000004   Data   RW         1851    .data               mc_w.l(stdout.o)
+    0x20000264   0x00000004   Data   RW         1856    .data               mc_w.l(mvars.o)
+    0x20000268   0x00000004   Data   RW         1857    .data               mc_w.l(mvars.o)
     0x2000026c   0x0000001c   Zero   RW          455    .bss                usb_init.o
     0x20000288   0x00001000   Zero   RW          604    .bss                memory.o
     0x20001288   0x00000070   Zero   RW          643    .bss                usb_bot.o
