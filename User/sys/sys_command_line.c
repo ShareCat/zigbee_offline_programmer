@@ -233,7 +233,7 @@ void cli_init(uint32_t baud)
 
     PRINTF("------------------------------\r\n\r\n");
     TERMINAL_HIGH_LIGHT();
-    PRINTF("    CLI version: V0.4         \r\n\r\n");
+    PRINTF("    CLI version: V0.5         \r\n\r\n");
     PRINTF("    coder: Cat                \r\n\r\n");
     PRINTF("    Email: 843553493@qq.com   \r\n\r\n");
     TERMINAL_UN_HIGH_LIGHT();
@@ -265,19 +265,20 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
             /* 串口有接收到新数据，复制到Handle.buff后解析 */
             if(TRUE == QUEUE_OUT((*rx_buff), Handle.buff[Handle.len])) {
-                /* 将收到的字符发送出去，终端回显 */
-                USART_SendData(DEBUG_USARTx, Handle.buff[Handle.len]);
-
                 /* '\b'用于删除最近的一个字符 */
-                if(('\b' == Handle.buff[Handle.len]) && (0 < Handle.len)) {
+                if ('\b' == Handle.buff[Handle.len]) {
                     /* 还有缓存的字符就删除最近一个 */
-                    if(0 < Handle.len) {
-                        Handle.len -= 1;  /* 回退一个字符 */
+                    if (0 < Handle.len) {
                         /* 实现在secrueCRT上也删除最近输入的一个字符 */
+                        TERMINAL_MOVE_LEFT(1);
                         TERMINAL_CLEAR_END();
+                        /* 回退一个字符 */
+                        Handle.len -= 1;
                     }
 
                 } else {
+                    /* 将收到的字符发送出去，终端回显 */
+                    USART_SendData(DEBUG_USARTx, Handle.buff[Handle.len]);
                     /* 是正常字符，不是删除键 */
                     Handle.len++;
                 }

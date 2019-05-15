@@ -13,4 +13,4 @@
 - Max Program Control
 - Verify After Program
 - Run After Program
-- Flash Read out Protection
+- Flash Read Out Protection
