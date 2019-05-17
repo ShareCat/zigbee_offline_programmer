@@ -409,11 +409,8 @@ void os_init(volatile OS_TASK_S *ptask)
 
 #if OS_INFO
 
-    /* 打印主机版本 */
-    PRINTF("panel: \r\n");
-
     /* 打印编译时间 */
-    PRINTF("build: %s %s\r\n\r\n", __DATE__, __TIME__);
+    PRINTF_COLOR(E_FONT_PURPLE, "build: %s %s\r\n\r\n", __DATE__, __TIME__);
 #endif /* OS_INFO */
 }
 

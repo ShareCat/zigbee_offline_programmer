@@ -19,10 +19,10 @@
 #include "sys_queue.h"
 
 /* Macro config --------------------------------------------------------------*/
-#define USING_CML           TRUE                    /* 是否使用命令行 */
-#define USING_HISTORY       TRUE                    /* 是否使用历史记录 */
+#define CLI_ENABLE          TRUE                    /* 是否使用命令行 */
+#define CLI_HISTORY         TRUE                    /* 是否使用历史记录 */
 #define HISTORY_MAX         10                      /* 历史记录个数 */
-#define USING_PRINTF        TRUE                    /* 串口打印调试 */
+#define CLI_PRINTF          TRUE                    /* 串口打印调试 */
 #define CLI_BAUDRATE        ((uint32_t)768000)      /* 串口波特率 */
 #define USART_INIT(baud)    debug_usart_init(baud)  /* 串口初始化函数 */
 #define SYSTEM_REBOOT()     NVIC_SystemReset()      /* MCU重启 */
@@ -33,22 +33,69 @@
 #define KEY_BIG_B           0x42
 
 
-#ifdef USING_CML
+#if CLI_ENABLE
     #define CLI_INIT(...)       cli_init(__VA_ARGS__)
     #define CLI_RUN(...)        cli_run(__VA_ARGS__)
 #else
     #define CLI_INIT(...)       ;
     #define CLI_RUN(...)        ;
-#endif /* USING_CML */
+#endif /* CLI_ENABLE */
 
 
-#ifdef USING_PRINTF
+#if CLI_PRINTF
     #define PRINTF(...)         printf(__VA_ARGS__)
     #define SPRINTF(...)        sprintf(__VA_ARGS__)
+
+enum {
+    E_FONT_BLACK,
+    E_FONT_L_RED,
+    E_FONT_RED,
+    E_FONT_GREEN,
+    E_FONT_YELLOW,
+    E_FONT_BLUE,
+    E_FONT_PURPLE,
+    E_FONT_CYAN,
+    E_FONT_WHITE,
+};
+
+    #define PRINTF_COLOR(c, ...)    do {                            \
+                                        switch (c) {                \
+                                            case E_FONT_BLACK:      \
+                                            TERMINAL_FONT_BLACK();  \
+                                            break;                  \
+                                            case E_FONT_L_RED:      \
+                                            TERMINAL_FONT_L_RED();  \
+                                            break;                  \
+                                            case E_FONT_RED:        \
+                                            TERMINAL_FONT_RED();    \
+                                            break;                  \
+                                            case E_FONT_GREEN:      \
+                                            TERMINAL_FONT_GREEN();  \
+                                            break;                  \
+                                            case E_FONT_YELLOW:     \
+                                            TERMINAL_FONT_YELLOW(); \
+                                            break;                  \
+                                            case E_FONT_BLUE:       \
+                                            TERMINAL_FONT_BLUE();   \
+                                            break;                  \
+                                            case E_FONT_PURPLE:     \
+                                            TERMINAL_FONT_PURPLE(); \
+                                            break;                  \
+                                            case E_FONT_CYAN:       \
+                                            TERMINAL_FONT_CYAN();   \
+                                            break;                  \
+                                            case E_FONT_WHITE:      \
+                                            TERMINAL_FONT_WHITE();  \
+                                            break;                  \
+                                        }                           \
+                                        printf(__VA_ARGS__);        \
+                                        TERMINAL_FONT_GREEN();      \
+                                    } while(0)
 #else
     #define PRINTF(...)         ;
     #define SPRINTF(...)        ;
-#endif /* USING_PRINTF */
+    #define PRINTF_COLOR(c, ...);
+#endif /* CLI_PRINTF */
 
 
 

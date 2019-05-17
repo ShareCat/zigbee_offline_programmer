@@ -205,7 +205,7 @@ static uint8_t cli_reboot(void *para, uint8_t len)
 }
 
 
-#if USING_HISTORY
+#if CLI_HISTORY
 
 __packed typedef struct {
     char cmd[HISTORY_MAX][HANDLE_LEN];
@@ -300,7 +300,7 @@ void cli_init(uint32_t baud)
 
     memset((uint8_t *)&cli_rx_buff, 0, sizeof(RX_BUFF_TYPE));
 
-#if USING_HISTORY
+#if CLI_HISTORY
     memset((uint8_t *)&history, 0, sizeof(history));
 #endif
 
@@ -323,14 +323,13 @@ void cli_init(uint32_t baud)
     TERMINAL_DISPLAY_CLEAR();
     TERMINAL_RESET_CURSOR();
 
-    PRINTF("------------------------------\r\n\r\n");
+    PRINTF_COLOR(E_FONT_YELLOW, "-------------------------------\r\n\r\n");
     TERMINAL_HIGH_LIGHT();
-    PRINTF("    CLI version: V0.6         \r\n\r\n");
-    PRINTF("    coder: Cat                \r\n\r\n");
-    PRINTF("    Email: 843553493@qq.com   \r\n\r\n");
+    PRINTF("    CLI version: V0.6          \r\n\r\n");
+    PRINTF("    coder: Cat                 \r\n\r\n");
+    PRINTF("    Email: 843553493@qq.com    \r\n\r\n");
     TERMINAL_UN_HIGH_LIGHT();
-    PRINTF("------------------------------\r\n\r\n");
-
+    PRINTF_COLOR(E_FONT_YELLOW, "-------------------------------\r\n\r\n");
 }
 
 
@@ -380,7 +379,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                     /* 是正常字符，不是删除键 */
                     Handle.len++;
 
-#if USING_HISTORY
+#if CLI_HISTORY
                     char *p_hist_cmd = 0;
                     if (Handle.len > 2) {
                         if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
@@ -447,7 +446,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                             /* 命令执行正确 */
                             PRINTF("\r\n-> OK\r\n");
 
-#if USING_HISTORY
+#if CLI_HISTORY
                             cli_history_add((char *)Handle.buff);
 #endif
 
