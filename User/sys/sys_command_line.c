@@ -265,7 +265,7 @@ static char* cli_history_show(uint8_t mode)
         }
     } else {
         /* 下一个历史命令 */
-        if (1 != history.show) {
+        if (1 < history.show) {
             history.show--;
         }
     }
@@ -276,7 +276,7 @@ static char* cli_history_show(uint8_t mode)
         if (0 != index) {
             index--;
         } else {
-            index = HISTORY_MAX;
+            index = HISTORY_MAX - 1;
         }
         num--;
     }
