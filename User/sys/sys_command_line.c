@@ -205,6 +205,88 @@ static uint8_t cli_reboot(void *para, uint8_t len)
 }
 
 
+#if USING_HISTORY
+
+__packed typedef struct {
+    char cmd[HISTORY_MAX][HANDLE_LEN];
+    uint8_t count;
+    uint8_t latest;
+    uint8_t show;
+}HISTORY_S;
+
+static HISTORY_S history;
+
+
+/**
+  * @brief          添加一个历史记录
+  * @param  buff:   历史记录
+  * @retval         无
+  */
+static void cli_history_add(char* buff)
+{
+    uint16_t len;
+
+    if (NULL == buff) return;
+
+    len = strlen((const char *)buff);
+    if (len < HANDLE_LEN) {
+        memset((void *)history.cmd[history.latest], 0x00, HANDLE_LEN);
+        memcpy((void *)history.cmd[history.latest], (const void *)buff, len);
+        history.count++;
+
+        history.latest++;
+        if (history.latest >= HISTORY_MAX) {
+            history.latest = 0;
+        }
+
+        history.show = 0;
+    }
+}
+
+
+/**
+  * @brief          查看历史记录
+  * @param  mode:   TRUE查看上一个，FALSE查看下一个
+  * @retval         历史记录
+  */
+static char* cli_history_show(uint8_t mode)
+{
+    uint8_t num;
+    uint8_t index;
+
+    if (0 == history.count) return 0;
+
+    if (TRUE == mode) {
+        /* 上一个历史命令 */
+        if (history.show < history.count) {
+            history.show++;
+        }
+    } else {
+        /* 下一个历史命令 */
+        if (1 != history.show) {
+            history.show--;
+        }
+    }
+
+    num = history.show;
+    index = history.latest;
+    while (num) {
+        if (0 != index) {
+            index--;
+        } else {
+            index = HISTORY_MAX;
+        }
+        num--;
+    }
+
+    //PRINTF("history: %s \r\n", history.cmd[index]);
+
+    return history.cmd[index];
+}
+
+#endif
+
+
 /**
   * @brief  命令行初始化
   * @param  串口波特率
@@ -213,7 +295,13 @@ static uint8_t cli_reboot(void *para, uint8_t len)
 void cli_init(uint32_t baud)
 {
     uint8_t i;
+
     memset((uint8_t *)&cli_rx_buff, 0, sizeof(RX_BUFF_TYPE));
+
+#if USING_HISTORY
+    memset((uint8_t *)&history, 0, sizeof(history));
+#endif
+
     USART_INIT(baud);
 
     /* 对每个命令进行初始化 */
@@ -235,7 +323,7 @@ void cli_init(uint32_t baud)
 
     PRINTF("------------------------------\r\n\r\n");
     TERMINAL_HIGH_LIGHT();
-    PRINTF("    CLI version: V0.5         \r\n\r\n");
+    PRINTF("    CLI version: V0.6         \r\n\r\n");
     PRINTF("    coder: Cat                \r\n\r\n");
     PRINTF("    Email: 843553493@qq.com   \r\n\r\n");
     TERMINAL_UN_HIGH_LIGHT();
@@ -280,9 +368,49 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
                 } else {
                     /* 将收到的字符发送出去，终端回显 */
-                    USART_SendData(DEBUG_USARTx, Handle.buff[Handle.len]);
+                    if ((KEY_ESCAPE != Handle.buff[Handle.len])
+                        && (KEY_LEFT_SQUARE != Handle.buff[Handle.len])) {
+
+                        USART_SendData(DEBUG_USARTx, Handle.buff[Handle.len]);
+                    }
+                    //PRINTF("%02x ", Handle.buff[Handle.len]);
+
                     /* 是正常字符，不是删除键 */
                     Handle.len++;
+
+#if USING_HISTORY
+                    char *p_hist_cmd = 0;
+                    if (Handle.len > 2) {
+                        if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
+                            && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
+                            && (KEY_BIG_A == Handle.buff[Handle.len - 1])) {
+                            /* “上方向”键 */
+                            while (Handle.len) {
+                                TERMINAL_MOVE_LEFT(1);
+                                TERMINAL_CLEAR_END();
+                                Handle.len--;
+                            }
+                            p_hist_cmd = cli_history_show(TRUE);
+                        } else if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
+                            && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
+                            && (KEY_BIG_B == Handle.buff[Handle.len - 1])) {
+                            /* “下方向”键 */
+                            while (Handle.len) {
+                                TERMINAL_MOVE_LEFT(1);
+                                TERMINAL_CLEAR_END();
+                                Handle.len--;
+                            }
+                            p_hist_cmd = cli_history_show(FALSE);
+                        }
+
+                        if (0 != p_hist_cmd) {
+                            memcpy(Handle.buff, p_hist_cmd, strlen(p_hist_cmd));
+                            Handle.len = strlen(p_hist_cmd);
+                            Handle.buff[Handle.len] = '\0';
+                            PRINTF("%s", Handle.buff);
+                        }
+                    }
+#endif
                 }
 
             } else {
@@ -322,6 +450,10 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                         if(CLI_Cmd[i].pFun(ParaAddr, ParaLen)) {
                             /* 命令执行正确 */
                             PRINTF("\r\n-> OK\r\n");
+
+#if USING_HISTORY
+                            cli_history_add((char *)Handle.buff);
+#endif
 
                             /* 开启了回显，就打印收到的命令 */
                             if(ENABLE == cli_echo_flag) {

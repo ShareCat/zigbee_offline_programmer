@@ -20,11 +20,17 @@
 
 /* Macro config --------------------------------------------------------------*/
 #define USING_CML           TRUE                    /* 是否使用命令行 */
+#define USING_HISTORY       TRUE                    /* 是否使用历史记录 */
+#define HISTORY_MAX         10                      /* 历史记录个数 */
 #define USING_PRINTF        TRUE                    /* 串口打印调试 */
 #define CLI_BAUDRATE        ((uint32_t)768000)      /* 串口波特率 */
 #define USART_INIT(baud)    debug_usart_init(baud)  /* 串口初始化函数 */
 #define SYSTEM_REBOOT()     NVIC_SystemReset()      /* MCU重启 */
 
+#define KEY_ESCAPE          0x1b
+#define KEY_LEFT_SQUARE     0x5b
+#define KEY_BIG_A           0x41
+#define KEY_BIG_B           0x42
 
 
 #ifdef USING_CML
