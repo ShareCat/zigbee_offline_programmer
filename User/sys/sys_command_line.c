@@ -232,7 +232,9 @@ static void cli_history_add(char* buff)
     if (len < HANDLE_LEN) {
         memset((void *)history.cmd[history.latest], 0x00, HANDLE_LEN);
         memcpy((void *)history.cmd[history.latest], (const void *)buff, len);
-        history.count++;
+        if (history.count < HISTORY_MAX) {
+            history.count++;
+        }
 
         history.latest++;
         if (history.latest >= HISTORY_MAX) {
@@ -384,22 +386,16 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                         if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
                             && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
                             && (KEY_BIG_A == Handle.buff[Handle.len - 1])) {
-                            /* “上方向”键 */
-                            while (Handle.len) {
-                                TERMINAL_MOVE_LEFT(1);
-                                TERMINAL_CLEAR_END();
-                                Handle.len--;
-                            }
+                            /* [上方向]键被按下 */
+                            TERMINAL_MOVE_LEFT(Handle.len);
+                            TERMINAL_CLEAR_END();
                             p_hist_cmd = cli_history_show(TRUE);
                         } else if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
                             && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
                             && (KEY_BIG_B == Handle.buff[Handle.len - 1])) {
-                            /* “下方向”键 */
-                            while (Handle.len) {
-                                TERMINAL_MOVE_LEFT(1);
-                                TERMINAL_CLEAR_END();
-                                Handle.len--;
-                            }
+                            /* [下方向]键被按下 */
+                            TERMINAL_MOVE_LEFT(Handle.len);
+                            TERMINAL_CLEAR_END();
                             p_hist_cmd = cli_history_show(FALSE);
                         }
 
@@ -407,7 +403,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                             memcpy(Handle.buff, p_hist_cmd, strlen(p_hist_cmd));
                             Handle.len = strlen(p_hist_cmd);
                             Handle.buff[Handle.len] = '\0';
-                            PRINTF("%s", Handle.buff);
+                            PRINTF("%s", Handle.buff);  /* 显示查询的命令 */
                         }
                     }
 #endif
