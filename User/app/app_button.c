@@ -126,7 +126,8 @@ void sw_button_double_click_handler(void* btn)
 {
     PRINTF("sw double click\r\n");
 
-    if (E_NXP_WAITING == nxp_state_get()) { /* 由于fm_buff缓存共用所以做个互锁 */
+    extern uint8_t msd_run_get(void);
+    if (FALSE == msd_run_get()) {   /* 由于fm_buff缓存共用所以做个互锁 */
         /* 读取并解析config配置文件 */
         extern void config_file_handle(void);
         config_file_handle();
@@ -141,6 +142,18 @@ void sw_button_double_click_handler(void* btn)
 void sw_button_long_press_handler(void* btn)
 {
     PRINTF("sw long press\r\n");
+
+    extern uint8_t msd_run_get(void);
+    if (FALSE == msd_run_get()) {   /* 由于fm_buff缓存共用所以做个互锁 */
+        if (E_NXP_WAITING == nxp_state_get()) { /* 正在下载，就不处理 */
+            /* 将系统当前的配置信息，写到system.txt文件中 */
+            extern void system_file_creat(void);
+            system_file_creat();
+
+            extern void buzzer_notice_config_ok(void);
+            buzzer_notice_config_ok();
+        }
+    }
 }
 
 

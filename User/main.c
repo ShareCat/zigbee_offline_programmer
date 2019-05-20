@@ -31,6 +31,8 @@
 /* Private functions ---------------------------------------------------------*/
 
 
+static uint8_t msd_run = FALSE;
+
 
 void Delay(__IO uint32_t nCount)	 //简单的延时函数
 {
@@ -84,6 +86,12 @@ static void disable_jtag_and_swd(void)
 }
 
 
+uint8_t msd_run_get(void)
+{
+    return msd_run;
+}
+
+
 /**
   * @brief  Main program.
   * @param  None
@@ -124,6 +132,7 @@ int main(void)
         /* USB MSD设备初始化 */
         mass_storage_init();
         os_task_creat(os_task, mass_storage_task, T_100MS);
+        msd_run = TRUE;
     } else {
         /* 数据库初始化 */
         database_init();

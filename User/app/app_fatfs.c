@@ -124,7 +124,8 @@ static void cli_fatfs_config_info(void)
   */
 static void cli_fatfs_firmware_info(void)
 {
-    if (E_NXP_WAITING == nxp_state_get()) {/* 由于fm_buff缓存共用因此做个互锁 */
+    extern uint8_t msd_run_get(void);
+    if (FALSE == msd_run_get()) {   /* 由于fm_buff缓存共用因此做个互锁 */
         print_firmware_backup();
     }
 }
@@ -1704,9 +1705,6 @@ void fatfs_init(void)
 
     /* 遍历打印fatfs中所有文件的路径 */
     fatfs_scan_files(ROOT_PATH);
-
-    /* 每次上电都将系统当前的配置信息，写到system.txt文件中 */
-    system_file_creat();
 
     fatfs_unmount();
 }
