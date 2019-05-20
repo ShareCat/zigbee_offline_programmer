@@ -356,8 +356,8 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
             /* 串口有接收到新数据，复制到Handle.buff后解析 */
             if(TRUE == QUEUE_OUT((*rx_buff), Handle.buff[Handle.len])) {
-                /* '\b'用于删除最近的一个字符 */
-                if ('\b' == Handle.buff[Handle.len]) {
+                /* KEY_BACKSPACE用于删除最近的一个字符 */
+                if (KEY_BACKSPACE == Handle.buff[Handle.len]) {
                     /* 还有缓存的字符就删除最近一个 */
                     if (0 < Handle.len) {
                         /* 实现在secrueCRT上也删除最近输入的一个字符 */
@@ -424,10 +424,10 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
         ---------------------------------------
      */
     if((1 == Handle.len) && (KEY_ENTER == Handle.buff[Handle.len - 1])) {
-        /* 不响应单独的"\r"，控制台按回车就是发送的"\r"给MCU */
+        /* 不响应单独的KEY_ENTER，控制台按回车就是发送的KEY_ENTER给MCU */
         Handle.len = 0;
-    } else if(1 < Handle.len) {  /* 命令长度满足解析条件，因为命令结束"\r"就是1字节了 */
-        /* 命令必须以"\r"结尾 */
+    } else if(1 < Handle.len) {  /* 命令长度满足解析条件，因为命令结束KEY_ENTER就是1字节了 */
+        /* 命令必须以KEY_ENTER结尾 */
         if(KEY_ENTER == Handle.buff[Handle.len - 1]) {
             Handle.buff[Handle.len - 1] = '\0';
 
