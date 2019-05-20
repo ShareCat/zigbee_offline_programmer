@@ -987,6 +987,8 @@ void system_file_creat(void)
 
     FRESULT res_flash;  /* 文件操作结果 */
 
+    fatfs_mount();
+
     config_info_update_from_database();
 
     /* 打开文件，每次都以新建的形式打开，属性为可写 */
@@ -1058,6 +1060,8 @@ void system_file_creat(void)
     }
     /* 不再读写，关闭文件 */
     f_close(&fnew);
+
+    fatfs_unmount();
 }
 
 
