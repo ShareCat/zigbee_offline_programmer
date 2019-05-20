@@ -423,12 +423,12 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
         第二步，解析命令
         ---------------------------------------
      */
-    if((1 == Handle.len) && ('\r' == Handle.buff[Handle.len - 1])) {
+    if((1 == Handle.len) && (KEY_ENTER == Handle.buff[Handle.len - 1])) {
         /* 不响应单独的"\r"，控制台按回车就是发送的"\r"给MCU */
         Handle.len = 0;
     } else if(1 < Handle.len) {  /* 命令长度满足解析条件，因为命令结束"\r"就是1字节了 */
         /* 命令必须以"\r"结尾 */
-        if('\r' == Handle.buff[Handle.len - 1]) {
+        if(KEY_ENTER == Handle.buff[Handle.len - 1]) {
             Handle.buff[Handle.len - 1] = '\0';
 
             /* 循环，寻找匹配的命令 */

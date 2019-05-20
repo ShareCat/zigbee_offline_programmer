@@ -31,6 +31,7 @@
 #define KEY_LEFT_SQUARE     0x5b
 #define KEY_BIG_A           0x41
 #define KEY_BIG_B           0x42
+#define KEY_ENTER           '\r'
 
 
 #if CLI_ENABLE

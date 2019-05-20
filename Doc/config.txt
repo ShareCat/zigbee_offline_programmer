@@ -4,7 +4,7 @@
 #   Author:     Cat                                         #
 #   Email:      843553493@qq.com                            #
 #                                                           #
-#   THIS IS CONFIG FILE, READ THE MANNUAL BEFORE MODIFY !   #
+#   THIS IS CONFIG FILE, PLEASE READ THE MANUAL FIRST !     #
 #                                                           #
 #############################################################
 
