@@ -750,6 +750,26 @@ uint8_t nxp_wait_for_command(void)
 }
 
 
+#ifdef NXP_TEST_MODE
+uint8_t nxp_test_mode = FALSE;
+void nxp_test_mode_set()
+{
+    if (FALSE == nxp_test_mode) {
+        nxp_test_mode = TRUE;
+        PRINTF("nxp_test_mode ON \r\n");
+        download_uart_init(115200);
+        nxp_reset_ctrl(DISABLE);
+        Delay(0xffff);
+        nxp_reset_ctrl(ENABLE);
+    } else {
+        nxp_test_mode = FALSE;
+        PRINTF("nxp_test_mode OFF \r\n");
+        download_uart_init(DOWNLOAD_USART_BAUDRATE_1);
+    }
+}
+#endif
+
+
 /**
   * @brief  NXP_ZIGBEE下载任务
   * @param  None
@@ -759,8 +779,14 @@ void nxp_task(void)
 {
     uint8_t cmd = nxp_wait_for_command();
 
+#ifdef NXP_TEST_MODE
+    if (TRUE == nxp_test_mode) return;
+#endif
+
     switch (nxp_state) {
         case E_NXP_NULL: {
+            nxp_reset_ctrl(ENABLE);
+            nxp_do1_ctrl(ENABLE);
             nxp_state = E_NXP_WAITING;
         }
         //break;    /* 这里就不用break了，直接进入下一个状态，节省20ms */

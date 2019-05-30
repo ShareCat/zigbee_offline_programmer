@@ -146,6 +146,14 @@ void download_usart_dma_rx_handle(void)
         extern void nxp_handle_rx_copy(uint8_t *buff, uint16_t len);
         nxp_handle_rx_copy(download_usart_dma_rx_buff, len);
 
+#ifdef NXP_TEST_MODE
+        extern uint8_t nxp_test_mode;
+        if (TRUE == nxp_test_mode) {
+            download_usart_dma_rx_buff[len] = 0;
+            PRINTF("RX: %s \r\n", download_usart_dma_rx_buff);
+        }
+#endif
+
         //重新设置传输数据长度
         DMA_SetCurrDataCounter(DMA1_Channel5, DOWNLOAD_USART_DMA_RX_BUFF_MAX);
         //打开接收DMA通道，重新接收

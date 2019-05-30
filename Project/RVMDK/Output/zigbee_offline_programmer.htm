@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Mon May 20 15:47:18 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Thu May 30 19:37:28 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1192 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -3391,7 +3391,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_task
 </UL>
 
-<P><STRONG><a name="[56]"></a>nxp_task</STRONG> (Thumb, 2876 bytes, Stack size 24 bytes, app_nxp.o(.text))
+<P><STRONG><a name="[56]"></a>nxp_task</STRONG> (Thumb, 2896 bytes, Stack size 24 bytes, app_nxp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1080<LI>Call Chain = nxp_task &rArr; config_info_max_program_handle_after_program &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_do1_ctrl
@@ -5955,7 +5955,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[221]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_firmware_backup_and_config_info
 </UL>
 
-<P><STRONG><a name="[222]"></a>copy_firmware_to_backup</STRONG> (Thumb, 434 bytes, Stack size 48 bytes, app_fatfs.o(.text))
+<P><STRONG><a name="[222]"></a>copy_firmware_to_backup</STRONG> (Thumb, 496 bytes, Stack size 48 bytes, app_fatfs.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1008<LI>Call Chain = copy_firmware_to_backup &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; spi_flash_buffer_write &rArr; spi_flash_page_write &rArr; spi_flash_write_enable &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_sector_erase

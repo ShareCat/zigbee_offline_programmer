@@ -72,6 +72,11 @@ void enb_button_single_click_handler(void* btn)
 {
     PRINTF("enb single click\r\n");
 
+#ifdef NXP_TEST_MODE
+    extern void nxp_test_mode_set();
+    nxp_test_mode_set();
+#endif
+
     uint8_t event = E_BUZZER_SHORT_SOUND;
     QUEUE_IN(buzzer_queue, event);
     QUEUE_IN(buzzer_queue, event);

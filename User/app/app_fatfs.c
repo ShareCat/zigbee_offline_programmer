@@ -1473,6 +1473,23 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
 
     res_flash = f_open(&fnew, temp_dir, FA_OPEN_EXISTING | FA_READ);
 
+    /*
+        检查OTA头部4个字节：0x0F03000B，如果存在OTA头部，则去掉OTA头部这4字节
+    */
+    /*  文件定位到rd_count位置 */
+    #define NXP_OTA_HAED_SIZE 4
+    res_flash = f_lseek(&fnew, rd_count);
+    /* 读取文件所有内容到缓存区 */
+    res_flash = f_read(&fnew, read_buff, NXP_OTA_HAED_SIZE, &rd_once);
+    if ((0x0F == read_buff[0])
+        && (0x0F == read_buff[0])
+        && (0x0F == read_buff[0])
+        && (0x0F == read_buff[0])) {
+        
+        rd_count = NXP_OTA_HAED_SIZE;
+        p_cfg->file_size -= NXP_OTA_HAED_SIZE;
+    }
+
     if (res_flash == FR_OK) {
         while (rd_count < p_cfg->file_size) {
             /*  文件定位到rd_count位置 */
