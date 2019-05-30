@@ -1482,9 +1482,9 @@ static uint8_t copy_firmware_to_backup(CONFIG_INFO_S *p_cfg)
     /* 读取文件所有内容到缓存区 */
     res_flash = f_read(&fnew, read_buff, NXP_OTA_HAED_SIZE, &rd_once);
     if ((0x0F == read_buff[0])
-        && (0x0F == read_buff[0])
-        && (0x0F == read_buff[0])
-        && (0x0F == read_buff[0])) {
+        && (0x03 == read_buff[1])
+        && (0x00 == read_buff[2])
+        && (0x0B == read_buff[3])) {
         
         rd_count = NXP_OTA_HAED_SIZE;
         p_cfg->file_size -= NXP_OTA_HAED_SIZE;
