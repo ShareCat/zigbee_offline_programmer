@@ -391,6 +391,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
             } else {
                 /* 已全部复制到Handle.buff了 */
+#if CLI_HISTORY
                 uint8_t key = 0;
                 uint8_t err = 0xff;
                 char *p_hist_cmd = 0;
@@ -432,11 +433,14 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                 }
 
                 if (0 == key) {
+#endif
                     /* 将收到的字符发送出去，终端回显 */
                     for (; i < Handle.len; i++) {
                         USART_SendData(DEBUG_USARTx, Handle.buff[i]);
                     }
+#if CLI_HISTORY
                 }
+#endif
                 break;
             }
 
