@@ -225,11 +225,22 @@ static HISTORY_S history;
 static void cli_history_add(char* buff)
 {
     uint16_t len;
+    uint8_t index = history.latest;
 
     if (NULL == buff) return;
 
     len = strlen((const char *)buff);
-    if (len < HANDLE_LEN) {
+    if (len >= HANDLE_LEN) return;  /* 命令长度溢出 */
+
+    /* 定位最近一个历史命令 */
+    if (0 != index) {
+        index--;
+    } else {
+        index = HISTORY_MAX - 1;
+    }
+
+    if (0 != memcmp(history.cmd[index], buff, len)) {
+        /* 和最近一个历史命令不一样，才保存 */
         memset((void *)history.cmd[history.latest], 0x00, HANDLE_LEN);
         memcpy((void *)history.cmd[history.latest], (const void *)buff, len);
         if (history.count < HISTORY_MAX) {
@@ -240,9 +251,9 @@ static void cli_history_add(char* buff)
         if (history.latest >= HISTORY_MAX) {
             history.latest = 0;
         }
-
-        history.show = 0;
     }
+
+    history.show = 0;
 }
 
 
