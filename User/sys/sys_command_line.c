@@ -399,9 +399,15 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                     if (0 != strstr((const char *)Handle.buff, KEY_UP)) {
                         //PRINTF("KEY_UP \r\n");
                         key = 1;
+                        TERMINAL_MOVE_LEFT(Handle.len);
+                        TERMINAL_CLEAR_END();
+                        err = cli_history_show(TRUE, &p_hist_cmd);
                     } else if (0 != strstr((const char *)Handle.buff, KEY_DOWN)) {
                         //PRINTF("KEY_DOWN \r\n");
                         key = 2;
+                        TERMINAL_MOVE_LEFT(Handle.len);
+                        TERMINAL_CLEAR_END();
+                        err = cli_history_show(FALSE, &p_hist_cmd);
                     } else if (0 != strstr((const char *)Handle.buff, KEY_RIGHT)) {
                         //PRINTF("KEY_RIGHT \r\n");
                         key = 3;
@@ -411,20 +417,6 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                     }
 
                     if (0 != key) {
-                        if (1 == key) {
-                            TERMINAL_MOVE_LEFT(Handle.len);
-                            TERMINAL_CLEAR_END();
-                            err = cli_history_show(TRUE, &p_hist_cmd);
-                        } else if (2 == key) {
-                            TERMINAL_MOVE_LEFT(Handle.len);
-                            TERMINAL_CLEAR_END();
-                            err = cli_history_show(FALSE, &p_hist_cmd);
-                        } else if (3 == key) {
-                            /* Ô¤Áô */
-                        } else if (4 == key) {
-                            /* Ô¤Áô */
-                        }
-
                         if (FALSE == err) {
                             memcpy(Handle.buff, p_hist_cmd, strlen(p_hist_cmd));
                             Handle.len = strlen(p_hist_cmd);
