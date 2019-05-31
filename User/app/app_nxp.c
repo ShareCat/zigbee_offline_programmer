@@ -172,7 +172,6 @@ uint8_t cli_nxp(void *para, uint8_t len)
         } else if (0 == strncmp((const char *)pTemp, "dbg 2", strlen("dbg 2"))) {
             /* nxp_test_mode ON */
             nxp_test_mode = TRUE;
-            PRINTF("nxp_test_mode ON \r\n");
             download_uart_init(115200);
             nxp_reset_ctrl(DISABLE);    /* zigbee reseting... */
             Delay(0xffff);

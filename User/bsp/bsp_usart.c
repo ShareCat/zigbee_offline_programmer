@@ -151,7 +151,7 @@ void download_usart_dma_rx_handle(void)
         if (TRUE == nxp_test_mode) {
             download_usart_dma_rx_buff[len] = 0;
             /* 打印zigbbe的调试串口输出的信息 */
-            PRINTF("ZIGBEE debug info: %s \r\n", download_usart_dma_rx_buff);
+            PRINTF_COLOR(E_FONT_PURPLE, "%s", download_usart_dma_rx_buff);
         }
 #endif
 

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Fri May 31 10:28:22 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Fri May 31 10:57:33 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1192 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1615,7 +1615,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CBW_Decode
 </UL>
 
-<P><STRONG><a name="[de]"></a>download_usart_dma_rx_handle</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, bsp_usart.o(.text))
+<P><STRONG><a name="[de]"></a>download_usart_dma_rx_handle</STRONG> (Thumb, 204 bytes, Stack size 16 bytes, bsp_usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = download_usart_dma_rx_handle &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_GetCurrDataCounter
@@ -1717,7 +1717,7 @@ Global Symbols
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_send_byte
 </UL>
 
-<P><STRONG><a name="[fd]"></a>Usart_SendHalfWord</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, bsp_usart.o(.text), UNUSED)
+<P><STRONG><a name="[fd]"></a>Usart_SendHalfWord</STRONG> (Thumb, 176 bytes, Stack size 24 bytes, bsp_usart.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
 </UL>
@@ -1730,7 +1730,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> printfa.o(i.__0printf)
 </UL>
-<P><STRONG><a name="[fe]"></a>fgetc</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, bsp_usart.o(.text), UNUSED)
+<P><STRONG><a name="[fe]"></a>fgetc</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, bsp_usart.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
 </UL>
@@ -3227,7 +3227,7 @@ Global Symbols
 
 <P><STRONG><a name="[2f8]"></a>database_task</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, app_database.o(.text), UNUSED)
 
-<P><STRONG><a name="[5d]"></a>cli_nxp</STRONG> (Thumb, 222 bytes, Stack size 16 bytes, app_nxp.o(.text))
+<P><STRONG><a name="[5d]"></a>cli_nxp</STRONG> (Thumb, 216 bytes, Stack size 16 bytes, app_nxp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = cli_nxp &rArr; download_uart_init &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
@@ -3357,7 +3357,7 @@ Global Symbols
 <LI><a href="#[246]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_download_first_pack
 </UL>
 
-<P><STRONG><a name="[246]"></a>nxp_download_first_pack</STRONG> (Thumb, 580 bytes, Stack size 8 bytes, app_nxp.o(.text))
+<P><STRONG><a name="[246]"></a>nxp_download_first_pack</STRONG> (Thumb, 558 bytes, Stack size 8 bytes, app_nxp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = nxp_download_first_pack &rArr; check_firmware_buff &rArr; get_one_sector_firmware_from_spi_flash &rArr; spi_flash_buffer_read &rArr; spi_flash_send_byte &rArr; spi_timeout_user_callback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[245]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_firmware_buff
@@ -3397,7 +3397,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_task
 </UL>
 
-<P><STRONG><a name="[56]"></a>nxp_task</STRONG> (Thumb, 2910 bytes, Stack size 24 bytes, app_nxp.o(.text))
+<P><STRONG><a name="[56]"></a>nxp_task</STRONG> (Thumb, 2904 bytes, Stack size 24 bytes, app_nxp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1080<LI>Call Chain = nxp_task &rArr; config_info_max_program_handle_after_program &rArr; config_info_save_to_database &rArr; config_info_update_from_database &rArr; database_read &rArr; lfs_file_open &rArr; lfs_file_opencfg &rArr; lfs_fs_forceconsistency &rArr; lfs_fs_deorphan &rArr; lfs_dir_commit &rArr; lfs_dir_compact &rArr; lfs_dir_split &rArr;  lfs_dir_compact (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_do1_ctrl
