@@ -27,14 +27,13 @@
 #define USART_INIT(baud)    debug_usart_init(baud)  /* 串口初始化函数 */
 #define SYSTEM_REBOOT()     NVIC_SystemReset()      /* MCU重启 */
 
-#define KEY_ESCAPE          0x1b
-#define KEY_LEFT_SQUARE     0x5b
-#define KEY_BIG_A           0x41
-#define KEY_BIG_B           0x42
-#define KEY_BIG_C           0x43
-#define KEY_BIG_D           0x44
-#define KEY_ENTER           '\r'    /* 回车键 */
-#define KEY_BACKSPACE       '\b'    /* 回格键 */
+
+#define KEY_UP              "\x1b\x5b\x41"  /* [上方向]键：0x1b 0x5b 0x41 */
+#define KEY_DOWN            "\x1b\x5b\x42"  /* [下方向]键：0x1b 0x5b 0x42 */
+#define KEY_RIGHT           "\x1b\x5b\x43"  /* [右方向]键：0x1b 0x5b 0x43 */
+#define KEY_LEFT            "\x1b\x5b\x44"  /* [左方向]键：0x1b 0x5b 0x44 */
+#define KEY_ENTER           '\r'            /* 回车键 */
+#define KEY_BACKSPACE       '\b'            /* 回格键 */
 
 
 #if CLI_ENABLE

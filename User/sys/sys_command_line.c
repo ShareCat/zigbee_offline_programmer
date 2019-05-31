@@ -356,7 +356,7 @@ void cli_init(uint32_t baud)
 static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 {
     static HANDLE_TYPE_S Handle = {.len = 0};
-    uint8_t i;
+    uint8_t i = Handle.len;;
     uint8_t ParaLen;
     uint8_t *ParaAddr;
     uint8_t cmd_match = FALSE;
@@ -383,35 +383,46 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                     }
 
                 } else {
-                    /* 将收到的字符发送出去，终端回显 */
-                    if ((KEY_ESCAPE != Handle.buff[Handle.len])
-                        && (KEY_LEFT_SQUARE != Handle.buff[Handle.len])) {
-
-                        USART_SendData(DEBUG_USARTx, Handle.buff[Handle.len]);
-                    }
                     //PRINTF("%02x ", Handle.buff[Handle.len]);
 
                     /* 是正常字符，不是删除键 */
                     Handle.len++;
+                }
 
-#if CLI_HISTORY
-                    uint8_t err = 0xff;
-                    char *p_hist_cmd = 0;
-                    if (Handle.len > 2) {
-                        if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
-                            && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
-                            && (KEY_BIG_A == Handle.buff[Handle.len - 1])) {
-                            /* [上方向]键被按下，会收到：0x1b 0x5b 0x41 */
+            } else {
+                /* 已全部复制到Handle.buff了 */
+                uint8_t key = 0;
+                uint8_t err = 0xff;
+                char *p_hist_cmd = 0;
+
+                if (Handle.len > 2) {
+                    if (0 != strstr((const char *)Handle.buff, KEY_UP)) {
+                        //PRINTF("KEY_UP \r\n");
+                        key = 1;
+                    } else if (0 != strstr((const char *)Handle.buff, KEY_DOWN)) {
+                        //PRINTF("KEY_DOWN \r\n");
+                        key = 2;
+                    } else if (0 != strstr((const char *)Handle.buff, KEY_RIGHT)) {
+                        //PRINTF("KEY_RIGHT \r\n");
+                        key = 3;
+                    } else if (0 != strstr((const char *)Handle.buff, KEY_LEFT)) {
+                        //PRINTF("KEY_LEFT \r\n");
+                        key = 4;
+                    }
+
+                    if (0 != key) {
+                        if (1 == key) {
                             TERMINAL_MOVE_LEFT(Handle.len);
                             TERMINAL_CLEAR_END();
                             err = cli_history_show(TRUE, &p_hist_cmd);
-                        } else if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
-                            && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
-                            && (KEY_BIG_B == Handle.buff[Handle.len - 1])) {
-                            /* [下方向]键被按下，会收到：0x1b 0x5b 0x42 */
+                        } else if (2 == key) {
                             TERMINAL_MOVE_LEFT(Handle.len);
                             TERMINAL_CLEAR_END();
                             err = cli_history_show(FALSE, &p_hist_cmd);
+                        } else if (3 == key) {
+                            /* 预留 */
+                        } else if (4 == key) {
+                            /* 预留 */
                         }
 
                         if (FALSE == err) {
@@ -419,18 +430,21 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                             Handle.len = strlen(p_hist_cmd);
                             Handle.buff[Handle.len] = '\0';
                             PRINTF("%s", Handle.buff);  /* 显示查询的命令 */
-                        } else if (TRUE == err) {
+                        } else if ((TRUE == err) || (0 != key)) {
                             /* 刚上电，没有任何历史命令，因此查询为空 */
                             TERMINAL_MOVE_LEFT(Handle.len);
                             TERMINAL_CLEAR_END();
-                            Handle.len = 0;
+                            memset(&Handle, 0x00, sizeof(Handle));
                         }
                     }
-#endif
                 }
 
-            } else {
-                /* 已全部复制到Handle.buff了 */
+                if (0 == key) {
+                    /* 将收到的字符发送出去，终端回显 */
+                    for (; i < Handle.len; i++) {
+                        USART_SendData(DEBUG_USARTx, Handle.buff[i]);
+                    }
+                }
                 break;
             }
 
