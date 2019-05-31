@@ -130,6 +130,8 @@ uint8_t fm_buff[FM_BUFF_SIZE];
 uint8_t nxp_dbg_en = FALSE;
 #ifdef NXP_CLI_DEBUG
 
+uint8_t nxp_test_mode = FALSE;
+
 /**
   * @brief  NXP信息查看
   * @param  None
@@ -166,6 +168,16 @@ uint8_t cli_nxp(void *para, uint8_t len)
             nxp_dbg_en = FALSE;
             NL1();
             DBG("nxp debug off\r\n");
+            nxp_test_mode = FALSE;
+        } else if (0 == strncmp((const char *)pTemp, "dbg 2", strlen("dbg 2"))) {
+            /* nxp_test_mode ON */
+            nxp_test_mode = TRUE;
+            PRINTF("nxp_test_mode ON \r\n");
+            download_uart_init(115200);
+            nxp_reset_ctrl(DISABLE);    /* zigbee reseting... */
+            Delay(0xffff);
+            nxp_reset_ctrl(ENABLE);     /* zigbee reset done */
+            NL1();
         } else {
             /* 参数有错 */
             return FALSE;
@@ -750,26 +762,6 @@ uint8_t nxp_wait_for_command(void)
 }
 
 
-#ifdef NXP_TEST_MODE
-uint8_t nxp_test_mode = FALSE;
-void nxp_test_mode_set()
-{
-    if (FALSE == nxp_test_mode) {
-        nxp_test_mode = TRUE;
-        PRINTF("nxp_test_mode ON \r\n");
-        download_uart_init(115200);
-        nxp_reset_ctrl(DISABLE);
-        Delay(0xffff);
-        nxp_reset_ctrl(ENABLE);
-    } else {
-        nxp_test_mode = FALSE;
-        PRINTF("nxp_test_mode OFF \r\n");
-        download_uart_init(DOWNLOAD_USART_BAUDRATE_1);
-    }
-}
-#endif
-
-
 /**
   * @brief  NXP_ZIGBEE下载任务
   * @param  None
@@ -779,8 +771,8 @@ void nxp_task(void)
 {
     uint8_t cmd = nxp_wait_for_command();
 
-#ifdef NXP_TEST_MODE
-    if (TRUE == nxp_test_mode) return;
+#ifdef NXP_CLI_DEBUG
+    if (TRUE == nxp_test_mode) return;  /* 测试模式，不允许下载 */
 #endif
 
     switch (nxp_state) {

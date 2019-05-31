@@ -146,11 +146,12 @@ void download_usart_dma_rx_handle(void)
         extern void nxp_handle_rx_copy(uint8_t *buff, uint16_t len);
         nxp_handle_rx_copy(download_usart_dma_rx_buff, len);
 
-#ifdef NXP_TEST_MODE
+#ifdef NXP_CLI_DEBUG
         extern uint8_t nxp_test_mode;
         if (TRUE == nxp_test_mode) {
             download_usart_dma_rx_buff[len] = 0;
-            PRINTF("RX: %s \r\n", download_usart_dma_rx_buff);
+            /* 打印zigbbe的调试串口输出的信息 */
+            PRINTF("ZIGBEE debug info: %s \r\n", download_usart_dma_rx_buff);
         }
 #endif
 
