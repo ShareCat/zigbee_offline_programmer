@@ -258,16 +258,18 @@ static void cli_history_add(char* buff)
 
 
 /**
-  * @brief          查看历史记录
-  * @param  mode:   TRUE查看上一个，FALSE查看下一个
-  * @retval         历史记录
+  * @brief              查看历史记录
+  * @param  mode:       TRUE查看上一个，FALSE查看下一个
+  * @param  p_history:  指向查询到的历史记录
+  * @retval             TRUE表示没有历史记录，FALSE表示查询成功
   */
-static char* cli_history_show(uint8_t mode)
+static uint8_t cli_history_show(uint8_t mode, char** p_history)
 {
+    uint8_t err = TRUE;
     uint8_t num;
     uint8_t index;
 
-    if (0 == history.count) return 0;
+    if (0 == history.count) return err;
 
     if (TRUE == mode) {
         /* 上一个历史命令 */
@@ -292,9 +294,11 @@ static char* cli_history_show(uint8_t mode)
         num--;
     }
 
+    err = FALSE;
+    *p_history = history.cmd[index];
     //PRINTF("history: %s \r\n", history.cmd[index]);
 
-    return history.cmd[index];
+    return err;
 }
 
 #endif
@@ -391,29 +395,35 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                     Handle.len++;
 
 #if CLI_HISTORY
+                    uint8_t err = 0xff;
                     char *p_hist_cmd = 0;
                     if (Handle.len > 2) {
                         if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
                             && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
                             && (KEY_BIG_A == Handle.buff[Handle.len - 1])) {
-                            /* [上方向]键被按下 */
+                            /* [上方向]键被按下，会收到：0x1b 0x5b 0x41 */
                             TERMINAL_MOVE_LEFT(Handle.len);
                             TERMINAL_CLEAR_END();
-                            p_hist_cmd = cli_history_show(TRUE);
+                            err = cli_history_show(TRUE, &p_hist_cmd);
                         } else if ((KEY_ESCAPE == Handle.buff[Handle.len - 3])
                             && (KEY_LEFT_SQUARE == Handle.buff[Handle.len - 2])
                             && (KEY_BIG_B == Handle.buff[Handle.len - 1])) {
-                            /* [下方向]键被按下 */
+                            /* [下方向]键被按下，会收到：0x1b 0x5b 0x42 */
                             TERMINAL_MOVE_LEFT(Handle.len);
                             TERMINAL_CLEAR_END();
-                            p_hist_cmd = cli_history_show(FALSE);
+                            err = cli_history_show(FALSE, &p_hist_cmd);
                         }
 
-                        if (0 != p_hist_cmd) {
+                        if (FALSE == err) {
                             memcpy(Handle.buff, p_hist_cmd, strlen(p_hist_cmd));
                             Handle.len = strlen(p_hist_cmd);
                             Handle.buff[Handle.len] = '\0';
                             PRINTF("%s", Handle.buff);  /* 显示查询的命令 */
+                        } else if (TRUE == err) {
+                            /* 刚上电，没有任何历史命令，因此查询为空 */
+                            TERMINAL_MOVE_LEFT(Handle.len);
+                            TERMINAL_CLEAR_END();
+                            Handle.len = 0;
                         }
                     }
 #endif

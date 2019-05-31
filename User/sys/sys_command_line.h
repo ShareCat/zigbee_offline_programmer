@@ -31,6 +31,8 @@
 #define KEY_LEFT_SQUARE     0x5b
 #define KEY_BIG_A           0x41
 #define KEY_BIG_B           0x42
+#define KEY_BIG_C           0x43
+#define KEY_BIG_D           0x44
 #define KEY_ENTER           '\r'    /* 回车键 */
 #define KEY_BACKSPACE       '\b'    /* 回格键 */
 
