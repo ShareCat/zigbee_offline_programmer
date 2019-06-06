@@ -419,6 +419,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
                     if (0 != key) {
                         if (FALSE == err) {
+                            memset(&Handle, 0x00, sizeof(Handle));
                             memcpy(Handle.buff, p_hist_cmd, strlen(p_hist_cmd));
                             Handle.len = strlen(p_hist_cmd);
                             Handle.buff[Handle.len] = '\0';
@@ -432,7 +433,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                     }
                 }
 
-                if (0 == key) {
+                if ((0 == key) && (i < Handle.len)) {
 #endif
                     /* 将收到的字符发送出去，终端回显 */
                     for (; i < Handle.len; i++) {
