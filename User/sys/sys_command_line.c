@@ -382,10 +382,13 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                         Handle.len -= 1;
                     }
 
+                } else if (KEY_HORIZONTAL_TAB == Handle.buff[Handle.len]) {
+                    /* 命令行补全 */
+                    
                 } else {
-                    //PRINTF("%02x ", Handle.buff[Handle.len]);
+                    //PRINTF("%02x ", Handle.buff[Handle.len]); /* debug */
 
-                    /* 是正常字符，不是删除键 */
+                    /* 是正常字符，不是删除键，也不是水平制表键 */
                     Handle.len++;
                 }
 

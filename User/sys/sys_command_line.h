@@ -34,6 +34,8 @@
 #define KEY_LEFT            "\x1b\x5b\x44"  /* [左方向]键：0x1b 0x5b 0x44 */
 #define KEY_ENTER           '\r'            /* 回车键 */
 #define KEY_BACKSPACE       '\b'            /* 回格键 */
+#define KEY_HORIZONTAL_TAB  '\t'            /* 水平制表键 */
+#define KEY_VERTICAL_TAB    '\v'            /* 垂直制表键 */
 
 
 #if CLI_ENABLE

@@ -674,7 +674,7 @@ void debug_usart_rx_handle(void)
     if(USART_GetITStatus(DEBUG_USARTx, USART_IT_RXNE) != RESET) {
         ucTemp = USART_ReceiveData(DEBUG_USARTx);
         QUEUE_IN(cli_rx_buff, ucTemp);
-        //printf("%02x", ucTemp);
+        //printf("%02x ", ucTemp);  /* debug */
     }
 }
 
