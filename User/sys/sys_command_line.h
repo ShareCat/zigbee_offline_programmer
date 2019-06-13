@@ -21,7 +21,8 @@
 /* Macro config --------------------------------------------------------------*/
 #define CLI_ENABLE          TRUE                    /* 是否使用命令行 */
 #define CLI_HISTORY         TRUE                    /* 是否使用历史记录 */
-#define HISTORY_MAX         10                      /* 历史记录个数 */
+#define CLI_HISTORY_MAX     10                      /* 存储历史记录个数 */
+#define CLI_LOGIN           TRUE                    /* 是否需要登录 */
 #define CLI_PRINTF          TRUE                    /* 串口打印调试 */
 #define CLI_BAUDRATE        ((uint32_t)768000)      /* 串口波特率 */
 #define USART_INIT(baud)    debug_usart_init(baud)  /* 串口初始化函数 */

@@ -208,7 +208,7 @@ static uint8_t cli_reboot(void *para, uint8_t len)
 #if CLI_HISTORY
 
 __packed typedef struct {
-    char cmd[HISTORY_MAX][HANDLE_LEN];
+    char cmd[CLI_HISTORY_MAX][HANDLE_LEN];
     uint8_t count;
     uint8_t latest;
     uint8_t show;
@@ -220,7 +220,7 @@ static HISTORY_S history;
 /**
   * @brief          添加一个历史记录
   * @param  buff:   历史记录
-  * @retval         无
+  * @retval         null
   */
 static void cli_history_add(char* buff)
 {
@@ -236,19 +236,19 @@ static void cli_history_add(char* buff)
     if (0 != index) {
         index--;
     } else {
-        index = HISTORY_MAX - 1;
+        index = CLI_HISTORY_MAX - 1;
     }
 
     if (0 != memcmp(history.cmd[index], buff, len)) {
         /* 和最近一个历史命令不一样，才保存 */
         memset((void *)history.cmd[history.latest], 0x00, HANDLE_LEN);
         memcpy((void *)history.cmd[history.latest], (const void *)buff, len);
-        if (history.count < HISTORY_MAX) {
+        if (history.count < CLI_HISTORY_MAX) {
             history.count++;
         }
 
         history.latest++;
-        if (history.latest >= HISTORY_MAX) {
+        if (history.latest >= CLI_HISTORY_MAX) {
             history.latest = 0;
         }
     }
@@ -289,7 +289,7 @@ static uint8_t cli_history_show(uint8_t mode, char** p_history)
         if (0 != index) {
             index--;
         } else {
-            index = HISTORY_MAX - 1;
+            index = CLI_HISTORY_MAX - 1;
         }
         num--;
     }
@@ -297,6 +297,99 @@ static uint8_t cli_history_show(uint8_t mode, char** p_history)
     err = FALSE;
     *p_history = history.cmd[index];
     //PRINTF("history: %s \r\n", history.cmd[index]);
+
+    return err;
+}
+
+#endif
+
+
+#if CLI_LOGIN
+
+#define CLI_LOGIN_PASSWORD  "root"  /* 登录密码 */
+#define CLI_LOGIN_ERR_MAX   3       /* 密码输入错误达到3次，就锁定，直到下次重启 */
+#define CLI_LOGIN_TIME      600     /* 600秒没有收到命令，自动退出 */
+
+__packed typedef struct {
+    uint8_t flag :1;
+    uint8_t err_count :7;
+
+#if CLI_LOGIN_TIME
+    uint16_t timer;
+#endif
+}LOGIN_S;
+
+static LOGIN_S login;
+
+
+/**
+  * @brief  登录初始化
+  * @param  null
+  * @retval null
+  */
+static void cli_login_init(void)
+{
+    memset(&login, 0x00, sizeof(login));
+    PRINTF_COLOR(E_FONT_WHITE, "login password required \r\n\r\n");
+}
+
+#if CLI_LOGIN_TIME
+/**
+  * @brief  超时自动退出登录
+  * @param  login_timer_run被调用的周期，单位ms
+  * @retval null
+  */
+static void cli_login_timer_run(uint16_t n_ms)
+{
+    static uint8_t i = 0;
+    uint16_t temp = 1000 / n_ms;
+
+    if (TRUE == login.flag) {
+        if (i++ > temp) {
+            if (login.timer++ > CLI_LOGIN_TIME) {
+                login.flag = FALSE;
+                login.timer = 0;
+                PRINTF_COLOR(E_FONT_WHITE, "logout \r\n");
+            }
+            i = 0;
+        }
+    }
+}
+#endif
+
+/**
+  * @brief  登录密码判断
+  * @param  输入的密码
+  * @retval TRUE表示密码错误，FALSE表示密码正确
+  */
+static uint8_t cli_login_password_check(char* p_str)
+{
+    uint8_t err = TRUE;
+    uint16_t len1 = strlen(CLI_LOGIN_PASSWORD);
+    uint16_t len2 = strlen(p_str);
+
+    if (CLI_LOGIN_ERR_MAX > login.err_count) {
+        if ((len1 == len2) && (0 == memcmp(CLI_LOGIN_PASSWORD, p_str, len1))) {
+            login.flag = TRUE;
+            login.err_count = 0;
+
+#if CLI_LOGIN_TIME
+            login.timer = 0;
+#endif
+
+            err = FALSE;
+            PRINTF_COLOR(E_FONT_WHITE, "login success \r\n");
+        } else {
+            login.flag = FALSE;
+            login.err_count++;
+            PRINTF_COLOR(E_FONT_WHITE, "login password error! \r\n>");
+        }
+    } else {
+        /* 密码输入错误达到3次，就锁定，后续不管输入什么密码都提示错误，即使输入的
+        是正确的密码。也就是说只有刚开始3次机会输入正确密码才行 */
+        login.flag = FALSE;
+        PRINTF_COLOR(E_FONT_WHITE, "login password error! \r\n>");
+    }
 
     return err;
 }
@@ -340,11 +433,15 @@ void cli_init(uint32_t baud)
 
     PRINTF_COLOR(E_FONT_YELLOW, "-------------------------------\r\n\r\n");
     TERMINAL_HIGH_LIGHT();
-    PRINTF("    CLI version: V0.6          \r\n\r\n");
+    PRINTF("    CLI version: V0.7          \r\n\r\n");
     PRINTF("    coder: Cat                 \r\n\r\n");
     PRINTF("    Email: 843553493@qq.com    \r\n\r\n");
     TERMINAL_UN_HIGH_LIGHT();
     PRINTF_COLOR(E_FONT_YELLOW, "-------------------------------\r\n\r\n");
+
+#if CLI_LOGIN
+    cli_login_init();
+#endif
 }
 
 
@@ -383,11 +480,9 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                     }
 
                 } else if (KEY_HORIZONTAL_TAB == Handle.buff[Handle.len]) {
-                    /* 命令行补全 */
+                    /* 按下水平制表键实现命令行补全 */
                     
                 } else {
-                    //PRINTF("%02x ", Handle.buff[Handle.len]); /* debug */
-
                     /* 是正常字符，不是删除键，也不是水平制表键 */
                     Handle.len++;
                 }
@@ -466,6 +561,14 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
         if(KEY_ENTER == Handle.buff[Handle.len - 1]) {
             Handle.buff[Handle.len - 1] = '\0';
 
+#if CLI_LOGIN
+            if (FALSE == login.flag) {
+                cli_login_password_check((char *)Handle.buff);
+                memset(&Handle, 0x00, sizeof(Handle));
+                return; /* 没有登录成功，就不处理任何命令 */
+            }
+#endif
+
             /* 循环，寻找匹配的命令 */
             for(i = 0; i < sizeof(CLI_Cmd) / sizeof(COMMAND_S); i++) {
                 if(0 == strncmp((const char *)Handle.buff,
@@ -542,6 +645,10 @@ void cli_task(void)
 {
     cli_rx_handle(&cli_rx_buff);
     cli_tx_handle();
+
+#if CLI_LOGIN_TIME
+    cli_login_timer_run(20);
+#endif
 }
 
 
