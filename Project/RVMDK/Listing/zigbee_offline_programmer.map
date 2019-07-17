@@ -1,4 +1,4 @@
-Component: ARM Compiler 5.06 update 3 (build 300) Tool: armlink [4d35c9]
+Component: ARM Compiler 5.06 update 6 (build 750) Tool: armlink [4d35ed]
 
 ==============================================================================
 
@@ -1950,198 +1950,198 @@ Memory Map of the image
 
   Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000151c4, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x00015038])
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00014f54, Max: 0x00020000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00014f54, Max: 0x00020000, ABSOLUTE)
 
-    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x08000000   0x000000ec   Data   RO            3    RESET               startup_stm32f10x_md.o
-    0x080000ec   0x00000000   Code   RO         1516  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x080000ec   0x00000004   Code   RO         1840    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x080000f0   0x00000004   Code   RO         1843    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x080000f4   0x00000000   Code   RO         1845    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x080000f4   0x00000000   Code   RO         1847    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x080000f4   0x00000008   Code   RO         1848    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x080000fc   0x00000000   Code   RO         1850    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x080000fc   0x00000000   Code   RO         1852    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x080000fc   0x00000004   Code   RO         1841    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x08000100   0x00000024   Code   RO            4    .text               startup_stm32f10x_md.o
-    0x08000124   0x000001e0   Code   RO           24    .text               system_stm32f10x.o
-    0x08000304   0x000000dc   Code   RO          106    .text               misc.o
-    0x080003e0   0x00000254   Code   RO          215    .text               stm32f10x_dma.o
-    0x08000634   0x0000035c   Code   RO          263    .text               stm32f10x_gpio.o
-    0x08000990   0x00000040   Code   RO          290    .text               stm32f10x_iwdg.o
-    0x080009d0   0x000003a4   Code   RO          314    .text               stm32f10x_rcc.o
-    0x08000d74   0x0000030c   Code   RO          352    .text               stm32f10x_spi.o
-    0x08001080   0x00000408   Code   RO          376    .text               stm32f10x_usart.o
-    0x08001488   0x00000b50   Code   RO          403    .text               usb_core.o
-    0x08001fd8   0x0000003c   Code   RO          454    .text               usb_init.o
-    0x08002014   0x0000033c   Code   RO          477    .text               usb_int.o
-    0x08002350   0x0000005c   Code   RO          501    .text               usb_mem.o
-    0x080023ac   0x00000808   Code   RO          513    .text               usb_regs.o
-    0x08002bb4   0x00000080   Code   RO          525    .text               usb_sil.o
-    0x08002c34   0x00000144   Code   RO          537    .text               hw_config.o
-    0x08002d78   0x000000d8   Code   RO          566    .text               mass_mal.o
-    0x08002e50   0x00000218   Code   RO          603    .text               memory.o
-    0x08003068   0x0000044c   Code   RO          642    .text               usb_bot.o
-    0x080034b4   0x00000010   Code   RO          672    .text               usb_endp.o
-    0x080034c4   0x00000050   Code   RO          687    .text               usb_istr.o
-    0x08003514   0x00000268   Code   RO          705    .text               usb_prop.o
-    0x0800377c   0x00000148   Code   RO          732    .text               usb_pwr.o
-    0x080038c4   0x0000041c   Code   RO          750    .text               usb_scsi.o
-    0x08003ce0   0x0000050c   Code   RO          763    .text               bsp_usart.o
-    0x080041ec   0x0000002e   Code   RO          789    .text               bsp_iwdg.o
-    0x0800421a   0x00000002   PAD
-    0x0800421c   0x0000007c   Code   RO          804    .text               bsp_systick.o
-    0x08004298   0x0000057c   Code   RO          830    .text               bsp_spi.o
-    0x08004814   0x00000094   Code   RO          857    .text               bsp_button.o
-    0x080048a8   0x0000007c   Code   RO          891    .text               bsp_nxp.o
-    0x08004924   0x0000004c   Code   RO          906    .text               bsp_buzzer.o
-    0x08004970   0x00000c44   Code   RO          921    .text               sys_command_line.o
-    0x080055b4   0x000000ce   Code   RO          959    .text               sys_queue.o
-    0x08005682   0x00000002   PAD
-    0x08005684   0x00000580   Code   RO          971    .text               sys_scheduler.o
-    0x08005c04   0x000008ac   Code   RO         1006    .text               cm_backtrace.o
-    0x080064b0   0x0000000c   Code   RO         1049    .text               cmb_fault.o
-    0x080064bc   0x00000120   Code   RO         1053    .text               util.o
-    0x080065dc   0x00000148   Code   RO         1068    .text               diskio.o
-    0x08006724   0x00002ee8   Code   RO         1095    .text               ff.o
-    0x0800960c   0x000000a8   Code   RO         1122    .text               ccsbcs.o
-    0x080096b4   0x0000003c   Code   RO         1145    .text               lfs_util.o
-    0x080096f0   0x00004430   Code   RO         1177    .text               lfs.o
-    0x0800db20   0x000002d0   Code   RO         1199    .text               button.o
-    0x0800ddf0   0x00000114   Code   RO         1216    .text               app_mass_storage.o
-    0x0800df04   0x00001e28   Code   RO         1262    .text               app_fatfs.o
-    0x0800fd2c   0x000002a0   Code   RO         1300    .text               app_button.o
-    0x0800ffcc   0x000001b8   Code   RO         1346    .text               app_database.o
-    0x08010184   0x00001708   Code   RO         1368    .text               app_nxp.o
-    0x0801188c   0x00000190   Code   RO         1417    .text               app_buzzer.o
-    0x08011a1c   0x000000f8   Code   RO         1439    .text               main.o
-    0x08011b14   0x00000054   Code   RO         1495    .text               stm32f10x_it.o
-    0x08011b68   0x00000024   Code   RO         1519    .text               mc_w.l(memcpya.o)
-    0x08011b8c   0x00000024   Code   RO         1521    .text               mc_w.l(memseta.o)
-    0x08011bb0   0x00000024   Code   RO         1523    .text               mc_w.l(strstr.o)
-    0x08011bd4   0x00000018   Code   RO         1525    .text               mc_w.l(strncpy.o)
-    0x08011bec   0x00000014   Code   RO         1527    .text               mc_w.l(strchr.o)
-    0x08011c00   0x0000000e   Code   RO         1529    .text               mc_w.l(strlen.o)
-    0x08011c0e   0x0000001a   Code   RO         1531    .text               mc_w.l(memcmp.o)
-    0x08011c28   0x00000012   Code   RO         1533    .text               mc_w.l(strcpy.o)
-    0x08011c3a   0x0000001e   Code   RO         1535    .text               mc_w.l(strncmp.o)
-    0x08011c58   0x0000001c   Code   RO         1537    .text               mc_w.l(strspn.o)
-    0x08011c74   0x00000022   Code   RO         1539    .text               mc_w.l(strcspn.o)
-    0x08011c96   0x00000064   Code   RO         1832    .text               mf_w.l(fmul.o)
-    0x08011cfa   0x0000007c   Code   RO         1834    .text               mf_w.l(fdiv.o)
-    0x08011d76   0x0000000a   Code   RO         1836    .text               mf_w.l(ffltui.o)
-    0x08011d80   0x00000026   Code   RO         1838    .text               mf_w.l(f2d.o)
-    0x08011da6   0x0000002c   Code   RO         1855    .text               mc_w.l(uidiv.o)
-    0x08011dd2   0x00000062   Code   RO         1857    .text               mc_w.l(uldiv.o)
-    0x08011e34   0x00000000   Code   RO         1861    .text               mc_w.l(iusefp.o)
-    0x08011e34   0x0000006e   Code   RO         1862    .text               mf_w.l(fepilogue.o)
-    0x08011ea2   0x0000014e   Code   RO         1864    .text               mf_w.l(dadd.o)
-    0x08011ff0   0x000000e4   Code   RO         1866    .text               mf_w.l(dmul.o)
-    0x080120d4   0x000000de   Code   RO         1868    .text               mf_w.l(ddiv.o)
-    0x080121b2   0x00000030   Code   RO         1870    .text               mf_w.l(dfixul.o)
-    0x080121e2   0x00000002   PAD
-    0x080121e4   0x00000030   Code   RO         1872    .text               mf_w.l(cdrcmple.o)
-    0x08012214   0x00000024   Code   RO         1874    .text               mc_w.l(init.o)
-    0x08012238   0x0000001e   Code   RO         1876    .text               mc_w.l(llshl.o)
-    0x08012256   0x00000020   Code   RO         1878    .text               mc_w.l(llushr.o)
-    0x08012276   0x00000024   Code   RO         1880    .text               mc_w.l(llsshr.o)
-    0x0801229a   0x000000ba   Code   RO         1882    .text               mf_w.l(depilogue.o)
-    0x08012354   0x00000056   Code   RO         1892    .text               mc_w.l(__dczerorl2.o)
-    0x080123aa   0x00000002   PAD
-    0x080123ac   0x00000020   Code   RO         1776    i.__0printf         mc_w.l(printfa.o)
-    0x080123cc   0x00000028   Code   RO         1778    i.__0sprintf        mc_w.l(printfa.o)
-    0x080123f4   0x00000030   Code   RO         1188    i.__ARM_pop         lfs.o
-    0x08012424   0x0000000e   Code   RO         1886    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08012432   0x00000002   Code   RO         1887    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08012434   0x0000000e   Code   RO         1888    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x08012442   0x00000002   PAD
-    0x08012444   0x00000184   Code   RO         1783    i._fp_digits        mc_w.l(printfa.o)
-    0x080125c8   0x000006dc   Code   RO         1784    i._printf_core      mc_w.l(printfa.o)
-    0x08012ca4   0x00000024   Code   RO         1785    i._printf_post_padding  mc_w.l(printfa.o)
-    0x08012cc8   0x0000002e   Code   RO         1786    i._printf_pre_padding  mc_w.l(printfa.o)
-    0x08012cf6   0x0000000a   Code   RO         1788    i._sputc            mc_w.l(printfa.o)
-    0x08012d00   0x00000050   Code   RO         1804    i.free              mc_w.l(malloc.o)
-    0x08012d50   0x0000006c   Code   RO         1805    i.malloc            mc_w.l(malloc.o)
-    0x08012dbc   0x00000092   Data   RO          659    .constdata          usb_desc.o
-    0x08012e4e   0x0000001a   Data   RO          831    .constdata          bsp_spi.o
-    0x08012e68   0x000000ee   Data   RO          923    .constdata          sys_command_line.o
-    0x08012f56   0x0000000e   Data   RO          973    .constdata          sys_scheduler.o
-    0x08012f64   0x000000dc   Data   RO         1008    .constdata          cm_backtrace.o
-    0x08013040   0x000000ba   Data   RO         1096    .constdata          ff.o
-    0x080130fa   0x000008b8   Data   RO         1123    .constdata          ccsbcs.o
-    0x080139b2   0x00000002   PAD
-    0x080139b4   0x00000040   Data   RO         1146    .constdata          lfs_util.o
-    0x080139f4   0x000001c0   Data   RO         1178    .constdata          lfs.o
-    0x08013bb4   0x000000bd   Data   RO         1264    .constdata          app_fatfs.o
-    0x08013c71   0x00000003   PAD
-    0x08013c74   0x00000048   Data   RO         1348    .constdata          app_database.o
-    0x08013cbc   0x0000007a   Data   RO         1370    .constdata          app_nxp.o
-    0x08013d36   0x00000002   PAD
-    0x08013d38   0x00000133   Data   RO          924    .conststring        sys_command_line.o
-    0x08013e6b   0x00000001   PAD
-    0x08013e6c   0x00000815   Data   RO         1009    .conststring        cm_backtrace.o
-    0x08014681   0x00000003   PAD
-    0x08014684   0x00000009   Data   RO         1179    .conststring        lfs.o
-    0x0801468d   0x00000003   PAD
-    0x08014690   0x00000868   Data   RO         1265    .conststring        app_fatfs.o
-    0x08014ef8   0x0000003b   Data   RO         1371    .conststring        app_nxp.o
-    0x08014f33   0x00000001   PAD
-    0x08014f34   0x00000020   Data   RO         1884    Region$$Table       anon$$obj.o
+    0x08000000   0x08000000   0x000000ec   Data   RO            3    RESET               startup_stm32f10x_md.o
+    0x080000ec   0x080000ec   0x00000000   Code   RO         1516  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x080000ec   0x080000ec   0x00000004   Code   RO         1840    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x080000f0   0x080000f0   0x00000004   Code   RO         1843    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x080000f4   0x080000f4   0x00000000   Code   RO         1845    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x080000f4   0x080000f4   0x00000000   Code   RO         1847    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x080000f4   0x080000f4   0x00000008   Code   RO         1848    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x080000fc   0x080000fc   0x00000000   Code   RO         1850    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x080000fc   0x080000fc   0x00000000   Code   RO         1852    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x080000fc   0x080000fc   0x00000004   Code   RO         1841    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000100   0x08000100   0x00000024   Code   RO            4    .text               startup_stm32f10x_md.o
+    0x08000124   0x08000124   0x000001e0   Code   RO           24    .text               system_stm32f10x.o
+    0x08000304   0x08000304   0x000000dc   Code   RO          106    .text               misc.o
+    0x080003e0   0x080003e0   0x00000254   Code   RO          215    .text               stm32f10x_dma.o
+    0x08000634   0x08000634   0x0000035c   Code   RO          263    .text               stm32f10x_gpio.o
+    0x08000990   0x08000990   0x00000040   Code   RO          290    .text               stm32f10x_iwdg.o
+    0x080009d0   0x080009d0   0x000003a4   Code   RO          314    .text               stm32f10x_rcc.o
+    0x08000d74   0x08000d74   0x0000030c   Code   RO          352    .text               stm32f10x_spi.o
+    0x08001080   0x08001080   0x00000408   Code   RO          376    .text               stm32f10x_usart.o
+    0x08001488   0x08001488   0x00000b50   Code   RO          403    .text               usb_core.o
+    0x08001fd8   0x08001fd8   0x0000003c   Code   RO          454    .text               usb_init.o
+    0x08002014   0x08002014   0x0000033c   Code   RO          477    .text               usb_int.o
+    0x08002350   0x08002350   0x0000005c   Code   RO          501    .text               usb_mem.o
+    0x080023ac   0x080023ac   0x00000808   Code   RO          513    .text               usb_regs.o
+    0x08002bb4   0x08002bb4   0x00000080   Code   RO          525    .text               usb_sil.o
+    0x08002c34   0x08002c34   0x00000144   Code   RO          537    .text               hw_config.o
+    0x08002d78   0x08002d78   0x000000d8   Code   RO          566    .text               mass_mal.o
+    0x08002e50   0x08002e50   0x00000218   Code   RO          603    .text               memory.o
+    0x08003068   0x08003068   0x0000044c   Code   RO          642    .text               usb_bot.o
+    0x080034b4   0x080034b4   0x00000010   Code   RO          672    .text               usb_endp.o
+    0x080034c4   0x080034c4   0x00000050   Code   RO          687    .text               usb_istr.o
+    0x08003514   0x08003514   0x00000268   Code   RO          705    .text               usb_prop.o
+    0x0800377c   0x0800377c   0x00000148   Code   RO          732    .text               usb_pwr.o
+    0x080038c4   0x080038c4   0x0000041c   Code   RO          750    .text               usb_scsi.o
+    0x08003ce0   0x08003ce0   0x0000050c   Code   RO          763    .text               bsp_usart.o
+    0x080041ec   0x080041ec   0x0000002e   Code   RO          789    .text               bsp_iwdg.o
+    0x0800421a   0x0800421a   0x00000002   PAD
+    0x0800421c   0x0800421c   0x0000007c   Code   RO          804    .text               bsp_systick.o
+    0x08004298   0x08004298   0x0000057c   Code   RO          830    .text               bsp_spi.o
+    0x08004814   0x08004814   0x00000094   Code   RO          857    .text               bsp_button.o
+    0x080048a8   0x080048a8   0x0000007c   Code   RO          891    .text               bsp_nxp.o
+    0x08004924   0x08004924   0x0000004c   Code   RO          906    .text               bsp_buzzer.o
+    0x08004970   0x08004970   0x00000c44   Code   RO          921    .text               sys_command_line.o
+    0x080055b4   0x080055b4   0x000000ce   Code   RO          959    .text               sys_queue.o
+    0x08005682   0x08005682   0x00000002   PAD
+    0x08005684   0x08005684   0x00000580   Code   RO          971    .text               sys_scheduler.o
+    0x08005c04   0x08005c04   0x000008ac   Code   RO         1006    .text               cm_backtrace.o
+    0x080064b0   0x080064b0   0x0000000c   Code   RO         1049    .text               cmb_fault.o
+    0x080064bc   0x080064bc   0x00000120   Code   RO         1053    .text               util.o
+    0x080065dc   0x080065dc   0x00000148   Code   RO         1068    .text               diskio.o
+    0x08006724   0x08006724   0x00002ee8   Code   RO         1095    .text               ff.o
+    0x0800960c   0x0800960c   0x000000a8   Code   RO         1122    .text               ccsbcs.o
+    0x080096b4   0x080096b4   0x0000003c   Code   RO         1145    .text               lfs_util.o
+    0x080096f0   0x080096f0   0x00004430   Code   RO         1177    .text               lfs.o
+    0x0800db20   0x0800db20   0x000002d0   Code   RO         1199    .text               button.o
+    0x0800ddf0   0x0800ddf0   0x00000114   Code   RO         1216    .text               app_mass_storage.o
+    0x0800df04   0x0800df04   0x00001e28   Code   RO         1262    .text               app_fatfs.o
+    0x0800fd2c   0x0800fd2c   0x000002a0   Code   RO         1300    .text               app_button.o
+    0x0800ffcc   0x0800ffcc   0x000001b8   Code   RO         1346    .text               app_database.o
+    0x08010184   0x08010184   0x00001708   Code   RO         1368    .text               app_nxp.o
+    0x0801188c   0x0801188c   0x00000190   Code   RO         1417    .text               app_buzzer.o
+    0x08011a1c   0x08011a1c   0x000000f8   Code   RO         1439    .text               main.o
+    0x08011b14   0x08011b14   0x00000054   Code   RO         1495    .text               stm32f10x_it.o
+    0x08011b68   0x08011b68   0x00000024   Code   RO         1519    .text               mc_w.l(memcpya.o)
+    0x08011b8c   0x08011b8c   0x00000024   Code   RO         1521    .text               mc_w.l(memseta.o)
+    0x08011bb0   0x08011bb0   0x00000024   Code   RO         1523    .text               mc_w.l(strstr.o)
+    0x08011bd4   0x08011bd4   0x00000018   Code   RO         1525    .text               mc_w.l(strncpy.o)
+    0x08011bec   0x08011bec   0x00000014   Code   RO         1527    .text               mc_w.l(strchr.o)
+    0x08011c00   0x08011c00   0x0000000e   Code   RO         1529    .text               mc_w.l(strlen.o)
+    0x08011c0e   0x08011c0e   0x0000001a   Code   RO         1531    .text               mc_w.l(memcmp.o)
+    0x08011c28   0x08011c28   0x00000012   Code   RO         1533    .text               mc_w.l(strcpy.o)
+    0x08011c3a   0x08011c3a   0x0000001e   Code   RO         1535    .text               mc_w.l(strncmp.o)
+    0x08011c58   0x08011c58   0x0000001c   Code   RO         1537    .text               mc_w.l(strspn.o)
+    0x08011c74   0x08011c74   0x00000022   Code   RO         1539    .text               mc_w.l(strcspn.o)
+    0x08011c96   0x08011c96   0x00000064   Code   RO         1832    .text               mf_w.l(fmul.o)
+    0x08011cfa   0x08011cfa   0x0000007c   Code   RO         1834    .text               mf_w.l(fdiv.o)
+    0x08011d76   0x08011d76   0x0000000a   Code   RO         1836    .text               mf_w.l(ffltui.o)
+    0x08011d80   0x08011d80   0x00000026   Code   RO         1838    .text               mf_w.l(f2d.o)
+    0x08011da6   0x08011da6   0x0000002c   Code   RO         1855    .text               mc_w.l(uidiv.o)
+    0x08011dd2   0x08011dd2   0x00000062   Code   RO         1857    .text               mc_w.l(uldiv.o)
+    0x08011e34   0x08011e34   0x00000000   Code   RO         1861    .text               mc_w.l(iusefp.o)
+    0x08011e34   0x08011e34   0x0000006e   Code   RO         1862    .text               mf_w.l(fepilogue.o)
+    0x08011ea2   0x08011ea2   0x0000014e   Code   RO         1864    .text               mf_w.l(dadd.o)
+    0x08011ff0   0x08011ff0   0x000000e4   Code   RO         1866    .text               mf_w.l(dmul.o)
+    0x080120d4   0x080120d4   0x000000de   Code   RO         1868    .text               mf_w.l(ddiv.o)
+    0x080121b2   0x080121b2   0x00000030   Code   RO         1870    .text               mf_w.l(dfixul.o)
+    0x080121e2   0x080121e2   0x00000002   PAD
+    0x080121e4   0x080121e4   0x00000030   Code   RO         1872    .text               mf_w.l(cdrcmple.o)
+    0x08012214   0x08012214   0x00000024   Code   RO         1874    .text               mc_w.l(init.o)
+    0x08012238   0x08012238   0x0000001e   Code   RO         1876    .text               mc_w.l(llshl.o)
+    0x08012256   0x08012256   0x00000020   Code   RO         1878    .text               mc_w.l(llushr.o)
+    0x08012276   0x08012276   0x00000024   Code   RO         1880    .text               mc_w.l(llsshr.o)
+    0x0801229a   0x0801229a   0x000000ba   Code   RO         1882    .text               mf_w.l(depilogue.o)
+    0x08012354   0x08012354   0x00000056   Code   RO         1892    .text               mc_w.l(__dczerorl2.o)
+    0x080123aa   0x080123aa   0x00000002   PAD
+    0x080123ac   0x080123ac   0x00000020   Code   RO         1776    i.__0printf         mc_w.l(printfa.o)
+    0x080123cc   0x080123cc   0x00000028   Code   RO         1778    i.__0sprintf        mc_w.l(printfa.o)
+    0x080123f4   0x080123f4   0x00000030   Code   RO         1188    i.__ARM_pop         lfs.o
+    0x08012424   0x08012424   0x0000000e   Code   RO         1886    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08012432   0x08012432   0x00000002   Code   RO         1887    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08012434   0x08012434   0x0000000e   Code   RO         1888    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08012442   0x08012442   0x00000002   PAD
+    0x08012444   0x08012444   0x00000184   Code   RO         1783    i._fp_digits        mc_w.l(printfa.o)
+    0x080125c8   0x080125c8   0x000006dc   Code   RO         1784    i._printf_core      mc_w.l(printfa.o)
+    0x08012ca4   0x08012ca4   0x00000024   Code   RO         1785    i._printf_post_padding  mc_w.l(printfa.o)
+    0x08012cc8   0x08012cc8   0x0000002e   Code   RO         1786    i._printf_pre_padding  mc_w.l(printfa.o)
+    0x08012cf6   0x08012cf6   0x0000000a   Code   RO         1788    i._sputc            mc_w.l(printfa.o)
+    0x08012d00   0x08012d00   0x00000050   Code   RO         1804    i.free              mc_w.l(malloc.o)
+    0x08012d50   0x08012d50   0x0000006c   Code   RO         1805    i.malloc            mc_w.l(malloc.o)
+    0x08012dbc   0x08012dbc   0x00000092   Data   RO          659    .constdata          usb_desc.o
+    0x08012e4e   0x08012e4e   0x0000001a   Data   RO          831    .constdata          bsp_spi.o
+    0x08012e68   0x08012e68   0x000000ee   Data   RO          923    .constdata          sys_command_line.o
+    0x08012f56   0x08012f56   0x0000000e   Data   RO          973    .constdata          sys_scheduler.o
+    0x08012f64   0x08012f64   0x000000dc   Data   RO         1008    .constdata          cm_backtrace.o
+    0x08013040   0x08013040   0x000000ba   Data   RO         1096    .constdata          ff.o
+    0x080130fa   0x080130fa   0x000008b8   Data   RO         1123    .constdata          ccsbcs.o
+    0x080139b2   0x080139b2   0x00000002   PAD
+    0x080139b4   0x080139b4   0x00000040   Data   RO         1146    .constdata          lfs_util.o
+    0x080139f4   0x080139f4   0x000001c0   Data   RO         1178    .constdata          lfs.o
+    0x08013bb4   0x08013bb4   0x000000bd   Data   RO         1264    .constdata          app_fatfs.o
+    0x08013c71   0x08013c71   0x00000003   PAD
+    0x08013c74   0x08013c74   0x00000048   Data   RO         1348    .constdata          app_database.o
+    0x08013cbc   0x08013cbc   0x0000007a   Data   RO         1370    .constdata          app_nxp.o
+    0x08013d36   0x08013d36   0x00000002   PAD
+    0x08013d38   0x08013d38   0x00000133   Data   RO          924    .conststring        sys_command_line.o
+    0x08013e6b   0x08013e6b   0x00000001   PAD
+    0x08013e6c   0x08013e6c   0x00000815   Data   RO         1009    .conststring        cm_backtrace.o
+    0x08014681   0x08014681   0x00000003   PAD
+    0x08014684   0x08014684   0x00000009   Data   RO         1179    .conststring        lfs.o
+    0x0801468d   0x0801468d   0x00000003   PAD
+    0x08014690   0x08014690   0x00000868   Data   RO         1265    .conststring        app_fatfs.o
+    0x08014ef8   0x08014ef8   0x0000003b   Data   RO         1371    .conststring        app_nxp.o
+    0x08014f33   0x08014f33   0x00000001   PAD
+    0x08014f34   0x08014f34   0x00000020   Data   RO         1884    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00004dc8, Max: 0x00005000, ABSOLUTE, COMPRESSED[0x000000e4])
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08014f54, Size: 0x00004dc8, Max: 0x00005000, ABSOLUTE, COMPRESSED[0x000000e4])
 
-    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000014   Data   RW           25    .data               system_stm32f10x.o
-    0x20000014   0x00000014   Data   RW          315    .data               stm32f10x_rcc.o
-    0x20000028   0x00000003   Data   RW          404    .data               usb_core.o
-    0x2000002b   0x00000001   PAD
-    0x2000002c   0x00000014   Data   RW          456    .data               usb_init.o
-    0x20000040   0x00000004   Data   RW          478    .data               usb_int.o
-    0x20000044   0x0000001c   Data   RW          567    .data               mass_mal.o
-    0x20000060   0x00000024   Data   RW          605    .data               memory.o
-    0x20000084   0x0000007f   Data   RW          630    .data               scsi_data.o
-    0x20000103   0x00000001   PAD
-    0x20000104   0x0000000c   Data   RW          644    .data               usb_bot.o
-    0x20000110   0x0000001a   Data   RW          660    .data               usb_desc.o
-    0x2000012a   0x00000002   PAD
-    0x2000012c   0x0000003c   Data   RW          688    .data               usb_istr.o
-    0x20000168   0x00000094   Data   RW          706    .data               usb_prop.o
-    0x200001fc   0x00000007   Data   RW          733    .data               usb_pwr.o
-    0x20000203   0x00000005   Data   RW          925    .data               sys_command_line.o
-    0x20000208   0x00000006   Data   RW          974    .data               sys_scheduler.o
-    0x2000020e   0x00000002   PAD
-    0x20000210   0x00000014   Data   RW         1010    .data               cm_backtrace.o
-    0x20000224   0x0000000a   Data   RW         1097    .data               ff.o
-    0x2000022e   0x00000002   PAD
-    0x20000230   0x00000004   Data   RW         1200    .data               button.o
-    0x20000234   0x00000002   Data   RW         1217    .data               app_mass_storage.o
-    0x20000236   0x00000002   PAD
-    0x20000238   0x0000001c   Data   RW         1266    .data               app_fatfs.o
-    0x20000254   0x0000000e   Data   RW         1372    .data               app_nxp.o
-    0x20000262   0x00000001   Data   RW         1419    .data               app_buzzer.o
-    0x20000263   0x00000001   Data   RW         1440    .data               main.o
-    0x20000264   0x00000004   Data   RW         1854    .data               mc_w.l(stdout.o)
-    0x20000268   0x00000004   Data   RW         1859    .data               mc_w.l(mvars.o)
-    0x2000026c   0x00000004   Data   RW         1860    .data               mc_w.l(mvars.o)
-    0x20000270   0x0000001c   Zero   RW          455    .bss                usb_init.o
-    0x2000028c   0x00001000   Zero   RW          604    .bss                memory.o
-    0x2000128c   0x00000070   Zero   RW          643    .bss                usb_bot.o
-    0x200012fc   0x00000200   Zero   RW          764    .bss                bsp_usart.o
-    0x200014fc   0x000005c9   Zero   RW          922    .bss                sys_command_line.o
-    0x20001ac5   0x0000006e   Zero   RW          972    .bss                sys_scheduler.o
-    0x20001b33   0x00000001   PAD
-    0x20001b34   0x00000134   Zero   RW         1007    .bss                cm_backtrace.o
-    0x20001c68   0x000017c4   Zero   RW         1263    .bss                app_fatfs.o
-    0x2000342c   0x00000088   Zero   RW         1301    .bss                app_button.o
-    0x200034b4   0x000000cc   Zero   RW         1347    .bss                app_database.o
-    0x20003580   0x00001234   Zero   RW         1369    .bss                app_nxp.o
-    0x200047b4   0x0000000d   Zero   RW         1418    .bss                app_buzzer.o
-    0x200047c1   0x00000007   PAD
-    0x200047c8   0x00000200   Zero   RW            2    HEAP                startup_stm32f10x_md.o
-    0x200049c8   0x00000400   Zero   RW            1    STACK               startup_stm32f10x_md.o
+    0x20000000   COMPRESSED   0x00000014   Data   RW           25    .data               system_stm32f10x.o
+    0x20000014   COMPRESSED   0x00000014   Data   RW          315    .data               stm32f10x_rcc.o
+    0x20000028   COMPRESSED   0x00000003   Data   RW          404    .data               usb_core.o
+    0x2000002b   COMPRESSED   0x00000001   PAD
+    0x2000002c   COMPRESSED   0x00000014   Data   RW          456    .data               usb_init.o
+    0x20000040   COMPRESSED   0x00000004   Data   RW          478    .data               usb_int.o
+    0x20000044   COMPRESSED   0x0000001c   Data   RW          567    .data               mass_mal.o
+    0x20000060   COMPRESSED   0x00000024   Data   RW          605    .data               memory.o
+    0x20000084   COMPRESSED   0x0000007f   Data   RW          630    .data               scsi_data.o
+    0x20000103   COMPRESSED   0x00000001   PAD
+    0x20000104   COMPRESSED   0x0000000c   Data   RW          644    .data               usb_bot.o
+    0x20000110   COMPRESSED   0x0000001a   Data   RW          660    .data               usb_desc.o
+    0x2000012a   COMPRESSED   0x00000002   PAD
+    0x2000012c   COMPRESSED   0x0000003c   Data   RW          688    .data               usb_istr.o
+    0x20000168   COMPRESSED   0x00000094   Data   RW          706    .data               usb_prop.o
+    0x200001fc   COMPRESSED   0x00000007   Data   RW          733    .data               usb_pwr.o
+    0x20000203   COMPRESSED   0x00000005   Data   RW          925    .data               sys_command_line.o
+    0x20000208   COMPRESSED   0x00000006   Data   RW          974    .data               sys_scheduler.o
+    0x2000020e   COMPRESSED   0x00000002   PAD
+    0x20000210   COMPRESSED   0x00000014   Data   RW         1010    .data               cm_backtrace.o
+    0x20000224   COMPRESSED   0x0000000a   Data   RW         1097    .data               ff.o
+    0x2000022e   COMPRESSED   0x00000002   PAD
+    0x20000230   COMPRESSED   0x00000004   Data   RW         1200    .data               button.o
+    0x20000234   COMPRESSED   0x00000002   Data   RW         1217    .data               app_mass_storage.o
+    0x20000236   COMPRESSED   0x00000002   PAD
+    0x20000238   COMPRESSED   0x0000001c   Data   RW         1266    .data               app_fatfs.o
+    0x20000254   COMPRESSED   0x0000000e   Data   RW         1372    .data               app_nxp.o
+    0x20000262   COMPRESSED   0x00000001   Data   RW         1419    .data               app_buzzer.o
+    0x20000263   COMPRESSED   0x00000001   Data   RW         1440    .data               main.o
+    0x20000264   COMPRESSED   0x00000004   Data   RW         1854    .data               mc_w.l(stdout.o)
+    0x20000268   COMPRESSED   0x00000004   Data   RW         1859    .data               mc_w.l(mvars.o)
+    0x2000026c   COMPRESSED   0x00000004   Data   RW         1860    .data               mc_w.l(mvars.o)
+    0x20000270        -       0x0000001c   Zero   RW          455    .bss                usb_init.o
+    0x2000028c        -       0x00001000   Zero   RW          604    .bss                memory.o
+    0x2000128c        -       0x00000070   Zero   RW          643    .bss                usb_bot.o
+    0x200012fc        -       0x00000200   Zero   RW          764    .bss                bsp_usart.o
+    0x200014fc        -       0x000005c9   Zero   RW          922    .bss                sys_command_line.o
+    0x20001ac5        -       0x0000006e   Zero   RW          972    .bss                sys_scheduler.o
+    0x20001b33   COMPRESSED   0x00000001   PAD
+    0x20001b34        -       0x00000134   Zero   RW         1007    .bss                cm_backtrace.o
+    0x20001c68        -       0x000017c4   Zero   RW         1263    .bss                app_fatfs.o
+    0x2000342c        -       0x00000088   Zero   RW         1301    .bss                app_button.o
+    0x200034b4        -       0x000000cc   Zero   RW         1347    .bss                app_database.o
+    0x20003580        -       0x00001234   Zero   RW         1369    .bss                app_nxp.o
+    0x200047b4        -       0x0000000d   Zero   RW         1418    .bss                app_buzzer.o
+    0x200047c1   COMPRESSED   0x00000007   PAD
+    0x200047c8        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f10x_md.o
+    0x200049c8        -       0x00000400   Zero   RW            1    STACK               startup_stm32f10x_md.o
 
 
 ==============================================================================
@@ -2151,63 +2151,63 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       672        208          0          0        136       5745   app_button.o
-       400         14          0          1         13       1833   app_buzzer.o
-       440         46         72          0        204       7098   app_database.o
-      7720       2742       2341         28       6084      20350   app_fatfs.o
-       276         18          0          2          0       1282   app_mass_storage.o
-      5896       1546        181         14       4660      11925   app_nxp.o
-       148          4          0          0          0       1301   bsp_button.o
-        76          6          0          0          0        685   bsp_buzzer.o
-        46          0          0          0          0        632   bsp_iwdg.o
-       124          4          0          0          0        866   bsp_nxp.o
-      1404        138         26          0          0       5035   bsp_spi.o
-       124         16          0          0          0      16006   bsp_systick.o
-      1292        128          0          0        512       4960   bsp_usart.o
-       720         10          0          4          0       3830   button.o
-       168         14       2232          0          0       2125   ccsbcs.o
-      2220        366       2289         20        308      10574   cm_backtrace.o
-        12          0          0          0          0        436   cmb_fault.o
+       672        208          0          0        136       5813   app_button.o
+       400         14          0          1         13       1865   app_buzzer.o
+       440         46         72          0        204       7166   app_database.o
+      7720       2742       2341         28       6084      20434   app_fatfs.o
+       276         18          0          2          0       1314   app_mass_storage.o
+      5896       1546        181         14       4660      11993   app_nxp.o
+       148          4          0          0          0       1321   bsp_button.o
+        76          6          0          0          0        705   bsp_buzzer.o
+        46          0          0          0          0        652   bsp_iwdg.o
+       124          4          0          0          0        882   bsp_nxp.o
+      1404        138         26          0          0       5075   bsp_spi.o
+       124         16          0          0          0      16038   bsp_systick.o
+      1292        128          0          0        512       5012   bsp_usart.o
+       720         10          0          4          0       3902   button.o
+       168         14       2232          0          0       2197   ccsbcs.o
+      2220        366       2289         20        308      10646   cm_backtrace.o
+        12          0          0          0          0        456   cmb_fault.o
          0          0          0          0          0       4508   core_cm3.o
-       328          8          0          0          0       3946   diskio.o
-     12008        130        186         10          0      36508   ff.o
-       324         20          0          0          0       2608   hw_config.o
-     17504        954        457          0          0      60061   lfs.o
-        60          6         64          0          0       1498   lfs_util.o
-       248         62          0          1          0      17217   main.o
-       216         22          0         28          0       3815   mass_mal.o
-       536         60          0         36       4096       3482   memory.o
-       220         22          0          0          0       1817   misc.o
-         0          0          0        127          0       1118   scsi_data.o
-        36          8        236          0       1536        868   startup_stm32f10x_md.o
-       596          8          0          0          0       4382   stm32f10x_dma.o
-       860         38          0          0          0       5745   stm32f10x_gpio.o
-        84          0          0          0          0       2332   stm32f10x_it.o
-        64          6          0          0          0       1285   stm32f10x_iwdg.o
-       932         36          0         20          0       8928   stm32f10x_rcc.o
-       780         14          0          0          0       6634   stm32f10x_spi.o
-      1032         22          0          0          0       8476   stm32f10x_usart.o
-      3140        716        545          5       1481      27278   sys_command_line.o
-       206          0          0          0          0       2451   sys_queue.o
-      1408        232         14          6        110       5606   sys_scheduler.o
-       480         38          0         20          0     245295   system_stm32f10x.o
-      1100         60          0         12        112       2953   usb_bot.o
-      2896        114          0          3          0      20287   usb_core.o
-         0          0        146         26          0       1020   usb_desc.o
-        16          0          0          0          0        619   usb_endp.o
-        60         24          0         20         28       4250   usb_init.o
-       828         34          0          4          0       2027   usb_int.o
-        80         18          0         60          0       1428   usb_istr.o
-        92          6          0          0          0       1498   usb_mem.o
-       616         48          0        148          0       7244   usb_prop.o
-       328         22          0          7          0       2805   usb_pwr.o
-      2056         20          0          0          0      12081   usb_regs.o
-      1052         48          0          0          0       5138   usb_scsi.o
-       128          8          0          0          0       1570   usb_sil.o
-       288          0          0          0          0       1614   util.o
+       328          8          0          0          0       4018   diskio.o
+     12008        130        186         10          0      36608   ff.o
+       324         20          0          0          0       2640   hw_config.o
+     17504        954        457          0          0      60133   lfs.o
+        60          6         64          0          0       1534   lfs_util.o
+       248         62          0          1          0      17293   main.o
+       216         22          0         28          0       3867   mass_mal.o
+       536         60          0         36       4096       3554   memory.o
+       220         22          0          0          0       1853   misc.o
+         0          0          0        127          0       1150   scsi_data.o
+        36          8        236          0       1536        884   startup_stm32f10x_md.o
+       596          8          0          0          0       4418   stm32f10x_dma.o
+       860         38          0          0          0       5781   stm32f10x_gpio.o
+        84          0          0          0          0       2348   stm32f10x_it.o
+        64          6          0          0          0       1301   stm32f10x_iwdg.o
+       932         36          0         20          0       8980   stm32f10x_rcc.o
+       780         14          0          0          0       6666   stm32f10x_spi.o
+      1032         22          0          0          0       8512   stm32f10x_usart.o
+      3140        716        545          5       1481      27386   sys_command_line.o
+       206          0          0          0          0       2487   sys_queue.o
+      1408        232         14          6        110       5674   sys_scheduler.o
+       480         38          0         20          0     245483   system_stm32f10x.o
+      1100         60          0         12        112       3005   usb_bot.o
+      2896        114          0          3          0      20399   usb_core.o
+         0          0        146         26          0       1056   usb_desc.o
+        16          0          0          0          0        635   usb_endp.o
+        60         24          0         20         28       4326   usb_init.o
+       828         34          0          4          0       2079   usb_int.o
+        80         18          0         60          0       1484   usb_istr.o
+        92          6          0          0          0       1534   usb_mem.o
+       616         48          0        148          0       7316   usb_prop.o
+       328         22          0          7          0       2885   usb_pwr.o
+      2056         20          0          0          0      12113   usb_regs.o
+      1052         48          0          0          0       5174   usb_scsi.o
+       128          8          0          0          0       1606   usb_sil.o
+       288          0          0          0          0       1630   util.o
 
     ----------------------------------------------------------------------
-     72344       8064       8836        612      19288     615075   Object Totals
+     72344       8064       8836        612      19288     617791   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          4          0         15         10          8          0   (incl. Padding)
 
@@ -2280,8 +2280,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     77008       8196       8836        624      19288     612307   Grand Totals
-     77008       8196       8836        228      19288     612307   ELF Image Totals (compressed)
+     77008       8196       8836        624      19288     615023   Grand Totals
+     77008       8196       8836        228      19288     615023   ELF Image Totals (compressed)
      77008       8196       8836        228          0          0   ROM Totals
 
 ==============================================================================

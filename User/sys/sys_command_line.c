@@ -75,11 +75,11 @@ const COMMAND_S CLI_Cmd[] = {
     /* 上面是系统命令，以下开始是有关应用的命令了 */
 #ifdef NXP_CLI_DEBUG
     {"nxp",             NXP_CMD,            NULL,           cli_nxp},
-#endif
+#endif  /* NXP_CLI_DEBUG */
 
 #ifdef FATFS_CLI_DEBUG
     {"fatfs",           FATFS_CMD,          NULL,           cli_fatfs},
-#endif
+#endif  /* FATFS_CLI_DEBUG */
 };
 
 
@@ -301,7 +301,7 @@ static uint8_t cli_history_show(uint8_t mode, char** p_history)
     return err;
 }
 
-#endif
+#endif  /* CLI_HISTORY */
 
 
 #if CLI_LOGIN
@@ -316,7 +316,7 @@ __packed typedef struct {
 
 #if CLI_LOGIN_TIME
     uint16_t timer;
-#endif
+#endif  /* CLI_LOGIN_TIME */
 }LOGIN_S;
 
 static LOGIN_S login;
@@ -355,7 +355,7 @@ static void cli_login_timer_run(uint16_t n_ms)
         }
     }
 }
-#endif
+#endif  /* CLI_LOGIN_TIME */
 
 /**
   * @brief  登录密码判断
@@ -375,7 +375,7 @@ static uint8_t cli_login_password_check(char* p_str)
 
 #if CLI_LOGIN_TIME
             login.timer = 0;
-#endif
+#endif  /* CLI_LOGIN_TIME */
 
             err = FALSE;
             PRINTF_COLOR(E_FONT_WHITE, "login success \r\n");
@@ -394,7 +394,7 @@ static uint8_t cli_login_password_check(char* p_str)
     return err;
 }
 
-#endif
+#endif  /* CLI_LOGIN */
 
 
 /**
@@ -410,7 +410,7 @@ void cli_init(uint32_t baud)
 
 #if CLI_HISTORY
     memset((uint8_t *)&history, 0, sizeof(history));
-#endif
+#endif  /* CLI_HISTORY */
 
     USART_INIT(baud);
 
@@ -441,7 +441,7 @@ void cli_init(uint32_t baud)
 
 #if CLI_LOGIN
     cli_login_init();
-#endif
+#endif  /* CLI_LOGIN */
 }
 
 
@@ -532,14 +532,14 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                 }
 
                 if ((0 == key) && (i < Handle.len)) {
-#endif
+#endif  /* CLI_HISTORY */
                     /* 将收到的字符发送出去，终端回显 */
                     for (; i < Handle.len; i++) {
                         USART_SendData(DEBUG_USARTx, Handle.buff[i]);
                     }
 #if CLI_HISTORY
                 }
-#endif
+#endif  /* CLI_HISTORY */
                 break;
             }
 
@@ -567,7 +567,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                 memset(&Handle, 0x00, sizeof(Handle));
                 return; /* 没有登录成功，就不处理任何命令 */
             }
-#endif
+#endif  /* CLI_LOGIN */
 
             /* 循环，寻找匹配的命令 */
             for(i = 0; i < sizeof(CLI_Cmd) / sizeof(COMMAND_S); i++) {
@@ -586,7 +586,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
 #if CLI_HISTORY
                             cli_history_add((char *)Handle.buff);
-#endif
+#endif  /* CLI_HISTORY */
 
                             /* 开启了回显，就打印收到的命令 */
                             if(ENABLE == cli_echo_flag) {
@@ -648,7 +648,7 @@ void cli_task(void)
 
 #if CLI_LOGIN_TIME
     cli_login_timer_run(20);
-#endif
+#endif  /* CLI_LOGIN_TIME */
 }
 
 

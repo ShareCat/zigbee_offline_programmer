@@ -71,6 +71,6 @@
 ".\output\main.o"
 ".\output\stm32f10x_it.o"
 --library_type=microlib --strict --scatter ".\Output\zigbee_offline_programmer.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\Listing\zigbee_offline_programmer.map" -o .\Output\zigbee_offline_programmer.axf

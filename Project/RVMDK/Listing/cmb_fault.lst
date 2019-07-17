@@ -77,12 +77,11 @@ ARM Macro Assembler    Page 2
    46 0000000C         
    47 0000000C                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
-ork --depend=.\output\cmb_fault.d -o.\output\cmb_fault.o -IC:\Users\yf22\Deskto
-p\zigbee_offline_programmer\Project\RVMDK\RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32F
-1xx_DFP\2.1.0\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MICR
-OLIB SETA 1" --predefine="__UVISION_VERSION SETA 521" --predefine="STM32F10X_MD
- SETA 1" --list=.\listing\cmb_fault.lst ..\..\User\component\cm_backtrace\fault
-_handler\keil\cmb_fault.S
+ork --depend=.\output\cmb_fault.d -o.\output\cmb_fault.o -I.\RTE\_application -
+IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include -IC:\Keil_v5\ARM\C
+MSIS\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SET
+A 526" --predefine="STM32F10X_MD SETA 1" --list=.\listing\cmb_fault.lst ..\..\U
+ser\component\cm_backtrace\fault_handler\keil\cmb_fault.S
 
 
 
