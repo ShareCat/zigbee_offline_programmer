@@ -69,7 +69,7 @@ const struct lfs_config cfg = {
 
 
 /**
-  * @brief  按键任务初始化
+  * @brief  数据库任务初始化
   * @param  null
   * @retval null
   */

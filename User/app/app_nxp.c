@@ -243,7 +243,7 @@ void handle_tx_get_check_sum(HANDLE_TX_S *p_handle_tx)
 
 
 /**
-  * @brief  初始化
+  * @brief  下载任务初始化
   * @param  None
   * @retval None
   */
@@ -256,6 +256,12 @@ void nxp_init(void)
 }
 
 
+/**
+  * @brief  复制收到的数据到待处理缓存
+  * @param  buff 收到的数据
+  * @param  len 数据的长度
+  * @retval None
+  */
 void nxp_handle_rx_copy(uint8_t *buff, uint16_t len)
 {
     if (NULL == buff) return;

@@ -4,7 +4,7 @@
   * @author:    Cat（孙关平）
   * @version:   V1.0  
   * @date:      2018-1-26
-  * @brief:     LHD8006主机APP源码
+  * @brief:     zigbee_offline_programmer源码
   * @attention: 
   ******************************************************************************
   */
@@ -58,11 +58,11 @@ void Driver_CloseEA(void)
 
 
 /**
-  * @brief  关闭JTAG和SWD功能
+  * @brief  JTAG和SWD功能设置
   * @param  null
   * @retval null
   */
-static void disable_jtag_and_swd(void)
+static void jtag_and_swd_set(void)
 {
 #define STM32_SWD_ONLY  /* 只开启SWD调试，关闭JTAG */
 
@@ -78,8 +78,8 @@ static void disable_jtag_and_swd(void)
 #undef STM32_SWD_ONLY
 
 #ifdef USING_CM_BACKTRACE
-    #define CM_BACKTRACE_HW_VERSION     "V1.0.0"    /* 和真正版本没有关系，完全因为cm_backtrace需要 */
-    #define CM_BACKTRACE_SW_VERSION     "V0.1.0"    /* 和真正版本没有关系，完全因为cm_backtrace需要 */
+    #define CM_BACKTRACE_HW_VERSION     "V1.0.0"    /* 和项目版本没有关系，完全因为cm_backtrace需要 */
+    #define CM_BACKTRACE_SW_VERSION     "V0.1.0"    /* 和项目版本没有关系，完全因为cm_backtrace需要 */
     extern void cm_backtrace_init(const char *firmware_name, const char *hardware_ver, const char *software_ver);
     cm_backtrace_init("TestBoard", CM_BACKTRACE_HW_VERSION, CM_BACKTRACE_SW_VERSION);
 #endif
@@ -109,7 +109,7 @@ int main(void)
     NVIC_SetVectorTable(NVIC_VectTab_FLASH, APP_ADDR - NVIC_VectTab_FLASH);
     #endif
 
-    disable_jtag_and_swd();
+    jtag_and_swd_set();
 
     /* Add your application code here */
     os_init(os_task);
@@ -128,6 +128,9 @@ int main(void)
     disable_usb();
 
     extern uint8_t sw_button_read(void);
+    /* 由于测试使用的STM32只有20k内存，不够用，因此在启动时候通过sw按键做选择，
+    按下的话，运行U盘模式，被电脑识别，用于更改或查看配置信息，修改下载固件。
+    如果没有按下，就运行下载模式。 */
     if (0 == sw_button_read()) {
         /* USB MSD设备初始化 */
         mass_storage_init();
@@ -136,11 +139,9 @@ int main(void)
     } else {
         /* 数据库初始化 */
         database_init();
-        //os_task_creat(os_task, database_task, T_100MS);
 
         /* FATFS文件系统初始化 */
         fatfs_init();
-        //os_task_creat(os_task, fatfs_task, T_100MS);
 
         /* NXP_ZIGBEE下载任务 */
         nxp_init();

@@ -82,6 +82,7 @@
 #define SPI_FLASH_SectorSize        4096
 #define SPI_FLASH_BlockSize         65536
 
+
 /*
     共16Mbyte的SPI_FLASH
     第一部分：1Mbyte用于存储用户数据
@@ -100,6 +101,7 @@
 #define FATFS_SECTOR_COUNT          (3584)                      //14Mbyte
 #define FATFS_SECTOR_START          (DATABASE_SECTOR_START + DATABASE_SECTOR_COUNT + FM_BACKUP_SECTOR_COUNT)
 #define FATFS_ADDR_START            (FATFS_SECTOR_START * SPI_FLASH_SectorSize)
+
 
 /*命令定义-开头*******************************/
 #define W25X_WriteEnable            0x06

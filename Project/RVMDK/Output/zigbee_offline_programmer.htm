@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\zigbee_offline_programmer.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\zigbee_offline_programmer.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Jul 17 10:38:35 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Jul 30 11:22:25 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1192 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -432,7 +432,7 @@ Global Symbols
 <P><STRONG><a name="[25b]"></a>GPIO_PinRemapConfig</STRONG> (Thumb, 138 bytes, Stack size 20 bytes, stm32f10x_gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_PinRemapConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_jtag_and_swd
+<BR>[Called By]<UL><LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jtag_and_swd_set
 </UL>
 
 <P><STRONG><a name="[28c]"></a>GPIO_EXTILineConfig</STRONG> (Thumb, 66 bytes, Stack size 12 bytes, stm32f10x_gpio.o(.text), UNUSED)
@@ -530,7 +530,7 @@ Global Symbols
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_init
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_Cable_Config
 <LI><a href="#[200]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usb_gpio_disconnect
-<LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_jtag_and_swd
+<LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jtag_and_swd_set
 </UL>
 
 <P><STRONG><a name="[a0]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_rcc.o(.text))
@@ -2165,7 +2165,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_jtag_and_swd
+<BR>[Called By]<UL><LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jtag_and_swd_set
 </UL>
 
 <P><STRONG><a name="[13c]"></a>cm_backtrace_firmware_info</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, cm_backtrace.o(.text))
@@ -3516,7 +3516,7 @@ Global Symbols
 <LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;os_init
 <LI><a href="#[137]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;os_start
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;os_task_creat
-<LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_jtag_and_swd
+<LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jtag_and_swd_set
 <LI><a href="#[259]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
@@ -6065,8 +6065,8 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nxp_task
 </UL>
 
-<P><STRONG><a name="[25a]"></a>disable_jtag_and_swd</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = disable_jtag_and_swd &rArr; cm_backtrace_init &rArr; strncpy
+<P><STRONG><a name="[25a]"></a>jtag_and_swd_set</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = jtag_and_swd_set &rArr; cm_backtrace_init &rArr; strncpy
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[25b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinRemapConfig
