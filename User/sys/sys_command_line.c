@@ -1,15 +1,15 @@
 /**
   ******************************************************************************
   * @file:      sys_command_line.c
-  * @author:    Cat(Ëï¹ØÆ½)
+  * @author:    Cat(å­™å…³å¹³)
   * @version:   V1.0
   * @date:      2018-1-18
-  * @brief:     µ÷ÊÔÃüÁîĞĞ
+  * @brief:     è°ƒè¯•å‘½ä»¤è¡Œ
   * @attention:
   * 
-  *             V0.5£ºÔö¼Ó¶àÑÕÉ«log´òÓ¡µÄAPI
-  *             V0.6£ºÔö¼ÓÀúÊ·ÃüÁî¹¦ÄÜ£¬ÀúÊ·ÃüÁî¸öÊı¿ÉÒÔ×Ô¶¨Òå
-  *             V0.7£ºÔö¼Ólogin¹¦ÄÜ£¬ÃÜÂëÊä´íËø¶¨£¬Ò»¶ÎÊ±¼äÃ»ÓĞÊäÈëÃüÁî£¬×Ô¶¯logout
+  *             V0.5ï¼šå¢åŠ å¤šé¢œè‰²logæ‰“å°çš„API
+  *             V0.6ï¼šå¢åŠ å†å²å‘½ä»¤åŠŸèƒ½ï¼Œå†å²å‘½ä»¤ä¸ªæ•°å¯ä»¥è‡ªå®šä¹‰
+  *             V0.7ï¼šå¢åŠ loginåŠŸèƒ½ï¼Œå¯†ç è¾“é”™é”å®šï¼Œä¸€æ®µæ—¶é—´æ²¡æœ‰è¾“å…¥å‘½ä»¤ï¼Œè‡ªåŠ¨logout
   * 
   ******************************************************************************
   */
@@ -38,9 +38,9 @@ __packed typedef struct {
 
 
 
-uint8_t cli_echo_flag = DISABLE; /* »ØÏÔÄ¬ÈÏ¹Ø±Õ */
+uint8_t cli_echo_flag = DISABLE; /* å›æ˜¾é»˜è®¤å…³é—­ */
 
-RX_BUFF_TYPE cli_rx_buff; /* 128×Ö½Ú¶ÓÁĞ£¬±£´æ´®¿ÚÖĞ¶Ï½ÓÊÕµÄÃüÁî */
+RX_BUFF_TYPE cli_rx_buff; /* 128å­—èŠ‚é˜Ÿåˆ—ï¼Œä¿å­˜ä¸²å£ä¸­æ–­æ¥æ”¶çš„å‘½ä»¤ */
 
 
 
@@ -68,16 +68,16 @@ const char CLI_Cmd_Reboot[] =
 
 
 /**
-  * ÃüÁî½á¹¹Ìå±í£¬ÃüÁîÇø·Ö´óĞ¡Ğ´
+  * å‘½ä»¤ç»“æ„ä½“è¡¨ï¼Œå‘½ä»¤åŒºåˆ†å¤§å°å†™
   */
 const COMMAND_S CLI_Cmd[] = {
-    /* ÃüÁî               ÃüÁî°ïÖú                ³õÊ¼»¯º¯Êı          ´¦Àíº¯Êı */
+    /* å‘½ä»¤               å‘½ä»¤å¸®åŠ©                åˆå§‹åŒ–å‡½æ•°          å¤„ç†å‡½æ•° */
     {"help",            CLI_Cmd_Help,       NULL,           cli_help},
     {"cls",             CLI_Cmd_Clear,      NULL,           cli_clear},
     {"echo",            CLI_Cmd_Echo,       NULL,           cli_echo},
     {"reboot",          CLI_Cmd_Reboot,     NULL,           cli_reboot},
 
-    /* ÉÏÃæÊÇÏµÍ³ÃüÁî£¬ÒÔÏÂ¿ªÊ¼ÊÇÓĞ¹ØÓ¦ÓÃµÄÃüÁîÁË */
+    /* ä¸Šé¢æ˜¯ç³»ç»Ÿå‘½ä»¤ï¼Œä»¥ä¸‹å¼€å§‹æ˜¯æœ‰å…³åº”ç”¨çš„å‘½ä»¤äº† */
 #ifdef NXP_CLI_DEBUG
     {"nxp",             NXP_CMD,            NULL,           cli_nxp},
 #endif  /* NXP_CLI_DEBUG */
@@ -89,10 +89,10 @@ const COMMAND_S CLI_Cmd[] = {
 
 
 /**
-  * @brief          ´òÓ¡Ã¿¸öÃüÁîµÄ°ïÖúĞÅÏ¢
-  * @param  para:   ²ÎÊıµØÖ·
-  * @param  len:    ²ÎÊı³¤¶È
-  * @retval         ·µ»ØTrue±íÊ¾ÕıÈ·
+  * @brief          æ‰“å°æ¯ä¸ªå‘½ä»¤çš„å¸®åŠ©ä¿¡æ¯
+  * @param  para:   å‚æ•°åœ°å€
+  * @param  len:    å‚æ•°é•¿åº¦
+  * @retval         è¿”å›Trueè¡¨ç¤ºæ­£ç¡®
   */
 static uint8_t cli_help(void *para, uint8_t len)
 {
@@ -109,32 +109,32 @@ static uint8_t cli_help(void *para, uint8_t len)
 
 
 /**
-  * @brief          ÇåÆÁÃüÁî
-  * @param  para:   ²ÎÊıµØÖ·
-  * @param  len:    ²ÎÊı³¤¶È
-  * @retval         ·µ»ØTrue±íÊ¾ÕıÈ·
+  * @brief          æ¸…å±å‘½ä»¤
+  * @param  para:   å‚æ•°åœ°å€
+  * @param  len:    å‚æ•°é•¿åº¦
+  * @retval         è¿”å›Trueè¡¨ç¤ºæ­£ç¡®
   */
 static uint8_t cli_clear(void *para, uint8_t len)
 {
-    TERMINAL_BACK_BLACK(); /* ÉèÖÃÖÕ¶ËÏÔÊ¾±³¾°ÎªºÚÉ« */
-    TERMINAL_FONT_GREEN(); /* ÉèÖÃÖÕ¶ËÏÔÊ¾×ÖÌåÎªÂÌÉ« */
+    TERMINAL_BACK_BLACK(); /* è®¾ç½®ç»ˆç«¯æ˜¾ç¤ºèƒŒæ™¯ä¸ºé»‘è‰² */
+    TERMINAL_FONT_GREEN(); /* è®¾ç½®ç»ˆç«¯æ˜¾ç¤ºå­—ä½“ä¸ºç»¿è‰² */
 
     /* This prints the clear screen and move cursor to top-left corner control
      * characters for VT100 terminals. This means it will not work on
      * non-VT100 compliant terminals, namely Windows' cmd.exe, but should
      * work on anything unix-y. */
     TERMINAL_RESET_CURSOR();
-    TERMINAL_DISPLAY_CLEAR(); /* secureCRTÊÕµ½Õâ¸ö×Ö·û´®¾ÍÇåÆÁ */
+    TERMINAL_DISPLAY_CLEAR(); /* secureCRTæ”¶åˆ°è¿™ä¸ªå­—ç¬¦ä¸²å°±æ¸…å± */
 
     return TRUE;
 }
 
 
 /**
-  * @brief          ´òÓ¡Ã¿¸öÃüÁîµÄ°ïÖúĞÅÏ¢
-  * @param  para:   ²ÎÊıµØÖ·
-  * @param  len:    ²ÎÊı³¤¶È
-  * @retval         ·µ»ØTrue±íÊ¾ÕıÈ·
+  * @brief          æ‰“å°æ¯ä¸ªå‘½ä»¤çš„å¸®åŠ©ä¿¡æ¯
+  * @param  para:   å‚æ•°åœ°å€
+  * @param  len:    å‚æ•°é•¿åº¦
+  * @retval         è¿”å›Trueè¡¨ç¤ºæ­£ç¡®
   */
 static uint8_t cli_echo(void *para, uint8_t len)
 {
@@ -142,43 +142,43 @@ static uint8_t cli_echo(void *para, uint8_t len)
     pTemp = (uint8_t *)para;
 
     if((0 < len) && (NULL != pTemp)) {
-        pTemp++; /* Ìø¹ıÒ»¸ö¿Õ¸ñ */
+        pTemp++; /* è·³è¿‡ä¸€ä¸ªç©ºæ ¼ */
 
         if('1' == *pTemp) {
-            /* ´ò¿ª»ØÏÔ */
+            /* æ‰“å¼€å›æ˜¾ */
             cli_echo_flag = ENABLE;
             PRINTF("echo on\r\n");
         } else if('0' == *pTemp) {
-            /* ¹Ø±Õ»ØÏÔ */
+            /* å…³é—­å›æ˜¾ */
             cli_echo_flag = DISABLE;
             PRINTF("echo off\r\n");
         } else {
-            /* ²ÎÊıÓĞ´í */
+            /* å‚æ•°æœ‰é”™ */
             return FALSE;
         }
     }
 
-    /* ÕıÈ··µ»Ø */
+    /* æ­£ç¡®è¿”å› */
     return TRUE;
 }
 
 
 #if 0
 /**
-  * @brief  »ñÈ¡MCUĞÅÏ¢
-  * @param  ²ÎÊıµØÖ·ºÍ²ÎÊı³¤¶È
-  * @retval ·µ»ØTrue±íÊ¾ÕıÈ·
+  * @brief  è·å–MCUä¿¡æ¯
+  * @param  å‚æ•°åœ°å€å’Œå‚æ•°é•¿åº¦
+  * @retval è¿”å›Trueè¡¨ç¤ºæ­£ç¡®
   */
 static uint8_t cli_mcu_info(void *para, uint8_t len)
 {
     uint16_t flash_size;
     uint32_t MAC_buff[3];
 
-    /* »ñÈ¡FLASH´óĞ¡ */
+    /* è·å–FLASHå¤§å° */
     flash_size = *(__IO uint16_t *)(0x1FFF7A22);
     PRINTF("Flash size: %d KB\r\n", flash_size);
 
-    /* »ñÈ¡ID */
+    /* è·å–ID */
     MAC_buff[0] = *(__IO uint32_t*)(0x1FFF7A10);
     MAC_buff[1] = *(__IO uint32_t*)(0x1FFF7A14);
     MAC_buff[2] = *(__IO uint32_t*)(0x1FFF7A18);
@@ -190,10 +190,10 @@ static uint8_t cli_mcu_info(void *para, uint8_t len)
 
 
 /**
-  * @brief          ÖØÆôMCU
-  * @param  para:   ²ÎÊıµØÖ·
-  * @param  len:    ²ÎÊı³¤¶È
-  * @retval         ·µ»ØTrue±íÊ¾ÕıÈ·
+  * @brief          é‡å¯MCU
+  * @param  para:   å‚æ•°åœ°å€
+  * @param  len:    å‚æ•°é•¿åº¦
+  * @retval         è¿”å›Trueè¡¨ç¤ºæ­£ç¡®
   */
 static uint8_t cli_reboot(void *para, uint8_t len)
 {
@@ -223,8 +223,8 @@ static HISTORY_S history;
 
 
 /**
-  * @brief          Ìí¼ÓÒ»¸öÀúÊ·¼ÇÂ¼
-  * @param  buff:   ÀúÊ·¼ÇÂ¼
+  * @brief          æ·»åŠ ä¸€ä¸ªå†å²è®°å½•
+  * @param  buff:   å†å²è®°å½•
   * @retval         null
   */
 static void cli_history_add(char* buff)
@@ -235,9 +235,9 @@ static void cli_history_add(char* buff)
     if (NULL == buff) return;
 
     len = strlen((const char *)buff);
-    if (len >= HANDLE_LEN) return;  /* ÃüÁî³¤¶ÈÒç³ö */
+    if (len >= HANDLE_LEN) return;  /* å‘½ä»¤é•¿åº¦æº¢å‡º */
 
-    /* ¶¨Î»×î½üÒ»¸öÀúÊ·ÃüÁî */
+    /* å®šä½æœ€è¿‘ä¸€ä¸ªå†å²å‘½ä»¤ */
     if (0 != index) {
         index--;
     } else {
@@ -245,7 +245,7 @@ static void cli_history_add(char* buff)
     }
 
     if (0 != memcmp(history.cmd[index], buff, len)) {
-        /* ºÍ×î½üÒ»¸öÀúÊ·ÃüÁî²»Ò»Ñù£¬²Å±£´æ */
+        /* å’Œæœ€è¿‘ä¸€ä¸ªå†å²å‘½ä»¤ä¸ä¸€æ ·ï¼Œæ‰ä¿å­˜ */
         memset((void *)history.cmd[history.latest], 0x00, HANDLE_LEN);
         memcpy((void *)history.cmd[history.latest], (const void *)buff, len);
         if (history.count < CLI_HISTORY_MAX) {
@@ -263,10 +263,10 @@ static void cli_history_add(char* buff)
 
 
 /**
-  * @brief              ²é¿´ÀúÊ·¼ÇÂ¼
-  * @param  mode:       TRUE²é¿´ÉÏÒ»¸ö£¬FALSE²é¿´ÏÂÒ»¸ö
-  * @param  p_history:  Ö¸Ïò²éÑ¯µ½µÄÀúÊ·¼ÇÂ¼
-  * @retval             TRUE±íÊ¾Ã»ÓĞÀúÊ·¼ÇÂ¼£¬FALSE±íÊ¾²éÑ¯³É¹¦
+  * @brief              æŸ¥çœ‹å†å²è®°å½•
+  * @param  mode:       TRUEæŸ¥çœ‹ä¸Šä¸€ä¸ªï¼ŒFALSEæŸ¥çœ‹ä¸‹ä¸€ä¸ª
+  * @param  p_history:  æŒ‡å‘æŸ¥è¯¢åˆ°çš„å†å²è®°å½•
+  * @retval             TRUEè¡¨ç¤ºæ²¡æœ‰å†å²è®°å½•ï¼ŒFALSEè¡¨ç¤ºæŸ¥è¯¢æˆåŠŸ
   */
 static uint8_t cli_history_show(uint8_t mode, char** p_history)
 {
@@ -277,12 +277,12 @@ static uint8_t cli_history_show(uint8_t mode, char** p_history)
     if (0 == history.count) return err;
 
     if (TRUE == mode) {
-        /* ÉÏÒ»¸öÀúÊ·ÃüÁî */
+        /* ä¸Šä¸€ä¸ªå†å²å‘½ä»¤ */
         if (history.show < history.count) {
             history.show++;
         }
     } else {
-        /* ÏÂÒ»¸öÀúÊ·ÃüÁî */
+        /* ä¸‹ä¸€ä¸ªå†å²å‘½ä»¤ */
         if (1 < history.show) {
             history.show--;
         }
@@ -311,9 +311,9 @@ static uint8_t cli_history_show(uint8_t mode, char** p_history)
 
 #if CLI_LOGIN
 
-#define CLI_LOGIN_PASSWORD  "root"  /* µÇÂ¼ÃÜÂë */
-#define CLI_LOGIN_ERR_MAX   3       /* ÃÜÂëÊäÈë´íÎó´ïµ½3´Î£¬¾ÍËø¶¨£¬Ö±µ½ÏÂ´ÎÖØÆô */
-#define CLI_LOGIN_TIME      600     /* 600ÃëÃ»ÓĞÊÕµ½ÃüÁî£¬×Ô¶¯ÍË³ö */
+#define CLI_LOGIN_PASSWORD  "root"  /* ç™»å½•å¯†ç  */
+#define CLI_LOGIN_ERR_MAX   3       /* å¯†ç è¾“å…¥é”™è¯¯è¾¾åˆ°3æ¬¡ï¼Œå°±é”å®šï¼Œç›´åˆ°ä¸‹æ¬¡é‡å¯ */
+#define CLI_LOGIN_TIME      600     /* 600ç§’æ²¡æœ‰æ”¶åˆ°å‘½ä»¤ï¼Œè‡ªåŠ¨é€€å‡º */
 
 __packed typedef struct {
     uint8_t flag :1;
@@ -328,7 +328,7 @@ static LOGIN_S login;
 
 
 /**
-  * @brief  µÇÂ¼³õÊ¼»¯
+  * @brief  ç™»å½•åˆå§‹åŒ–
   * @param  null
   * @retval null
   */
@@ -340,8 +340,8 @@ static void cli_login_init(void)
 
 #if CLI_LOGIN_TIME
 /**
-  * @brief  ³¬Ê±×Ô¶¯ÍË³öµÇÂ¼
-  * @param  login_timer_run±»µ÷ÓÃµÄÖÜÆÚ£¬µ¥Î»ms
+  * @brief  è¶…æ—¶è‡ªåŠ¨é€€å‡ºç™»å½•
+  * @param  login_timer_runè¢«è°ƒç”¨çš„å‘¨æœŸï¼Œå•ä½ms
   * @retval null
   */
 static void cli_login_timer_run(uint16_t n_ms)
@@ -363,9 +363,9 @@ static void cli_login_timer_run(uint16_t n_ms)
 #endif  /* CLI_LOGIN_TIME */
 
 /**
-  * @brief  µÇÂ¼ÃÜÂëÅĞ¶Ï
-  * @param  ÊäÈëµÄÃÜÂë
-  * @retval TRUE±íÊ¾ÃÜÂë´íÎó£¬FALSE±íÊ¾ÃÜÂëÕıÈ·
+  * @brief  ç™»å½•å¯†ç åˆ¤æ–­
+  * @param  è¾“å…¥çš„å¯†ç 
+  * @retval TRUEè¡¨ç¤ºå¯†ç é”™è¯¯ï¼ŒFALSEè¡¨ç¤ºå¯†ç æ­£ç¡®
   */
 static uint8_t cli_login_password_check(char* p_str)
 {
@@ -390,8 +390,8 @@ static uint8_t cli_login_password_check(char* p_str)
             PRINTF_COLOR(E_FONT_WHITE, "login password error! \r\n>");
         }
     } else {
-        /* ÃÜÂëÊäÈë´íÎó´ïµ½3´Î£¬¾ÍËø¶¨£¬ºóĞø²»¹ÜÊäÈëÊ²Ã´ÃÜÂë¶¼ÌáÊ¾´íÎó£¬¼´Ê¹ÊäÈëµÄ
-        ÊÇÕıÈ·µÄÃÜÂë¡£Ò²¾ÍÊÇËµÖ»ÓĞ¸Õ¿ªÊ¼3´Î»ú»áÊäÈëÕıÈ·ÃÜÂë²ÅĞĞ */
+        /* å¯†ç è¾“å…¥é”™è¯¯è¾¾åˆ°3æ¬¡ï¼Œå°±é”å®šï¼Œåç»­ä¸ç®¡è¾“å…¥ä»€ä¹ˆå¯†ç éƒ½æç¤ºé”™è¯¯ï¼Œå³ä½¿è¾“å…¥çš„
+        æ˜¯æ­£ç¡®çš„å¯†ç ã€‚ä¹Ÿå°±æ˜¯è¯´åªæœ‰åˆšå¼€å§‹3æ¬¡æœºä¼šè¾“å…¥æ­£ç¡®å¯†ç æ‰è¡Œ */
         login.flag = FALSE;
         PRINTF_COLOR(E_FONT_WHITE, "login password error! \r\n>");
     }
@@ -403,8 +403,8 @@ static uint8_t cli_login_password_check(char* p_str)
 
 
 /**
-  * @brief  ÃüÁîĞĞ³õÊ¼»¯
-  * @param  ´®¿Ú²¨ÌØÂÊ
+  * @brief  å‘½ä»¤è¡Œåˆå§‹åŒ–
+  * @param  ä¸²å£æ³¢ç‰¹ç‡
   * @retval null
   */
 void cli_init(uint32_t baud)
@@ -419,20 +419,20 @@ void cli_init(uint32_t baud)
 
     USART_INIT(baud);
 
-    /* ¶ÔÃ¿¸öÃüÁî½øĞĞ³õÊ¼»¯ */
+    /* å¯¹æ¯ä¸ªå‘½ä»¤è¿›è¡Œåˆå§‹åŒ– */
     for(i = 0; i < sizeof(CLI_Cmd) / sizeof(COMMAND_S); i++) {
-        /* ¸ÃÃüÁî³õÊ¼»¯º¯Êı·Ç¿Õ */
+        /* è¯¥å‘½ä»¤åˆå§‹åŒ–å‡½æ•°éç©º */
         if(NULL != CLI_Cmd[i].pInit) {
             if(FALSE == CLI_Cmd[i].pInit()) {
-                /* Ö´ĞĞ³õÊ¼»¯º¯Êı·µ»Ø´íÎó£¬ÒªÌáÊ¾ */
+                /* æ‰§è¡Œåˆå§‹åŒ–å‡½æ•°è¿”å›é”™è¯¯ï¼Œè¦æç¤º */
                 PRINTF("\r\n-> FUN[%d] INIT WRONG\r\n", i);
             }
         }
     }
 
     PRINTF(" \r\n");
-    TERMINAL_BACK_BLACK(); /* ÉèÖÃÖÕ¶ËÏÔÊ¾±³¾°ÎªºÚÉ« */
-    TERMINAL_FONT_GREEN(); /* ÉèÖÃÖÕ¶ËÏÔÊ¾×ÖÌåÎªÂÌÉ« */
+    TERMINAL_BACK_BLACK(); /* è®¾ç½®ç»ˆç«¯æ˜¾ç¤ºèƒŒæ™¯ä¸ºé»‘è‰² */
+    TERMINAL_FONT_GREEN(); /* è®¾ç½®ç»ˆç«¯æ˜¾ç¤ºå­—ä½“ä¸ºç»¿è‰² */
     TERMINAL_DISPLAY_CLEAR();
     TERMINAL_RESET_CURSOR();
 
@@ -451,49 +451,49 @@ void cli_init(uint32_t baud)
 
 
 /**
-  * @brief              ´¦Àí½ÓÊÕµ½µÄÊı¾İ
-  * @param  rx_buff:    ´®¿ÚÊÕµ½µÄÊı¾İ
+  * @brief              å¤„ç†æ¥æ”¶åˆ°çš„æ•°æ®
+  * @param  rx_buff:    ä¸²å£æ”¶åˆ°çš„æ•°æ®
   * @retval             null
   */
 static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 {
     static HANDLE_TYPE_S Handle = {.len = 0};
-    uint8_t i = Handle.len;;
+    uint8_t i = Handle.len;
     uint8_t ParaLen;
     uint8_t *ParaAddr;
     uint8_t cmd_match = FALSE;
 
     /*  ---------------------------------------
-        µÚÒ»²½£¬½«´®¿Ú½ÓÊÕµ½µÄÊı¾İ±£´æÆğÀ´
+        ç¬¬ä¸€æ­¥ï¼Œå°†ä¸²å£æ¥æ”¶åˆ°çš„æ•°æ®ä¿å­˜èµ·æ¥
         ---------------------------------------
      */
     while(1) {
 
-        if(Handle.len < HANDLE_LEN) {  /* »º´æÃ»Âú */
+        if(Handle.len < HANDLE_LEN) {  /* ç¼“å­˜æ²¡æ»¡ */
 
-            /* ´®¿ÚÓĞ½ÓÊÕµ½ĞÂÊı¾İ£¬¸´ÖÆµ½Handle.buffºó½âÎö */
+            /* ä¸²å£æœ‰æ¥æ”¶åˆ°æ–°æ•°æ®ï¼Œå¤åˆ¶åˆ°Handle.buffåè§£æ */
             if(TRUE == QUEUE_OUT((*rx_buff), Handle.buff[Handle.len])) {
-                /* KEY_BACKSPACEÓÃÓÚÉ¾³ı×î½üµÄÒ»¸ö×Ö·û */
+                /* KEY_BACKSPACEç”¨äºåˆ é™¤æœ€è¿‘çš„ä¸€ä¸ªå­—ç¬¦ */
                 if (KEY_BACKSPACE == Handle.buff[Handle.len]) {
-                    /* »¹ÓĞ»º´æµÄ×Ö·û¾ÍÉ¾³ı×î½üÒ»¸ö */
+                    /* è¿˜æœ‰ç¼“å­˜çš„å­—ç¬¦å°±åˆ é™¤æœ€è¿‘ä¸€ä¸ª */
                     if (0 < Handle.len) {
-                        /* ÊµÏÖÔÚsecrueCRTÉÏÒ²É¾³ı×î½üÊäÈëµÄÒ»¸ö×Ö·û */
+                        /* å®ç°åœ¨secrueCRTä¸Šä¹Ÿåˆ é™¤æœ€è¿‘è¾“å…¥çš„ä¸€ä¸ªå­—ç¬¦ */
                         TERMINAL_MOVE_LEFT(1);
                         TERMINAL_CLEAR_END();
-                        /* »ØÍËÒ»¸ö×Ö·û */
+                        /* å›é€€ä¸€ä¸ªå­—ç¬¦ */
                         Handle.len -= 1;
                     }
 
                 } else if (KEY_HORIZONTAL_TAB == Handle.buff[Handle.len]) {
-                    /* °´ÏÂË®Æ½ÖÆ±í¼üÊµÏÖÃüÁîĞĞ²¹È« */
+                    /* æŒ‰ä¸‹æ°´å¹³åˆ¶è¡¨é”®å®ç°å‘½ä»¤è¡Œè¡¥å…¨ */
                     
                 } else {
-                    /* ÊÇÕı³£×Ö·û£¬²»ÊÇÉ¾³ı¼ü£¬Ò²²»ÊÇË®Æ½ÖÆ±í¼ü */
+                    /* æ˜¯æ­£å¸¸å­—ç¬¦ï¼Œä¸æ˜¯åˆ é™¤é”®ï¼Œä¹Ÿä¸æ˜¯æ°´å¹³åˆ¶è¡¨é”® */
                     Handle.len++;
                 }
 
             } else {
-                /* ÒÑÈ«²¿¸´ÖÆµ½Handle.buffÁË */
+                /* å·²å…¨éƒ¨å¤åˆ¶åˆ°Handle.buffäº† */
 #if CLI_HISTORY
                 uint8_t key = 0;
                 uint8_t err = 0xff;
@@ -526,9 +526,9 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
                             memcpy(Handle.buff, p_hist_cmd, strlen(p_hist_cmd));
                             Handle.len = strlen(p_hist_cmd);
                             Handle.buff[Handle.len] = '\0';
-                            PRINTF("%s", Handle.buff);  /* ÏÔÊ¾²éÑ¯µÄÃüÁî */
+                            PRINTF("%s", Handle.buff);  /* æ˜¾ç¤ºæŸ¥è¯¢çš„å‘½ä»¤ */
                         } else if ((TRUE == err) || (0 != key)) {
-                            /* ¸ÕÉÏµç£¬Ã»ÓĞÈÎºÎÀúÊ·ÃüÁî£¬Òò´Ë²éÑ¯Îª¿Õ */
+                            /* åˆšä¸Šç”µï¼Œæ²¡æœ‰ä»»ä½•å†å²å‘½ä»¤ï¼Œå› æ­¤æŸ¥è¯¢ä¸ºç©º */
                             TERMINAL_MOVE_LEFT(Handle.len);
                             TERMINAL_CLEAR_END();
                             memset(&Handle, 0x00, sizeof(Handle));
@@ -538,7 +538,7 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
                 if ((0 == key) && (i < Handle.len)) {
 #endif  /* CLI_HISTORY */
-                    /* ½«ÊÕµ½µÄ×Ö·û·¢ËÍ³öÈ¥£¬ÖÕ¶Ë»ØÏÔ */
+                    /* å°†æ”¶åˆ°çš„å­—ç¬¦å‘é€å‡ºå»ï¼Œç»ˆç«¯å›æ˜¾ */
                     for (; i < Handle.len; i++) {
                         USART_SendData(DEBUG_USARTx, Handle.buff[i]);
                     }
@@ -549,20 +549,20 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
             }
 
         } else {
-            /* »º´æÂúÁË */
+            /* ç¼“å­˜æ»¡äº† */
             break;
         }
     }
 
     /*  ---------------------------------------
-        µÚ¶ş²½£¬½âÎöÃüÁî
+        ç¬¬äºŒæ­¥ï¼Œè§£æå‘½ä»¤
         ---------------------------------------
      */
     if((1 == Handle.len) && (KEY_ENTER == Handle.buff[Handle.len - 1])) {
-        /* ²»ÏìÓ¦µ¥¶ÀµÄKEY_ENTER£¬¿ØÖÆÌ¨°´»Ø³µ¾ÍÊÇ·¢ËÍµÄKEY_ENTER¸øMCU */
+        /* ä¸å“åº”å•ç‹¬çš„KEY_ENTERï¼Œæ§åˆ¶å°æŒ‰å›è½¦å°±æ˜¯å‘é€çš„KEY_ENTERç»™MCU */
         Handle.len = 0;
-    } else if(1 < Handle.len) {  /* ÃüÁî³¤¶ÈÂú×ã½âÎöÌõ¼ş£¬ÒòÎªÃüÁî½áÊøKEY_ENTER¾ÍÊÇ1×Ö½ÚÁË */
-        /* ÃüÁî±ØĞëÒÔKEY_ENTER½áÎ² */
+    } else if(1 < Handle.len) {  /* å‘½ä»¤é•¿åº¦æ»¡è¶³è§£ææ¡ä»¶ï¼Œå› ä¸ºå‘½ä»¤ç»“æŸKEY_ENTERå°±æ˜¯1å­—èŠ‚äº† */
+        /* å‘½ä»¤å¿…é¡»ä»¥KEY_ENTERç»“å°¾ */
         if(KEY_ENTER == Handle.buff[Handle.len - 1]) {
             Handle.buff[Handle.len - 1] = '\0';
 
@@ -570,49 +570,49 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
             if (FALSE == login.flag) {
                 cli_login_password_check((char *)Handle.buff);
                 memset(&Handle, 0x00, sizeof(Handle));
-                return; /* Ã»ÓĞµÇÂ¼³É¹¦£¬¾Í²»´¦ÀíÈÎºÎÃüÁî */
+                return; /* æ²¡æœ‰ç™»å½•æˆåŠŸï¼Œå°±ä¸å¤„ç†ä»»ä½•å‘½ä»¤ */
             }
 #endif  /* CLI_LOGIN */
 
-            /* Ñ­»·£¬Ñ°ÕÒÆ¥ÅäµÄÃüÁî */
+            /* å¾ªç¯ï¼Œå¯»æ‰¾åŒ¹é…çš„å‘½ä»¤ */
             for(i = 0; i < sizeof(CLI_Cmd) / sizeof(COMMAND_S); i++) {
                 if(0 == strncmp((const char *)Handle.buff,
                                 (void *)CLI_Cmd[i].pCmd,
                                 strlen(CLI_Cmd[i].pCmd))) {
                     cmd_match = TRUE;
-                    ParaLen = Handle.len - strlen(CLI_Cmd[i].pCmd);   /* ÃüÁî²ÎÊıµÄ³¤¶È */
-                    ParaAddr = &Handle.buff[strlen(CLI_Cmd[i].pCmd)]; /* ÃüÁî²ÎÊıµÄµØÖ· */
+                    ParaLen = Handle.len - strlen(CLI_Cmd[i].pCmd);   /* å‘½ä»¤å‚æ•°çš„é•¿åº¦ */
+                    ParaAddr = &Handle.buff[strlen(CLI_Cmd[i].pCmd)]; /* å‘½ä»¤å‚æ•°çš„åœ°å€ */
 
                     if(NULL != CLI_Cmd[i].pFun) {
-                        /* Ö´ĞĞÃüÁî¶ÔÓ¦µÄº¯Êı */
+                        /* æ‰§è¡Œå‘½ä»¤å¯¹åº”çš„å‡½æ•° */
                         if(CLI_Cmd[i].pFun(ParaAddr, ParaLen)) {
-                            /* ÃüÁîÖ´ĞĞÕıÈ· */
+                            /* å‘½ä»¤æ‰§è¡Œæ­£ç¡® */
                             PRINTF("\r\n-> OK\r\n");
 
 #if CLI_HISTORY
                             cli_history_add((char *)Handle.buff);
 #endif  /* CLI_HISTORY */
 
-                            /* ¿ªÆôÁË»ØÏÔ£¬¾Í´òÓ¡ÊÕµ½µÄÃüÁî */
+                            /* å¼€å¯äº†å›æ˜¾ï¼Œå°±æ‰“å°æ”¶åˆ°çš„å‘½ä»¤ */
                             if(ENABLE == cli_echo_flag) {
                                 Handle.buff[Handle.len] = '\0';
                                 PRINTF("[echo]: %s\r\n", (const char*)Handle.buff);
                             }
                         } else {
-                            /* ÃüÁîÖ´ĞĞ³ö´í */
+                            /* å‘½ä»¤æ‰§è¡Œå‡ºé”™ */
                             PRINTF("\r\n-> PARA. ERR\r\n");
-                            /* ²ÎÊı³ö´íÌáÊ¾¸ÃÃüÁîÊ¹ÓÃ°ïÖú */
+                            /* å‚æ•°å‡ºé”™æç¤ºè¯¥å‘½ä»¤ä½¿ç”¨å¸®åŠ© */
                             PRINTF(CLI_Cmd[i].pHelp);
                         }
                     } else {
-                        /* ÊÇ¿Õº¯Êı£¬ÌáÊ¾´íÎó */
+                        /* æ˜¯ç©ºå‡½æ•°ï¼Œæç¤ºé”™è¯¯ */
                         PRINTF("\r\n-> FUNC. ERR\r\n");
                     }
                 }
             }
 
             if(FALSE == cmd_match) {
-                /* Ã»ÓĞÆ¥Åäµ½ÓĞĞ§ÃüÁî£¬ÌáÊ¾ÃüÁî´íÎó */
+                /* æ²¡æœ‰åŒ¹é…åˆ°æœ‰æ•ˆå‘½ä»¤ï¼Œæç¤ºå‘½ä»¤é”™è¯¯ */
                 PRINTF("\r\n-> CMD ERR, try: help\r\n\r\n");
             }
 
@@ -624,25 +624,25 @@ static void cli_rx_handle(RX_BUFF_TYPE *rx_buff)
 
 
     if(Handle.len >= HANDLE_LEN) {
-        /* ÂúÁË£¬Çå¿Õ¼ÆÊı */
+        /* æ»¡äº†ï¼Œæ¸…ç©ºè®¡æ•° */
         Handle.len = 0;
     }
 }
 
 
 /**
-  * @brief  ´¦ÀíÒª·¢ËÍµÄÊı¾İ
+  * @brief  å¤„ç†è¦å‘é€çš„æ•°æ®
   * @param  null
   * @retval null
   */
 static void cli_tx_handle(void)
 {
-    /* Ô¤Áô */
+    /* é¢„ç•™ */
 }
 
 
 /**
-  * @brief  ´¦ÀíÃüÁîĞĞÊı¾İ£¬Ò»°ã50msÔËĞĞÒ»´Î¾Í¹»ÁË
+  * @brief  å¤„ç†å‘½ä»¤è¡Œæ•°æ®ï¼Œä¸€èˆ¬50msè¿è¡Œä¸€æ¬¡å°±å¤Ÿäº†
   * @param  null
   * @retval null
   */
