@@ -3,13 +3,13 @@
   * @file    bsp_rtc.c
   * @version V1.0
   * @date    2013-xx-xx
-  * @brief   stm32 RTC Çý¶¯
+  * @brief   stm32 RTC é©±åŠ¨
   ******************************************************************************
   * @attention
   *
-  * ÊµÑéÆ½Ì¨:±ü»ð F103-°ÔµÀ STM32 ¿ª·¢°å
-  * ÂÛÌ³    :http://www.firebbs.cn
-  * ÌÔ±¦    :https://fire-stm32.taobao.com
+  * å®žéªŒå¹³å°:ç§‰ç« F103-éœ¸é“ STM32 å¼€å‘æ¿
+  * è®ºå›    :http://www.firebbs.cn
+  * æ·˜å®    :https://fire-stm32.taobao.com
   *
   ******************************************************************************
   */
@@ -22,21 +22,21 @@
 
 
 
-/*ÐÇÆÚ£¬ÉúÐ¤ÓÃÎÄ×ÖASCIIÂë*/
-char const *WEEK_STR[] = {"ÈÕ", "Ò»", "¶þ", "Èý", "ËÄ", "Îå", "Áù"};
-char const *zodiac_sign[] = {"Öí", "Êó", "Å£", "»¢", "ÍÃ", "Áú", "Éß", "Âí", "Ñò", "ºï", "¼¦", "¹·"};
+/*æ˜ŸæœŸï¼Œç”Ÿè‚–ç”¨æ–‡å­—ASCIIç */
+char const *WEEK_STR[] = {"æ—¥", "ä¸€", "äºŒ", "ä¸‰", "å››", "äº”", "å…­"};
+char const *zodiac_sign[] = {"çŒª", "é¼ ", "ç‰›", "è™Ž", "å…”", "é¾™", "è›‡", "é©¬", "ç¾Š", "çŒ´", "é¸¡", "ç‹—"};
 
-/*Ó¢ÎÄ£¬ÐÇÆÚ£¬ÉúÐ¤ÓÃÎÄ×ÖASCIIÂë*/
+/*è‹±æ–‡ï¼Œæ˜ŸæœŸï¼Œç”Ÿè‚–ç”¨æ–‡å­—ASCIIç */
 char const *en_WEEK_STR[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 char const *en_zodiac_sign[] = {"Pig", "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog"};
 
 
 /*
- * º¯ÊýÃû£ºNVIC_Configuration
- * ÃèÊö  £ºÅäÖÃRTCÃëÖÐ¶ÏµÄÖ÷ÖÐ¶ÏÓÅÏÈ¼¶Îª1£¬´ÎÓÅÏÈ¼¶Îª0
- * ÊäÈë  £ºÎÞ
- * Êä³ö  £ºÎÞ
- * µ÷ÓÃ  £ºÍâ²¿µ÷ÓÃ
+ * å‡½æ•°åï¼šNVIC_Configuration
+ * æè¿°  ï¼šé…ç½®RTCç§’ä¸­æ–­çš„ä¸»ä¸­æ–­ä¼˜å…ˆçº§ä¸º1ï¼Œæ¬¡ä¼˜å…ˆçº§ä¸º0
+ * è¾“å…¥  ï¼šæ— 
+ * è¾“å‡º  ï¼šæ— 
+ * è°ƒç”¨  ï¼šå¤–éƒ¨è°ƒç”¨
  */
 void RTC_NVIC_Config(void)
 {
@@ -55,82 +55,82 @@ void RTC_NVIC_Config(void)
 
 
 /*
- * º¯ÊýÃû£ºRTC_CheckAndConfig
- * ÃèÊö  £º¼ì²é²¢ÅäÖÃRTC
- * ÊäÈë  £ºÓÃÓÚ¶ÁÈ¡RTCÊ±¼äµÄ½á¹¹ÌåÖ¸Õë
- * Êä³ö  £ºÎÞ
- * µ÷ÓÃ  £ºÍâ²¿µ÷ÓÃ
+ * å‡½æ•°åï¼šRTC_CheckAndConfig
+ * æè¿°  ï¼šæ£€æŸ¥å¹¶é…ç½®RTC
+ * è¾“å…¥  ï¼šç”¨äºŽè¯»å–RTCæ—¶é—´çš„ç»“æž„ä½“æŒ‡é’ˆ
+ * è¾“å‡º  ï¼šæ— 
+ * è°ƒç”¨  ï¼šå¤–éƒ¨è°ƒç”¨
  */
 void RTC_CheckAndConfig(struct rtc_time *tm)
 {
-    /*ÔÚÆô¶¯Ê±¼ì²é±¸·Ý¼Ä´æÆ÷BKP_DR1£¬Èç¹ûÄÚÈÝ²»ÊÇ0xA5A5,
-      ÔòÐèÖØÐÂÅäÖÃÊ±¼ä²¢Ñ¯ÎÊÓÃ»§µ÷ÕûÊ±¼ä*/
+    /*åœ¨å¯åŠ¨æ—¶æ£€æŸ¥å¤‡ä»½å¯„å­˜å™¨BKP_DR1ï¼Œå¦‚æžœå†…å®¹ä¸æ˜¯0xA5A5,
+      åˆ™éœ€é‡æ–°é…ç½®æ—¶é—´å¹¶è¯¢é—®ç”¨æˆ·è°ƒæ•´æ—¶é—´*/
     if (BKP_ReadBackupRegister(RTC_BKP_DRX) != RTC_BKP_DATA) {
         PRINTF("\r\n\r\n RTC not yet configured....");
         PRINTF("\r\n\r\n RTC configured....");
 
-        /* Ê¹ÓÃtmµÄÊ±¼äÅäÖÃRTC¼Ä´æÆ÷ */
+        /* ä½¿ç”¨tmçš„æ—¶é—´é…ç½®RTCå¯„å­˜å™¨ */
         time_adjust(tm);
 
-        /*ÏòBKP_DR1¼Ä´æÆ÷Ð´Èë±êÖ¾£¬ËµÃ÷RTCÒÑÔÚÔËÐÐ*/
+        /*å‘BKP_DR1å¯„å­˜å™¨å†™å…¥æ ‡å¿—ï¼Œè¯´æ˜ŽRTCå·²åœ¨è¿è¡Œ*/
         BKP_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
     } else {
 
-        /* Ê¹ÄÜ PWR ºÍ Backup Ê±ÖÓ */
+        /* ä½¿èƒ½ PWR å’Œ Backup æ—¶é’Ÿ */
         RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 
-        /* ÔÊÐí·ÃÎÊ Backup ÇøÓò */
+        /* å…è®¸è®¿é—® Backup åŒºåŸŸ */
         PWR_BackupAccessCmd(ENABLE);
 
-        /*LSEÆô¶¯ÎÞÐèÉèÖÃÐÂÊ±ÖÓ*/
+        /*LSEå¯åŠ¨æ— éœ€è®¾ç½®æ–°æ—¶é’Ÿ*/
 
 #ifdef RTC_CLOCK_SOURCE_LSI
-        /* Ê¹ÄÜ LSI */
+        /* ä½¿èƒ½ LSI */
         RCC_LSICmd(ENABLE);
 
-        /* µÈ´ý LSI ×¼±¸ºÃ */
+        /* ç­‰å¾… LSI å‡†å¤‡å¥½ */
         while (RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
         {}
 
 #endif
 
         if (RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET) {
-            /*¼ì²éÊÇ·ñµôµçÖØÆô*/
+            /*æ£€æŸ¥æ˜¯å¦æŽ‰ç”µé‡å¯*/
             PRINTF("\r\n\r\n Power On Reset occurred....");
         } else if (RCC_GetFlagStatus(RCC_FLAG_PINRST) != RESET) {
-            /*¼ì²éÊÇ·ñReset¸´Î»*/
+            /*æ£€æŸ¥æ˜¯å¦Resetå¤ä½*/
             PRINTF("\r\n\r\n External Reset occurred....");
         }
 
         PRINTF("\r\n No need to configure RTC....");
 
-        /*µÈ´ý¼Ä´æÆ÷Í¬²½*/
+        /*ç­‰å¾…å¯„å­˜å™¨åŒæ­¥*/
         RTC_WaitForSynchro();
 
-        /*ÔÊÐíRTCÃëÖÐ¶Ï*/
+        /*å…è®¸RTCç§’ä¸­æ–­*/
         RTC_ITConfig(RTC_IT_SEC, ENABLE);
 
-        /*µÈ´ýÉÏ´ÎRTC¼Ä´æÆ÷Ð´²Ù×÷Íê³É*/
+        /*ç­‰å¾…ä¸Šæ¬¡RTCå¯„å­˜å™¨å†™æ“ä½œå®Œæˆ*/
         RTC_WaitForLastTask();
     }
 
-    /* ¶¨ÒåÁËÊ±ÖÓÊä³öºê£¬ÔòÅäÖÃÐ£ÕýÊ±ÖÓÊä³öµ½PC13 */
+    /* å®šä¹‰äº†æ—¶é’Ÿè¾“å‡ºå®ï¼Œåˆ™é…ç½®æ ¡æ­£æ—¶é’Ÿè¾“å‡ºåˆ°PC13 */
 #ifdef RTCClockOutput_Enable
-    /* Ê¹ÄÜ PWR ºÍ Backup Ê±ÖÓ */
+    /* ä½¿èƒ½ PWR å’Œ Backup æ—¶é’Ÿ */
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 
-    /* ÔÊÐí·ÃÎÊ Backup ÇøÓò */
+    /* å…è®¸è®¿é—® Backup åŒºåŸŸ */
     PWR_BackupAccessCmd(ENABLE);
 
-    /* ½ûÖ¹ Tamper Òý½Å */
-    /* ÒªÊä³ö RTCCLK/64 µ½ Tamper Òý½Å,  tamper ¹¦ÄÜ±ØÐë½ûÖ¹ */
+    /* ç¦æ­¢ Tamper å¼•è„š */
+    /* è¦è¾“å‡º RTCCLK/64 åˆ° Tamper å¼•è„š,  tamper åŠŸèƒ½å¿…é¡»ç¦æ­¢ */
     BKP_TamperPinCmd(DISABLE);
 
-    /* Ê¹ÄÜ RTC Ê±ÖÓÊä³öµ½ Tamper Òý½Å */
+    /* ä½¿èƒ½ RTC æ—¶é’Ÿè¾“å‡ºåˆ° Tamper å¼•è„š */
     BKP_RTCOutputConfig(BKP_RTCOutputSource_CalibClock);
 #endif
 
-    /* Çå³ý¸´Î»±êÖ¾ flags */
+    /* æ¸…é™¤å¤ä½æ ‡å¿— flags */
     RCC_ClearFlag();
 
 }
@@ -138,95 +138,95 @@ void RTC_CheckAndConfig(struct rtc_time *tm)
 
 
 /*
- * º¯ÊýÃû£ºRTC_Configuration
- * ÃèÊö  £ºÅäÖÃRTC
- * ÊäÈë  £ºÎÞ
- * Êä³ö  £ºÎÞ
- * µ÷ÓÃ  £ºÍâ²¿µ÷ÓÃ
+ * å‡½æ•°åï¼šRTC_Configuration
+ * æè¿°  ï¼šé…ç½®RTC
+ * è¾“å…¥  ï¼šæ— 
+ * è¾“å‡º  ï¼šæ— 
+ * è°ƒç”¨  ï¼šå¤–éƒ¨è°ƒç”¨
  */
 void RTC_Configuration(void)
 {
-    /* Ê¹ÄÜ PWR ºÍ Backup Ê±ÖÓ */
+    /* ä½¿èƒ½ PWR å’Œ Backup æ—¶é’Ÿ */
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 
-    /* ÔÊÐí·ÃÎÊ Backup ÇøÓò */
+    /* å…è®¸è®¿é—® Backup åŒºåŸŸ */
     PWR_BackupAccessCmd(ENABLE);
 
-    /* ¸´Î» Backup ÇøÓò */
+    /* å¤ä½ Backup åŒºåŸŸ */
     BKP_DeInit();
 
-//Ê¹ÓÃÍâ²¿Ê±ÖÓ»¹ÊÇÄÚ²¿Ê±ÖÓ£¨ÔÚbsp_rtc.hÎÄ¼þ¶¨Òå£©
-//Ê¹ÓÃÍâ²¿Ê±ÖÓÊ±£¬ÔÚÓÐÐ©Çé¿öÏÂ¾§Õñ²»ÆðÕñ
-//ÅúÁ¿²úÆ·µÄÊ±ºò£¬ºÜÈÝÒ×³öÏÖÍâ²¿¾§Õñ²»ÆðÕñµÄÇé¿ö£¬²»Ì«¿É¿¿
+//ä½¿ç”¨å¤–éƒ¨æ—¶é’Ÿè¿˜æ˜¯å†…éƒ¨æ—¶é’Ÿï¼ˆåœ¨bsp_rtc.hæ–‡ä»¶å®šä¹‰ï¼‰
+//ä½¿ç”¨å¤–éƒ¨æ—¶é’Ÿæ—¶ï¼Œåœ¨æœ‰äº›æƒ…å†µä¸‹æ™¶æŒ¯ä¸èµ·æŒ¯
+//æ‰¹é‡äº§å“çš„æ—¶å€™ï¼Œå¾ˆå®¹æ˜“å‡ºçŽ°å¤–éƒ¨æ™¶æŒ¯ä¸èµ·æŒ¯çš„æƒ…å†µï¼Œä¸å¤ªå¯é 
 #ifdef  RTC_CLOCK_SOURCE_LSE
-    /* Ê¹ÄÜ LSE */
+    /* ä½¿èƒ½ LSE */
     RCC_LSEConfig(RCC_LSE_ON);
 
-    /* µÈ´ý LSE ×¼±¸ºÃ */
+    /* ç­‰å¾… LSE å‡†å¤‡å¥½ */
     while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
     {}
 
-    /* Ñ¡Ôñ LSE ×÷Îª RTC Ê±ÖÓÔ´ */
+    /* é€‰æ‹© LSE ä½œä¸º RTC æ—¶é’Ÿæº */
     RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
 
-    /* Ê¹ÄÜ RTC Ê±ÖÓ */
+    /* ä½¿èƒ½ RTC æ—¶é’Ÿ */
     RCC_RTCCLKCmd(ENABLE);
 
-    /* µÈ´ý RTC ¼Ä´æÆ÷ Í¬²½
-     * ÒòÎªRTCÊ±ÖÓÊÇµÍËÙµÄ£¬ÄÚ»·Ê±ÖÓÊÇ¸ßËÙµÄ£¬ËùÒÔÒªÍ¬²½
+    /* ç­‰å¾… RTC å¯„å­˜å™¨ åŒæ­¥
+     * å› ä¸ºRTCæ—¶é’Ÿæ˜¯ä½Žé€Ÿçš„ï¼Œå†…çŽ¯æ—¶é’Ÿæ˜¯é«˜é€Ÿçš„ï¼Œæ‰€ä»¥è¦åŒæ­¥
      */
     RTC_WaitForSynchro();
 
-    /* È·±£ÉÏÒ»´Î RTC µÄ²Ù×÷Íê³É */
+    /* ç¡®ä¿ä¸Šä¸€æ¬¡ RTC çš„æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 
-    /* Ê¹ÄÜ RTC ÃëÖÐ¶Ï */
+    /* ä½¿èƒ½ RTC ç§’ä¸­æ–­ */
     RTC_ITConfig(RTC_IT_SEC, ENABLE);
 
-    /* È·±£ÉÏÒ»´Î RTC µÄ²Ù×÷Íê³É */
+    /* ç¡®ä¿ä¸Šä¸€æ¬¡ RTC çš„æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 
-    /* ÉèÖÃ RTC ·ÖÆµ: Ê¹ RTC ÖÜÆÚÎª1s  */
+    /* è®¾ç½® RTC åˆ†é¢‘: ä½¿ RTC å‘¨æœŸä¸º1s  */
     /* RTC period = RTCCLK/RTC_PR = (32.768 KHz)/(32767+1) = 1HZ */
     RTC_SetPrescaler(32767);
 
-    /* È·±£ÉÏÒ»´Î RTC µÄ²Ù×÷Íê³É */
+    /* ç¡®ä¿ä¸Šä¸€æ¬¡ RTC çš„æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 
 #else
 
-    /* Ê¹ÄÜ LSI */
+    /* ä½¿èƒ½ LSI */
     RCC_LSICmd(ENABLE);
 
-    /* µÈ´ý LSI ×¼±¸ºÃ */
+    /* ç­‰å¾… LSI å‡†å¤‡å¥½ */
     while (RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
     {}
 
-    /* Ñ¡Ôñ LSI ×÷Îª RTC Ê±ÖÓÔ´ */
+    /* é€‰æ‹© LSI ä½œä¸º RTC æ—¶é’Ÿæº */
     RCC_RTCCLKConfig(RCC_RTCCLKSource_LSI);
 
-    /* Ê¹ÄÜ RTC Ê±ÖÓ */
+    /* ä½¿èƒ½ RTC æ—¶é’Ÿ */
     RCC_RTCCLKCmd(ENABLE);
 
-    /* µÈ´ý RTC ¼Ä´æÆ÷ Í¬²½
-     * ÒòÎªRTCÊ±ÖÓÊÇµÍËÙµÄ£¬ÄÚ»·Ê±ÖÓÊÇ¸ßËÙµÄ£¬ËùÒÔÒªÍ¬²½
+    /* ç­‰å¾… RTC å¯„å­˜å™¨ åŒæ­¥
+     * å› ä¸ºRTCæ—¶é’Ÿæ˜¯ä½Žé€Ÿçš„ï¼Œå†…çŽ¯æ—¶é’Ÿæ˜¯é«˜é€Ÿçš„ï¼Œæ‰€ä»¥è¦åŒæ­¥
      */
     RTC_WaitForSynchro();
 
-    /* È·±£ÉÏÒ»´Î RTC µÄ²Ù×÷Íê³É */
+    /* ç¡®ä¿ä¸Šä¸€æ¬¡ RTC çš„æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 
-    /* Ê¹ÄÜ RTC ÃëÖÐ¶Ï */
+    /* ä½¿èƒ½ RTC ç§’ä¸­æ–­ */
     RTC_ITConfig(RTC_IT_SEC, ENABLE);
 
-    /* È·±£ÉÏÒ»´Î RTC µÄ²Ù×÷Íê³É */
+    /* ç¡®ä¿ä¸Šä¸€æ¬¡ RTC çš„æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 
-    /* ÉèÖÃ RTC ·ÖÆµ: Ê¹ RTC ÖÜÆÚÎª1s ,LSIÔ¼Îª40KHz */
+    /* è®¾ç½® RTC åˆ†é¢‘: ä½¿ RTC å‘¨æœŸä¸º1s ,LSIçº¦ä¸º40KHz */
     /* RTC period = RTCCLK/RTC_PR = (40 KHz)/(40000-1+1) = 1HZ */
     RTC_SetPrescaler(40000 - 1);
 
-    /* È·±£ÉÏÒ»´Î RTC µÄ²Ù×÷Íê³É */
+    /* ç¡®ä¿ä¸Šä¸€æ¬¡ RTC çš„æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 #endif
 
@@ -235,28 +235,28 @@ void RTC_Configuration(void)
 
 
 /*
- * º¯ÊýÃû£ºTime_Regulate_Get
- * ÃèÊö  £º±£´æÓÃ»§Ê¹ÓÃ´®¿ÚÉèÖÃµÄÊ±¼ä£¬
- *         ÒÔ±ãºóÃæ×ª»¯³ÉÊ±¼ä´Á´æ´¢µ½RTC ¼ÆÊý¼Ä´æÆ÷ÖÐ¡£
- * ÊäÈë  £ºÓÃÓÚ¶ÁÈ¡RTCÊ±¼äµÄ½á¹¹ÌåÖ¸Õë
- * ×¢Òâ  £ºÔÚ´®¿Úµ÷ÊÔÖúÊÖÊäÈëÊ±£¬ÊäÈëÍêÊý×ÖÒª¼Ó»Ø³µ
+ * å‡½æ•°åï¼šTime_Regulate_Get
+ * æè¿°  ï¼šä¿å­˜ç”¨æˆ·ä½¿ç”¨ä¸²å£è®¾ç½®çš„æ—¶é—´ï¼Œ
+ *         ä»¥ä¾¿åŽé¢è½¬åŒ–æˆæ—¶é—´æˆ³å­˜å‚¨åˆ°RTC è®¡æ•°å¯„å­˜å™¨ä¸­ã€‚
+ * è¾“å…¥  ï¼šç”¨äºŽè¯»å–RTCæ—¶é—´çš„ç»“æž„ä½“æŒ‡é’ˆ
+ * æ³¨æ„  ï¼šåœ¨ä¸²å£è°ƒè¯•åŠ©æ‰‹è¾“å…¥æ—¶ï¼Œè¾“å…¥å®Œæ•°å­—è¦åŠ å›žè½¦
  */
 void Time_Regulate_Get(struct rtc_time *tm)
 {
     uint32_t temp_num = 0;
     uint8_t day_max = 0 ;
 
-    PRINTF("\r\n=========================ÉèÖÃÊ±¼ä==================");
+    PRINTF("\r\n=========================è®¾ç½®æ—¶é—´==================");
 
     do {
-        PRINTF("\r\n  ÇëÊäÈëÄê·Ý(Please Set Years),·¶Î§[1970~2038]£¬ÊäÈë×Ö·ûºóÇë¼Ó»Ø³µ:");
+        PRINTF("\r\n  è¯·è¾“å…¥å¹´ä»½(Please Set Years),èŒƒå›´[1970~2038]ï¼Œè¾“å…¥å­—ç¬¦åŽè¯·åŠ å›žè½¦:");
         scanf("%d", &temp_num);
 
         if (temp_num < 1970 || temp_num > 2038) {
-            PRINTF("\r\n ÄúÊäÈëµÄÊý×ÖÊÇ:%d£¬²»·ûºÏÒªÇó", temp_num);
+            PRINTF("\r\n æ‚¨è¾“å…¥çš„æ•°å­—æ˜¯:%dï¼Œä¸ç¬¦åˆè¦æ±‚", temp_num);
 
         } else {
-            PRINTF("\n\r  Äê·Ý±»ÉèÖÃÎª: %d\n\r", temp_num);
+            PRINTF("\n\r  å¹´ä»½è¢«è®¾ç½®ä¸º: %d\n\r", temp_num);
 
             tm->tm_year = temp_num;
             break;
@@ -265,21 +265,21 @@ void Time_Regulate_Get(struct rtc_time *tm)
 
 
     do {
-        PRINTF("\r\n  ÇëÊäÈëÔÂ·Ý(Please Set Months):·¶Î§[1~12]£¬ÊäÈë×Ö·ûºóÇë¼Ó»Ø³µ:");
+        PRINTF("\r\n  è¯·è¾“å…¥æœˆä»½(Please Set Months):èŒƒå›´[1~12]ï¼Œè¾“å…¥å­—ç¬¦åŽè¯·åŠ å›žè½¦:");
         scanf("%d", &temp_num);
 
         if (temp_num < 1 || temp_num > 12) {
-            PRINTF("\r\n ÄúÊäÈëµÄÊý×ÖÊÇ:%d£¬²»·ûºÏÒªÇó", temp_num);
+            PRINTF("\r\n æ‚¨è¾“å…¥çš„æ•°å­—æ˜¯:%dï¼Œä¸ç¬¦åˆè¦æ±‚", temp_num);
 
         } else {
-            PRINTF("\n\r  ÔÂ·Ý±»ÉèÖÃÎª: %d\n\r", temp_num);
+            PRINTF("\n\r  æœˆä»½è¢«è®¾ç½®ä¸º: %d\n\r", temp_num);
 
             tm->tm_mon = temp_num;
             break;
         }
     } while (1);
 
-    /*¸ù¾ÝÔÂ·Ý¼ÆËã×î´óÈÕÆÚ*/
+    /*æ ¹æ®æœˆä»½è®¡ç®—æœ€å¤§æ—¥æœŸ*/
     switch (tm->tm_mon) {
         case 1:
         case 3:
@@ -300,7 +300,7 @@ void Time_Regulate_Get(struct rtc_time *tm)
 
         case 2:
 
-            /*¼ÆËãÈòÄê*/
+            /*è®¡ç®—é—°å¹´*/
             if ((tm->tm_year % 4 == 0) &&
                     ((tm->tm_year % 100 != 0) || (tm->tm_year % 400 == 0)) &&
                     (tm->tm_mon > 2)) {
@@ -313,13 +313,13 @@ void Time_Regulate_Get(struct rtc_time *tm)
     }
 
     do {
-        PRINTF("\r\n  ÇëÊäÈëÈÕÆÚ(Please Set Months),·¶Î§[1~%d]£¬ÊäÈë×Ö·ûºóÇë¼Ó»Ø³µ:", day_max);
+        PRINTF("\r\n  è¯·è¾“å…¥æ—¥æœŸ(Please Set Months),èŒƒå›´[1~%d]ï¼Œè¾“å…¥å­—ç¬¦åŽè¯·åŠ å›žè½¦:", day_max);
         scanf("%d", &temp_num);
 
         if (temp_num < 1 || temp_num > day_max) {
-            PRINTF("\r\n ÄúÊäÈëµÄÊý×ÖÊÇ:%d£¬²»·ûºÏÒªÇó", temp_num);
+            PRINTF("\r\n æ‚¨è¾“å…¥çš„æ•°å­—æ˜¯:%dï¼Œä¸ç¬¦åˆè¦æ±‚", temp_num);
         } else {
-            PRINTF("\n\r  ÈÕÆÚ±»ÉèÖÃÎª: %d\n\r", temp_num);
+            PRINTF("\n\r  æ—¥æœŸè¢«è®¾ç½®ä¸º: %d\n\r", temp_num);
 
             tm->tm_mday = temp_num;
             break;
@@ -327,13 +327,13 @@ void Time_Regulate_Get(struct rtc_time *tm)
     } while (1);
 
     do {
-        PRINTF("\r\n  ÇëÊäÈëÊ±ÖÓ(Please Set Hours),·¶Î§[0~23]£¬ÊäÈë×Ö·ûºóÇë¼Ó»Ø³µ:");
+        PRINTF("\r\n  è¯·è¾“å…¥æ—¶é’Ÿ(Please Set Hours),èŒƒå›´[0~23]ï¼Œè¾“å…¥å­—ç¬¦åŽè¯·åŠ å›žè½¦:");
         scanf("%d", &temp_num);
 
         if (temp_num > 23) {
-            PRINTF("\r\n ÄúÊäÈëµÄÊý×ÖÊÇ:%d£¬²»·ûºÏÒªÇó", temp_num);
+            PRINTF("\r\n æ‚¨è¾“å…¥çš„æ•°å­—æ˜¯:%dï¼Œä¸ç¬¦åˆè¦æ±‚", temp_num);
         } else {
-            PRINTF("\n\r  Ê±ÖÓ±»ÉèÖÃÎª: %d\n\r", temp_num);
+            PRINTF("\n\r  æ—¶é’Ÿè¢«è®¾ç½®ä¸º: %d\n\r", temp_num);
 
             tm->tm_hour = temp_num;
             break;
@@ -341,13 +341,13 @@ void Time_Regulate_Get(struct rtc_time *tm)
     } while (1);
 
     do {
-        PRINTF("\r\n  ÇëÊäÈë·ÖÖÓ(Please Set Minutes),·¶Î§[0~59]£¬ÊäÈë×Ö·ûºóÇë¼Ó»Ø³µ:");
+        PRINTF("\r\n  è¯·è¾“å…¥åˆ†é’Ÿ(Please Set Minutes),èŒƒå›´[0~59]ï¼Œè¾“å…¥å­—ç¬¦åŽè¯·åŠ å›žè½¦:");
         scanf("%d", &temp_num);
 
         if (temp_num > 59) {
-            PRINTF("\r\n ÄúÊäÈëµÄÊý×ÖÊÇ:%d£¬²»·ûºÏÒªÇó", temp_num);
+            PRINTF("\r\n æ‚¨è¾“å…¥çš„æ•°å­—æ˜¯:%dï¼Œä¸ç¬¦åˆè¦æ±‚", temp_num);
         } else {
-            PRINTF("\n\r  ·ÖÖÓ±»ÉèÖÃÎª: %d\n\r", temp_num);
+            PRINTF("\n\r  åˆ†é’Ÿè¢«è®¾ç½®ä¸º: %d\n\r", temp_num);
 
             tm->tm_min = temp_num;
             break;
@@ -355,13 +355,13 @@ void Time_Regulate_Get(struct rtc_time *tm)
     } while (1);
 
     do {
-        PRINTF("\r\n  ÇëÊäÈëÃëÖÓ(Please Set Seconds),·¶Î§[0~59]£¬ÊäÈë×Ö·ûºóÇë¼Ó»Ø³µ:");
+        PRINTF("\r\n  è¯·è¾“å…¥ç§’é’Ÿ(Please Set Seconds),èŒƒå›´[0~59]ï¼Œè¾“å…¥å­—ç¬¦åŽè¯·åŠ å›žè½¦:");
         scanf("%d", &temp_num);
 
         if (temp_num > 59) {
-            PRINTF("\r\n ÄúÊäÈëµÄÊý×ÖÊÇ:%d£¬²»·ûºÏÒªÇó", temp_num);
+            PRINTF("\r\n æ‚¨è¾“å…¥çš„æ•°å­—æ˜¯:%dï¼Œä¸ç¬¦åˆè¦æ±‚", temp_num);
         } else {
-            PRINTF("\n\r  ÃëÖÓ±»ÉèÖÃÎª: %d\n\r", temp_num);
+            PRINTF("\n\r  ç§’é’Ÿè¢«è®¾ç½®ä¸º: %d\n\r", temp_num);
 
             tm->tm_sec = temp_num;
             break;
@@ -372,41 +372,41 @@ void Time_Regulate_Get(struct rtc_time *tm)
 
 
 /*
- * º¯ÊýÃû£ºTime_Adjust
- * ÃèÊö  £ºÊ±¼äµ÷½Ú
- * ÊäÈë  £ºÓÃÓÚ¶ÁÈ¡RTCÊ±¼äµÄ½á¹¹ÌåÖ¸Õë£¨±±¾©Ê±¼ä£©
- * Êä³ö  £ºÎÞ
- * µ÷ÓÃ  £ºÍâ²¿µ÷ÓÃ
+ * å‡½æ•°åï¼šTime_Adjust
+ * æè¿°  ï¼šæ—¶é—´è°ƒèŠ‚
+ * è¾“å…¥  ï¼šç”¨äºŽè¯»å–RTCæ—¶é—´çš„ç»“æž„ä½“æŒ‡é’ˆï¼ˆåŒ—äº¬æ—¶é—´ï¼‰
+ * è¾“å‡º  ï¼šæ— 
+ * è°ƒç”¨  ï¼šå¤–éƒ¨è°ƒç”¨
  */
 void time_adjust(struct rtc_time *tm)
 {
 
-    /* RTC ÅäÖÃ */
+    /* RTC é…ç½® */
     RTC_Configuration();
 
-    /* µÈ´ýÈ·±£ÉÏÒ»´Î²Ù×÷Íê³É */
+    /* ç­‰å¾…ç¡®ä¿ä¸Šä¸€æ¬¡æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 
-    /* ¼ÆËãÐÇÆÚ */
+    /* è®¡ç®—æ˜ŸæœŸ */
     GregorianDay(tm);
 
-    /* ÓÉÈÕÆÚ¼ÆËãÊ±¼ä´Á²¢Ð´Èëµ½RTC¼ÆÊý¼Ä´æÆ÷ */
+    /* ç”±æ—¥æœŸè®¡ç®—æ—¶é—´æˆ³å¹¶å†™å…¥åˆ°RTCè®¡æ•°å¯„å­˜å™¨ */
     RTC_SetCounter(mktimev(tm) - TIME_ZOOM);
 
-    /* µÈ´ýÈ·±£ÉÏÒ»´Î²Ù×÷Íê³É */
+    /* ç­‰å¾…ç¡®ä¿ä¸Šä¸€æ¬¡æ“ä½œå®Œæˆ */
     RTC_WaitForLastTask();
 }
 
 /*
- * º¯ÊýÃû£ºcalendar_test
- * ÃèÊö  £º²âÊÔ¹«Àú¡¢Å©Àú¡¢¶þÊ®ËÄ½ÚÆø
+ * å‡½æ•°åï¼šcalendar_test
+ * æè¿°  ï¼šæµ‹è¯•å…¬åŽ†ã€å†œåŽ†ã€äºŒåå››èŠ‚æ°”
  */
 static void calendar_test(struct rtc_time *tm)
 {
     uint8_t str[200];
 
     GetChinaCalendar((u16)tm->tm_year, (u8)tm->tm_mon, (u8)tm->tm_mday, str);
-    PRINTF("Solar calendar: %0.2d%0.2d,%0.2d,%0.2d\r\n", str[0], str[1], str[2],  str[3]);
+    PRINTF("Solar calendar: %0.2d%0.2d,%0.2d,%0.2d\r\n", str[0], str[1], str[2], str[3]);
 
     GetChinaCalendarStr((u16)tm->tm_year, (u8)tm->tm_mon, (u8)tm->tm_mday, str);
     PRINTF("lunar calendar: %s\r\n", str);
@@ -416,11 +416,11 @@ static void calendar_test(struct rtc_time *tm)
 }
 
 /*
- * º¯ÊýÃû£ºtime_update
- * ÃèÊö  £º¶ÁÈ¡¸üÐÂÊ±¼äÖµ
- * ÊäÈë  £º-TimeVar RTC¼ÆÊýÖµ£¬µ¥Î»Îª s
- * Êä³ö  £ºÎÞ
- * µ÷ÓÃ  £ºÄÚ²¿µ÷ÓÃ
+ * å‡½æ•°åï¼štime_update
+ * æè¿°  ï¼šè¯»å–æ›´æ–°æ—¶é—´å€¼
+ * è¾“å…¥  ï¼š-TimeVar RTCè®¡æ•°å€¼ï¼Œå•ä½ä¸º s
+ * è¾“å‡º  ï¼šæ— 
+ * è°ƒç”¨  ï¼šå†…éƒ¨è°ƒç”¨
  */
 void time_update(struct rtc_time *tm)
 {
@@ -429,14 +429,14 @@ void time_update(struct rtc_time *tm)
 
     TimeVar = RTC_GetCounter();
 
-    /*  °Ñ±ê×¼Ê±¼ä×ª»»Îª±±¾©Ê±¼ä*/
-    BJ_TimeVar = TimeVar + TIME_ZOOM;
+    BJ_TimeVar = TimeVar + TIME_ZOOM;   /* æŠŠæ ‡å‡†æ—¶é—´è½¬æ¢ä¸ºåŒ—äº¬æ—¶é—´ */
 
-    to_tm(BJ_TimeVar, tm);  /* °Ñ¶¨Ê±Æ÷µÄÖµ×ª»»Îª±±¾©Ê±¼ä */
+    to_tm(BJ_TimeVar, tm);              /* æŠŠå®šæ—¶å™¨çš„å€¼è½¬æ¢ä¸ºåŒ—äº¬æ—¶é—´ */
 
-    /* Êä³öÊ±¼ä´Á£¬¹«ÀúÊ±¼ä */
+    /* æ‰“å°æ—¶é—´æˆ³ */
     PRINTF("UNIX value = %d \r\n", TimeVar);
 
+    /* æ‰“å°å…¬åŽ†æ—¶é—´ */
     PRINTF("Time: %d-%d-%d %0.2d:%0.2d:%0.2d (Zodiac Sign: %s, Weekday: %s) \r\n",    tm->tm_year, tm->tm_mon, tm->tm_mday, 
         tm->tm_hour, tm->tm_min, tm->tm_sec, 
         en_zodiac_sign[(tm->tm_year - 3) % 12], en_WEEK_STR[tm->tm_wday]);
