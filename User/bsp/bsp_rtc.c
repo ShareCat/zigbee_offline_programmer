@@ -22,11 +22,11 @@
 
 
 
-/*星期，生肖用文字ASCII码*/
+/* 星期，生肖用文字ASCII码 */
 char const *WEEK_STR[] = {"日", "一", "二", "三", "四", "五", "六"};
 char const *zodiac_sign[] = {"猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗"};
 
-/*英文，星期，生肖用文字ASCII码*/
+/* 英文，星期，生肖用文字ASCII码 */
 char const *en_WEEK_STR[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 char const *en_zodiac_sign[] = {"Pig", "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog"};
 
@@ -63,8 +63,8 @@ void RTC_NVIC_Config(void)
  */
 void RTC_CheckAndConfig(struct rtc_time *tm)
 {
-    /*在启动时检查备份寄存器BKP_DR1，如果内容不是0xA5A5,
-      则需重新配置时间并询问用户调整时间*/
+    /* 在启动时检查备份寄存器BKP_DR1，如果内容不是0xA5A5,
+        则需重新配置时间并询问用户调整时间 */
     if (BKP_ReadBackupRegister(RTC_BKP_DRX) != RTC_BKP_DATA) {
         PRINTF("\r\n\r\n RTC not yet configured....");
         PRINTF("\r\n\r\n RTC configured....");
@@ -72,7 +72,7 @@ void RTC_CheckAndConfig(struct rtc_time *tm)
         /* 使用tm的时间配置RTC寄存器 */
         time_adjust(tm);
 
-        /*向BKP_DR1寄存器写入标志，说明RTC已在运行*/
+        /* 向BKP_DR1寄存器写入标志，说明RTC已在运行 */
         BKP_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
     } else {
 
@@ -82,7 +82,7 @@ void RTC_CheckAndConfig(struct rtc_time *tm)
         /* 允许访问 Backup 区域 */
         PWR_BackupAccessCmd(ENABLE);
 
-        /*LSE启动无需设置新时钟*/
+        /* LSE启动无需设置新时钟 */
 
 #ifdef RTC_CLOCK_SOURCE_LSI
         /* 使能 LSI */
@@ -95,22 +95,22 @@ void RTC_CheckAndConfig(struct rtc_time *tm)
 #endif
 
         if (RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET) {
-            /*检查是否掉电重启*/
+            /* 检查是否掉电重启 */
             PRINTF("\r\n\r\n Power On Reset occurred....");
         } else if (RCC_GetFlagStatus(RCC_FLAG_PINRST) != RESET) {
-            /*检查是否Reset复位*/
+            /* 检查是否Reset复位 */
             PRINTF("\r\n\r\n External Reset occurred....");
         }
 
         PRINTF("\r\n No need to configure RTC....");
 
-        /*等待寄存器同步*/
+        /* 等待寄存器同步 */
         RTC_WaitForSynchro();
 
-        /*允许RTC秒中断*/
+        /* 允许RTC秒中断 */
         RTC_ITConfig(RTC_IT_SEC, ENABLE);
 
-        /*等待上次RTC寄存器写操作完成*/
+        /* 等待上次RTC寄存器写操作完成 */
         RTC_WaitForLastTask();
     }
 
@@ -154,10 +154,10 @@ void RTC_Configuration(void)
 
     /* 复位 Backup 区域 */
     BKP_DeInit();
-
-//使用外部时钟还是内部时钟（在bsp_rtc.h文件定义）
-//使用外部时钟时，在有些情况下晶振不起振
-//批量产品的时候，很容易出现外部晶振不起振的情况，不太可靠
+    /* 使用外部时钟还是内部时钟（在bsp_rtc.h文件定义）
+     * 使用外部时钟时，在有些情况下晶振不起振
+     * 批量产品的时候，很容易出现外部晶振不起振的情况，不太可靠
+     */
 #ifdef  RTC_CLOCK_SOURCE_LSE
     /* 使能 LSE */
     RCC_LSEConfig(RCC_LSE_ON);
@@ -186,7 +186,7 @@ void RTC_Configuration(void)
     /* 确保上一次 RTC 的操作完成 */
     RTC_WaitForLastTask();
 
-    /* 设置 RTC 分频: 使 RTC 周期为1s  */
+    /* 设置 RTC 分频: 使 RTC 周期为1s */
     /* RTC period = RTCCLK/RTC_PR = (32.768 KHz)/(32767+1) = 1HZ */
     RTC_SetPrescaler(32767);
 
@@ -279,7 +279,7 @@ void Time_Regulate_Get(struct rtc_time *tm)
         }
     } while (1);
 
-    /*根据月份计算最大日期*/
+    /* 根据月份计算最大日期 */
     switch (tm->tm_mon) {
         case 1:
         case 3:
@@ -300,7 +300,7 @@ void Time_Regulate_Get(struct rtc_time *tm)
 
         case 2:
 
-            /*计算闰年*/
+            /* 计算闰年 */
             if ((tm->tm_year % 4 == 0) &&
                     ((tm->tm_year % 100 != 0) || (tm->tm_year % 400 == 0)) &&
                     (tm->tm_mon > 2)) {
@@ -437,7 +437,7 @@ void time_update(struct rtc_time *tm)
     PRINTF("UNIX value = %d \r\n", TimeVar);
 
     /* 打印公历时间 */
-    PRINTF("Time: %d-%d-%d %0.2d:%0.2d:%0.2d (Zodiac Sign: %s, Weekday: %s) \r\n",    tm->tm_year, tm->tm_mon, tm->tm_mday, 
+    PRINTF("Time: %d-%d-%d %0.2d:%0.2d:%0.2d (Zodiac Sign: %s, Weekday: %s) \r\n", tm->tm_year, tm->tm_mon, tm->tm_mday, 
         tm->tm_hour, tm->tm_min, tm->tm_sec, 
         en_zodiac_sign[(tm->tm_year - 3) % 12], en_WEEK_STR[tm->tm_wday]);
 
