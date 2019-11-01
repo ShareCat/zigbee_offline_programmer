@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
   * @file:      main.c
-  * @author:    Cat£¨Ëï¹ØÆ½£©
+  * @author:    Catï¼ˆå­™å…³å¹³ï¼‰
   * @version:   V1.0  
   * @date:      2018-1-26
-  * @brief:     zigbee_offline_programmerÔ´Âë
+  * @brief:     zigbee_offline_programmeræºç 
   * @attention: 
   ******************************************************************************
   */
@@ -34,7 +34,7 @@
 static uint8_t msd_run = FALSE;
 
 
-void Delay(__IO uint32_t nCount)	 //¼òµ¥µÄÑÓÊ±º¯Êı
+void Delay(__IO uint32_t nCount)	 //ç®€å•çš„å»¶æ—¶å‡½æ•°
 {
     for(; nCount != 0; nCount--);
 }
@@ -58,28 +58,28 @@ void Driver_CloseEA(void)
 
 
 /**
-  * @brief  JTAGºÍSWD¹¦ÄÜÉèÖÃ
+  * @brief  JTAGå’ŒSWDåŠŸèƒ½è®¾ç½®
   * @param  null
   * @retval null
   */
 static void jtag_and_swd_set(void)
 {
-#define STM32_SWD_ONLY  /* Ö»¿ªÆôSWDµ÷ÊÔ£¬¹Ø±ÕJTAG */
+#define STM32_SWD_ONLY  /* åªå¼€å¯SWDè°ƒè¯•ï¼Œå…³é—­JTAG */
 
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE); //¿ªÆôAFIOÊ±ÖÓ
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE); //å¼€å¯AFIOæ—¶é’Ÿ
 
 #ifdef STM32_SWD_ONLY
-    /* ¹Ø±ÕJTAG¹¦ÄÜ£¬Ê¹ÄÜSWD */
+    /* å…³é—­JTAGåŠŸèƒ½ï¼Œä½¿èƒ½SWD */
     GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
 #else
-    /* ¹Ø±ÕJTAGºÍSWD¹¦ÄÜ */
+    /* å…³é—­JTAGå’ŒSWDåŠŸèƒ½ */
     GPIO_PinRemapConfig(GPIO_Remap_SWJ_Disable, ENABLE);
 #endif
 #undef STM32_SWD_ONLY
 
 #ifdef USING_CM_BACKTRACE
-    #define CM_BACKTRACE_HW_VERSION     "V1.0.0"    /* ºÍÏîÄ¿°æ±¾Ã»ÓĞ¹ØÏµ£¬ÍêÈ«ÒòÎªcm_backtraceĞèÒª */
-    #define CM_BACKTRACE_SW_VERSION     "V0.1.0"    /* ºÍÏîÄ¿°æ±¾Ã»ÓĞ¹ØÏµ£¬ÍêÈ«ÒòÎªcm_backtraceĞèÒª */
+    #define CM_BACKTRACE_HW_VERSION     "V1.0.0"    /* å’Œé¡¹ç›®ç‰ˆæœ¬æ²¡æœ‰å…³ç³»ï¼Œå®Œå…¨å› ä¸ºcm_backtraceéœ€è¦ */
+    #define CM_BACKTRACE_SW_VERSION     "V0.1.0"    /* å’Œé¡¹ç›®ç‰ˆæœ¬æ²¡æœ‰å…³ç³»ï¼Œå®Œå…¨å› ä¸ºcm_backtraceéœ€è¦ */
     extern void cm_backtrace_init(const char *firmware_name, const char *hardware_ver, const char *software_ver);
     cm_backtrace_init("TestBoard", CM_BACKTRACE_HW_VERSION, CM_BACKTRACE_SW_VERSION);
 #endif
@@ -105,7 +105,7 @@ int main(void)
          To reconfigure the default setting of SystemInit() function, refer to
          system_stm32f10x.c file
        */
-    #ifdef APP_PROJECT  /* ¶¨Òå±¾¹¤³ÌÎªAPP³ÌĞò£¬¾ÍĞèÒªÉèÖÃÖĞ¶ÏÏòÁ¿Æ«ÒÆ£¬Í¬Ê±KeilÈí¼şÀïÃæÒ²ÒªĞŞ¸ÄFlashÆğÊ¼µØÖ·ÎªFLASH_APP_ADDR */
+    #ifdef APP_PROJECT  /* å®šä¹‰æœ¬å·¥ç¨‹ä¸ºAPPç¨‹åºï¼Œå°±éœ€è¦è®¾ç½®ä¸­æ–­å‘é‡åç§»ï¼ŒåŒæ—¶Keilè½¯ä»¶é‡Œé¢ä¹Ÿè¦ä¿®æ”¹Flashèµ·å§‹åœ°å€ä¸ºFLASH_APP_ADDR */
     NVIC_SetVectorTable(NVIC_VectTab_FLASH, APP_ADDR - NVIC_VectTab_FLASH);
     #endif
 
@@ -114,44 +114,44 @@ int main(void)
     /* Add your application code here */
     os_init(os_task);
 
-    /* ´´½¨ÃüÁîĞĞ½âÎöÈÎÎñ£¬20msÔËĞĞÒ»´Î */
+    /* åˆ›å»ºå‘½ä»¤è¡Œè§£æä»»åŠ¡ï¼Œ20msè¿è¡Œä¸€æ¬¡ */
     os_task_creat(os_task, cli_task, T_20MS);
 
-    /* ·äÃùÆ÷ÈÎÎñ£¬20msÔËĞĞÒ»´Î */
+    /* èœ‚é¸£å™¨ä»»åŠ¡ï¼Œ20msè¿è¡Œä¸€æ¬¡ */
     buzzer_init();
     os_task_creat(os_task, buzzer_task, T_20MS);
 
-    /* °´¼üÉ¨ÃèÈÎÎñ£¬20msÔËĞĞÒ»´Î */
-	button_scan_init();
+    /* æŒ‰é”®æ‰«æä»»åŠ¡ï¼Œ20msè¿è¡Œä¸€æ¬¡ */
+    button_scan_init();
     os_task_creat(os_task, button_scan_task, T_20MS);
 
     disable_usb();
 
     extern uint8_t sw_button_read(void);
-    /* ÓÉÓÚ²âÊÔÊ¹ÓÃµÄSTM32Ö»ÓĞ20kÄÚ´æ£¬²»¹»ÓÃ£¬Òò´ËÔÚÆô¶¯Ê±ºòÍ¨¹ısw°´¼ü×öÑ¡Ôñ£¬
-    °´ÏÂµÄ»°£¬ÔËĞĞUÅÌÄ£Ê½£¬±»µçÄÔÊ¶±ğ£¬ÓÃÓÚ¸ü¸Ä»ò²é¿´ÅäÖÃĞÅÏ¢£¬ĞŞ¸ÄÏÂÔØ¹Ì¼ş¡£
-    Èç¹ûÃ»ÓĞ°´ÏÂ£¬¾ÍÔËĞĞÏÂÔØÄ£Ê½¡£ */
+    /* ç”±äºæµ‹è¯•ä½¿ç”¨çš„STM32åªæœ‰20kå†…å­˜ï¼Œä¸å¤Ÿç”¨ï¼Œå› æ­¤åœ¨å¯åŠ¨æ—¶å€™é€šè¿‡swæŒ‰é”®åšé€‰æ‹©ï¼Œ
+    æŒ‰ä¸‹çš„è¯ï¼Œè¿è¡ŒUç›˜æ¨¡å¼ï¼Œè¢«ç”µè„‘è¯†åˆ«ï¼Œç”¨äºæ›´æ”¹æˆ–æŸ¥çœ‹é…ç½®ä¿¡æ¯ï¼Œä¿®æ”¹ä¸‹è½½å›ºä»¶ã€‚
+    å¦‚æœæ²¡æœ‰æŒ‰ä¸‹ï¼Œå°±è¿è¡Œä¸‹è½½æ¨¡å¼ã€‚ */
     if (0 == sw_button_read()) {
-        /* USB MSDÉè±¸³õÊ¼»¯ */
+        /* USB MSDè®¾å¤‡åˆå§‹åŒ– */
         mass_storage_init();
         os_task_creat(os_task, mass_storage_task, T_100MS);
         msd_run = TRUE;
     } else {
-        /* Êı¾İ¿â³õÊ¼»¯ */
+        /* æ•°æ®åº“åˆå§‹åŒ– */
         database_init();
 
-        /* FATFSÎÄ¼şÏµÍ³³õÊ¼»¯ */
+        /* FATFSæ–‡ä»¶ç³»ç»Ÿåˆå§‹åŒ– */
         fatfs_init();
 
-        /* NXP_ZIGBEEÏÂÔØÈÎÎñ */
+        /* NXP_ZIGBEEä¸‹è½½ä»»åŠ¡ */
         nxp_init();
         os_task_creat(os_task, nxp_task, T_10MS);
     }
 
-    /* µ÷¶ÈÆ÷ÔËĞĞ */
+    /* è°ƒåº¦å™¨è¿è¡Œ */
     os_start(os_task);
     
-    /* ²»»áÔËĞĞµ½ÕâÀï */
+    /* ä¸ä¼šè¿è¡Œåˆ°è¿™é‡Œ */
     while(1);
 }
 
