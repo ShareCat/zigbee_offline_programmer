@@ -34,4 +34,4 @@ STM32F103C8T6 72MHz RAM:20K ROM:64K
 - Flash Read Out Protection
 
 ## 2. OTA:
-NXP zigbee getway V3.0 ota, Convert bin file to ota file[nxp_zigbee_v3.0_ota](https://github.com/ShareCat/nxp_zigbee_v3.0_ota)
+NXP zigbee getway V3.0 ota, Convert bin file to ota file, check this project: [nxp_zigbee_v3.0_ota](https://github.com/ShareCat/nxp_zigbee_v3.0_ota)
