@@ -6,8 +6,8 @@ STM32F103C8T6 72MHz RAM:20K ROM:64K
 * USART1: (DMA)download bin file to NXP zigbee
 * USART2: debug(command line)
 * USB: MSD(U flash disk)
-  * 1. used to store the configuration file (config.txt, set the automatic/manual download, maxium download times, download check, etc.)
-  * 2. to store the bin file, and you can store more than one, because you can configure the target bin file in the config.txt file.
+  * 1. Save the configuration file (config.txt, set the automatic/manual download, maxium download times, download check, etc.)
+  * 2. Save the bin(binary) file, and you can save more than one bin file, because you can configure the target bin file in the config.txt file.
 * SPI1: SPI_FLASH(W25Q128)
 
 * Since the STM32 (STM32F103C8T6) used in the test only has 20k RAM, which is not enough, so the sw button is used to make a choice when powering up and booting: 
